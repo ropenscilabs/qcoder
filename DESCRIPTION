@@ -1,7 +1,7 @@
 Package: qcoder
 Title: Lightweight qualitative coding
 Version: 0.0.1
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Authors@R: person("Beth", "Duckles", email = "bduckles@gmail.com", role = c("aut"))
 Description: What the package does (one paragraph).
 Depends: R (>= 3.4.3)
 License: GPL-v3
