@@ -11,3 +11,13 @@ Depends: R (>= 3.4.3)
 License: GPL-v3
 Encoding: UTF-8
 LazyData: true
+Imports:
+    readr,
+    shiny,
+    dplyr (>= 0.7),
+    magrittr
+Suggests:
+    rmarkdown,
+    testthat (>= 2.0.0),
+    withr,
+    covr
