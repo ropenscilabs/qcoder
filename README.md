@@ -1,8 +1,8 @@
 # qcoder
 
-Lightweight package to do qualitative coding
+Lightweight package to conduct qualitative coding
 
-##Motivation
+## Motivation
 
 The motivation for qcoder stems from the need for a free, open source option for analyzing qualitative data. Qualitative data refers to text from interview transcripts, observation notes, memos, and primary source/archival documents. Qualitative data can also be images such as drawings, photographs, and screen captures. 
 
@@ -14,7 +14,7 @@ Using software for QDA allows researchers to nest codes, then begin to see the n
 
 QDA is an iterative process. Researchers will often change, lump together, split, or re-organize codes as they analyze their data. Depending on the coding approach, researchers might also create a codebook or research notes for each code that defines the code and specifies instances in which the code should be applied. 
 
-##Current QDA software
+## Current QDA software
 
 To date, researchers who conduct QDA largely rely upon proprietary software such as those listed below (credit to Beth Duckles for the descriptions): 
 
@@ -49,10 +49,22 @@ A free, web based, open source service that was created by University of Pittsbu
 * Weft QDA  http://www.pressure.to/qda/ 
 A free and open source Windows program that has no support. The website says that bugs in the program can result in the loss of data. 
 
-##Limitations of Existing Software
+## Limitations of Existing Software
 
 Each extant software package has its limitations. The foremost limitation is cost, which can prohibit students and underfunded qualitative researchers from conducting analyses systematically and efficiently. Furthermore, the mature software packages (e.g., Atlas.TI) offer features that exceed the needs of many users and, as a result, suffer speed issues (particularly for those researchers who may not benefit from advanced hardware). The sharing process for proprietary QDA outputs is equally unwieldy, relying on non-intuitive bundling and unbundling processes, steep learning curves, and non-transferable skill development. 
 
-Open source languages such as R offer the opportunity to involve qualitative researchers in open source software development. Greater involvement of qualitative researchers serves to expand the scope of R users and could create inroads to connect qualitative and quantitative R packages. For instance, better integration of qualitative research packages into R would make it possible for existing text analysis programs to work alongside qualitative coding.  
+Open source languages such as R offer the opportunity to involve qualitative researchers in open source software development. Greater involvement of qualitative researchers serves to expand the scope of R users and could create inroads to connect qualitative and quantitative R packages. For instance, better integration of qualitative research packages into R would make it possible for existing text analysis programs to work alongside qualitative coding.
+
+## References
+
+Corbin, J., & Strauss, A. L. (2014). Basics of qualitative research. Thousand Oaks, CA: Sage.
+
+Glaser, B. G., & Strauss, A. L. (2017). Discovery of grounded theory: Strategies for qualitative research. London, UK: Routledge.
+
+Miles, M. B., & Huberman, A. M. (1994). Qualitative data analysis: An expanded sourcebook. Thousand Oaks, CA: Sage.
+
+Miles, M. B., Huberman, A. M., & Saldana, J. (2013). Qualitative data analysis. Thousand Oaks, CA: Sage.
+
+Saldaña, J. (2015). The coding manual for qualitative researchers. Thousand Oaks, CA: Sage.
 
 
