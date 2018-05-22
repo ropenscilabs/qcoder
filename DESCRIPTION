@@ -15,7 +15,9 @@ Imports:
     readr,
     shiny,
     dplyr (>= 0.7),
-    magrittr
+    magrittr,
+    shinyAce,
+    stingr
 Suggests:
     rmarkdown,
     testthat (>= 2.0.0),
