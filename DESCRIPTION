@@ -18,7 +18,7 @@ Imports:
     dplyr (>= 0.7),
     magrittr,
     shinyAce,
-    stingr
+    stringr
 Suggests:
     rmarkdown,
     testthat (>= 2.0.0),
