@@ -16,7 +16,7 @@ QDA is an iterative process. Researchers will often change, lump together, split
 
 ## Current QDA software
 
-To date, researchers who conduct QDA largely rely upon proprietary software such as those listed below (credit to [@bduckles](https://github.com/bduckles) for the descriptions): 
+To date, researchers who conduct QDA largely rely upon proprietary software such as those listed below (credit to [bduckles](https://github.com/bduckles) for the descriptions): 
 
 * [NVivo – QSR International](http://www.qsrinternational.com/product)
 Desktop based software with both Windows and Mac support. Has a lot of functionality including video and images as data and auto-coding processes. Tech support and training is available and a relatively large user base. 
@@ -54,9 +54,9 @@ Each extant software package has its limitations. The foremost limitation is cos
 
 Open source languages such as R offer the opportunity to involve qualitative researchers in open source software development. Greater involvement of qualitative researchers serves to expand the scope of R users and could create inroads to connect qualitative and quantitative R packages. For instance, better integration of qualitative research packages into R would make it possible for existing text analysis programs to work alongside qualitative coding.  
 
-##User Needs
+## User Needs
 
-We began this project at rOpenSci’s [runconf18] (https://github.com/ropensci/unconf18) based on [bduckles](https://github.com/bduckles) issue. We began by discussing the common challenges we and our peers face in conducting QDA and considering what we might learn from existing quantitative and text analysis open source packages. We identified a number of unique challenges qualitative researchers encounter when analyzing data. 
+We began this project at rOpenSci’s [runconf18](https://github.com/ropensci/unconf18) based on [bduckles](https://github.com/bduckles) issue. We began by discussing the common challenges we and our peers face in conducting QDA and considering what we might learn from existing quantitative and text analysis open source packages. We identified a number of unique challenges qualitative researchers encounter when analyzing data. 
 
 * *GUI for broader adoption.* Quantitative researchers are often familiar with conducting analyses from the command line. Qualitative researchers, on the other hand, often rely upon Graphical User Interfaces (GUI) to perform analysis tasks. A proposed, in-development solution is integrating Shiny apps to permit a personalized GUI for QCoder. 
 
@@ -71,7 +71,7 @@ We began this project at rOpenSci’s [runconf18] (https://github.com/ropensci/u
 
 * *Money.* Some of the disciplines in which qualitative work occurs do not enjoy the same level of funding as, say, science and engineering. Expensive software packages, then, may not be available to researchers. The case is equally dire for students and researchers in under-resourced communities and countries. An R-based QDA package enables broader participation in qualitative research and, by extension, broader perspectives on the nature of human and social behavior.  
 
-##Conceptualizing a Minimum Viable Product: A vignette
+## Conceptualizing a Minimum Viable Product: A vignette
 
 Questa the graduate student is working on one chapter of her dissertation research where she is trying to understand how different codes of conduct in the software community welcome underrepresented communities. She wants to understand language use and to trace how these codes of conduct are created from differing communities. She also is planning to do interviews with people who have created and used these codes of conduct to understand how their adoption influences inclusion.  
  
