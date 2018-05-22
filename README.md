@@ -57,6 +57,12 @@ Each extant software package has its limitations. The foremost limitation is cos
 
 Open source languages such as R offer the opportunity to involve qualitative researchers in open source software development. Greater involvement of qualitative researchers serves to expand the scope of R users and could create inroads to connect qualitative and quantitative R packages. For instance, better integration of qualitative research packages into R would make it possible for existing text analysis programs to work alongside qualitative coding.
 
+## Contributors 
+(Elin Waring)[https://github.com/elinw] 
+(Dan Sholler)[https://github.com/dsholler]
+(Jenny Draper)[https://github.com/learithe]
+(Beth Duckles)[https://github.com/bduckles]
+
 ## References
 
 Corbin, J., & Strauss, A. L. (2014). Basics of qualitative research. Thousand Oaks, CA: Sage.
