@@ -6,12 +6,12 @@ The Carpentries is a community-led project. We value the involvement of everyone
 
 To make clear what is expected, everyone participating in Carpentry activities is required to conform to the following Code of Conduct. This code of conduct applies to all spaces managed by The Carpentries including, but not limited to, workshops, email lists, online forums and on GitHub. Workshop hosts are expected to assist with enforcement of the Code of Conduct.
 
-(Qcode)If you believe someone is violating the Code of Conduct we ask that you report it to The Carpentry Policy subcommittee by emailing policy@carpentries.org or Cam Macdonell at confidential@carpentries.org, and if the violation occurs during a workshop or other in-person event, by contacting the host and/or coordinator. (/Qcode)[#person_talk]All reports will be kept confidential. When possible, please follow the reporting guidelines detailed here. All reports will be reviewed by the Policy subcommittee. A detailed enforcement policy can be found here.
+(Qcode)If you believe someone is violating the Code of Conduct we ask that you report it to The Carpentry Policy subcommittee by emailing policy@carpentries.org or Cam Macdonell at confidential@carpentries.org, and if the violation occurs during a workshop or other in-person event, by contacting the host and/or coordinator. (/Qcode){#person_talk}All reports will be kept confidential. When possible, please follow the reporting guidelines detailed here. All reports will be reviewed by the Policy subcommittee. A detailed enforcement policy can be found here.
 
 Code of Conduct
-The Carpentries are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. However, we recognise that some groups in our community are subject to historical and ongoing discrimination, and may be vulnerable or disadvantaged. Membership in such a specific group can be on the basis of characteristics such as (Qcode)gender(/Qcode)[#gender], sexual orientation, disability, physical appearance, body size, race, nationality, sex, colour, ethnic or social origin, pregnancy, citizenship, familial status, veteran status, genetic information, religion or belief, political or any other opinion, membership of a national minority, property, birth, age, or choice of text editor. We do not tolerate harassment of participants on the basis of these categories, or for any other reason.
+The Carpentries are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. However, we recognise that some groups in our community are subject to historical and ongoing discrimination, and may be vulnerable or disadvantaged. Membership in such a specific group can be on the basis of characteristics such as (Qcode)gender(/Qcode){#gender}, sexual orientation, disability, physical appearance, body size, race, nationality, sex, colour, ethnic or social origin, pregnancy, citizenship, familial status, veteran status, genetic information, religion or belief, political or any other opinion, membership of a national minority, property, birth, age, or choice of text editor. We do not tolerate harassment of participants on the basis of these categories, or for any other reason.
 
-(Qcode)Harassment is any form of behaviour intended to exclude, intimidate, or cause discomfort.(/Qcode)[#harassment] Because we are a diverse community, we may have different ways of communicating and of understanding the intent behind actions. Therefore we have chosen to prohibit certain forms of behaviour in our community, regardless of intent. (Qcode)Prohibited harassing behaviour includes but is not limited to:
+(Qcode)Harassment is any form of behaviour intended to exclude, intimidate, or cause discomfort.(/Qcode){#harassment} Because we are a diverse community, we may have different ways of communicating and of understanding the intent behind actions. Therefore we have chosen to prohibit certain forms of behaviour in our community, regardless of intent. (Qcode)Prohibited harassing behaviour includes but is not limited to:
 
 written or verbal comments which have the effect of excluding people on the basis of membership of a specific group listed above
 causing someone to fear for their safety, such as through stalking, following, or intimidation
@@ -22,7 +22,7 @@ sustained disruption of talks, events or communications
 incitement to violence, suicide, or self-harm
 continuing to initiate interaction (including photography or recording) with someone after being asked to stop
 publication of private communication without consent
-Behaviour not explicitly mentioned above may still constitute harassment. The list above should not be taken as exhaustive but rather as a guide to make it easier to enrich all of us and the communities in which we participate. All Carpentry interactions should be professional regardless of location: harassment is prohibited whether it occurs on- or offline, and the same standards apply to both.(/Qcode)[#harassment]
+Behaviour not explicitly mentioned above may still constitute harassment. The list above should not be taken as exhaustive but rather as a guide to make it easier to enrich all of us and the communities in which we participate. All Carpentry interactions should be professional regardless of location: harassment is prohibited whether it occurs on- or offline, and the same standards apply to both.(/Qcode){#harassment}
 
 Enforcement of the Code of Conduct will be respectful and not include any harassing behaviors. Any changes to the meaning of this Code of Conduct must be approved by majority vote of both the Policy subcommittee and The Carpentries Executive Council. The Carpentry Community will be informed of these changes and any concerns that are raised will be discussed by the Policy committee.
 
@@ -36,7 +36,7 @@ If you believe someone is violating the Code of Conduct we ask that you report i
 All reports will be kept confidential. 
 In some cases we may determine that a public statement will need to be made. If that’s the case, the identities of all victims and reporters will remain confidential unless those individuals instruct us otherwise.
 
-If the violation occurred at an in-person event, please contact the event host and/or coordinator so that they can take any appropriate immediate response, as well as contacting the subcommittee. (Qcode)You can also contact The Carpentries Executive Director Tracy Teal by telephone at 1-530-341-3230.(/Qcode)[#person_talk]
+If the violation occurred at an in-person event, please contact the event host and/or coordinator so that they can take any appropriate immediate response, as well as contacting the subcommittee. (Qcode)You can also contact The Carpentries Executive Director Tracy Teal by telephone at 1-530-341-3230.(/Qcode){#person_talk}
 
 If you believe anyone is in physical danger, please notify appropriate law enforcement first. 
 If you are unsure which law enforcement agency is appropriate, please include this in your report and we will attempt to notify them.
@@ -66,7 +66,7 @@ A private reprimand from the committee to the individual(s) involved
 A public announcement that an incident occurred
 An imposed vacation (i.e. asking someone to “take a week off” from a mailing list)
 A permanent or temporary ban from some or all Carpentry spaces (mailing lists, GitHub repos, in-person events, etc.)
-Assistance to the complainant with a report to other bodies, for example, institutional offices or appropriate law enforcement agencies(/Qcode)[#consequences]
+Assistance to the complainant with a report to other bodies, for example, institutional offices or appropriate law enforcement agencies(/Qcode){#consequences}
 We’ll respond within one week to the original reporter with either a resolution or an explanation of why the situation is not yet resolved.
 
 Once we’ve determined our final action, we’ll contact the original reporter to let them know what action (if any) we’ll be taking. We’ll take into account feedback from the reporter on the appropriateness of our response, but we may decide not to act on that feedback.
@@ -114,7 +114,7 @@ A private reprimand from the committee to the individual(s) involved. In this ca
 A public announcement of an incident, ideally in the same venue that the violation occurred (i.e. on the listserv for a listserv violation; GitHub for a GitHub violation, etc.). The committee may choose to publish this message elsewhere for posterity.
 An imposed vacation (i.e. asking someone to “take a week off” from a listserv or the Carpentries’ GitHub repos). The committee chair will communicate this “vacation” to the individual(s). They’ll be asked to take this vacation voluntarily, but if they don’t agree then a temporary ban may be imposed to enforce this vacation.
 A permanent or temporary ban from some or all Carpentry spaces (listservs, GitHub, in-person events including workshops, etc). The committee will maintain records of all such bans so that they may be reviewed in the future, extended to new Carpentry communication forums, or otherwise maintained.
-Assistance to the complainant with a report to other bodies, for example, institutional offices or appropriate law enforcement agencies.(/Qcode)[#consequences]
+Assistance to the complainant with a report to other bodies, for example, institutional offices or appropriate law enforcement agencies.(/Qcode){#consequences}
 Once a resolution is agreed upon, but before it is enacted, the committee will contact the original reporter and any other affected parties and explain the proposed resolution. The committee will ask if this resolution is acceptable, and must note feedback for the record. However, the committee is not required to act on this feedback.
 
 Finally the committee will make a report to the Carpentry Executive Council, as well as Carpentry directorship in the event of an ongoing resolution, such as a ban.
