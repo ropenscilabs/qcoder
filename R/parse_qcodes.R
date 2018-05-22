@@ -11,9 +11,6 @@
 #
 # replaces newline characters [\n\r] with <br> in the captured text
 #
-# BUG as of 22 May 2018: parsing for a coded item will fail if the character "}" is present 
-# in its text block
-#
 #
 
 library(stringr, readr)
