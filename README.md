@@ -21,32 +21,23 @@ To date, researchers who conduct QDA largely rely upon proprietary software such
 * [NVivo – QSR International](http://www.qsrinternational.com/product)
 Desktop based software with both Windows and Mac support. Has a lot of functionality including video and images as data and auto-coding processes. Tech support and training is available and a relatively large user base. 
 
-* [Atlas.TI](http://atlasti.com/)
-Desktop based software for Mac and Windows, also has mobile apps for android and iOS. Similar functionality as NVivo including using video and visuals as data. Has training and support. 
+* [Atlas.TI](http://atlasti.com/) Desktop based software for Mac and Windows, also has mobile apps for android and iOS. Similar functionality as NVivo including using video and visuals as data. Has training and support. 
 
-* [MAXQDA](http://www.maxqda.com/)
-Desktop based software that works for both Mac and Windows. Training and Several tiers of licenses.
+* [MAXQDA](http://www.maxqda.com/) Desktop based software that works for both Mac and Windows. Training and Several tiers of licenses.
 
-* [QDA Miner – Provalis Research](https://provalisresearch.com/products/qualitative-data-analysis-software/) 
-A Windows application to analyze qualitative text, can be used with some visuals as well. They also have a “lite” package which is free. 
+* [QDA Miner – Provalis Research](https://provalisresearch.com/products/qualitative-data-analysis-software/) A Windows application to analyze qualitative text, can be used with some visuals as well. They also have a “lite” package which is free. 
 
-* [HyperResearch – Researchware](http://www.researchware.com/products/hyperresearch.html) 
-Desktop based software that works on both Mac and Windows. 
+* [HyperResearch – Researchware](http://www.researchware.com/products/hyperresearch.html) Desktop based software that works on both Mac and Windows. 
 
-* [Dedoose](http://www.dedoose.com/) 
-Web based software, usable on any platform. Data stored in the web instead of on your device. Includes text, photos, audio, video and spreadsheet information. 
+* [Dedoose](http://www.dedoose.com/) Web based software, usable on any platform. Data stored in the web instead of on your device. Includes text, photos, audio, video and spreadsheet information. 
 
-* [Annotations](http://www.annotationsapp.com/)
-Mac only app that allows you to highlight, keyword and create notes for text documents. An inexpensive way to do basic qualitative data analysis. Last updated in 2014. 
+* [Annotations](http://www.annotationsapp.com/) Mac only app that allows you to highlight, keyword and create notes for text documents. An inexpensive way to do basic qualitative data analysis. Last updated in 2014. 
 
-* [RQDA](http://rqda.r-forge.r-project.org/)
-A QDA package for R that is free and open source. Bugs in the program make it challenging to use. Last updated in 2012. 
+* [RQDA](http://rqda.r-forge.r-project.org/) A QDA package for R that is free and open source. Bugs in the program make it challenging to use. Last updated in 2012. 
 
-* [Coding Analysis Toolkit – CAT](http://cat.texifter.com/)  
-A free, web based, open source service that was created by University of Pittsburgh. Can be used on any platform. Not supported. 
+* [Coding Analysis Toolkit – CAT](http://cat.texifter.com/) A free, web based, open source service that was created by University of Pittsburgh. Can be used on any platform. Not supported. 
 
-* [Weft QDA](http://www.pressure.to/qda/) 
-A free and open source Windows program that has no support. The website says that bugs in the program can result in the loss of data. 
+* [Weft QDA](http://www.pressure.to/qda/) A free and open source Windows program that has no support. The website says that bugs in the program can result in the loss of data. 
 
 ## Limitations of Existing Software
 
