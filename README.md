@@ -1,6 +1,6 @@
 # QCoder
-
-Lightweight package to conduct qualitative coding
+Lightweight package to conduct qualitative coding  
+<p><img src="hex/imgHex.png", width="150", align="right" /></p>
 
 ## Motivation
 
