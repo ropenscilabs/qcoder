@@ -73,10 +73,10 @@ She’s planning to start up her interviews and overall she thinks she’ll have
 She’s not sure how many codes she’d need, but she’s guessing that the first round of the coding would be a lot of different codes - maybe 150 - 200 codes to start. Then she’d likely change them and boil it down into groups of codes and categories of those codes. So ideally the program would make it easy for her to edit, change and move around the codes. She also needs to write up a simple codebook as she does the coding. 
 
 ## Contributors 
-[Elin Waring](https://github.com/elinw) 
-[Dan Sholler](https://github.com/dsholler)
-[Jenny Draper](https://github.com/learithe)
-[Beth Duckles](https://github.com/bduckles)
+* [Elin Waring](https://github.com/elinw) 
+* [Dan Sholler](https://github.com/dsholler)
+* [Jenny Draper](https://github.com/learithe)
+* [Beth Duckles](https://github.com/bduckles)
 
 ## References
 
