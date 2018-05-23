@@ -1,0 +1,25 @@
+CoC_Example1
+rOpenSci code of conduct
+
+WHOPLANSPONSORSVENUE
+rOpenSci is committed to providing a welcoming and harassment-free experience for everyone, regardless of (QCODE)gender(/QCODE){#gender}, (QCODE)gender identity and expression(/QCODE){#gender_id}, age, sexual orientation, disability, physical appearance, body size, race, ethnicity, religion (or lack thereof), or technology choices. We do not tolerate harassment of conference participants in any form. Sexual language and imagery is not appropriate for any conference venue, including talks, workshops, parties, Twitter and other online media. (QCODE)Unconf participants violating these rules may be sanctioned or expelled from the event at the discretion of the conference } organizers.(/QCODE){#consequences, #twitter}
+
+This code of conduct applies to all participants, including rOpenSci staff and leadership and applies to all modes of interaction, both in-person and online, including Unconf GitHub project repos and rOpenSci GitHub, the rOpenSci discussion forum, Slack channels and Twitter.
+
+rOpenSci unconf participants agree to:
+
+Be considerate in speech and actions, and actively seek to acknowledge and respect the boundaries of fellow attendees.
+Refrain from demeaning, discriminatory, or harassing behavior and speech. (QCODE)Harassment includes, but is not limited to: deliberate intimidation; stalking; unwanted photography or recording; sustained or willful disruption of talks or other events; inappropriate physical contact; use of sexual or discriminatory imagery, comments, or jokes; and unwelcome sexual attention.(/QCODE){#harassment} If you feel that someone has harassed you or otherwise treated you inappropriately, please alert any member of the conference team in person.
+Take care of each other. Alert a member of the conference team if you notice a dangerous situation, someone in distress, or violations of this code of conduct, even if they seem inconsequential.
+
+Need Help?
+
+(QCODE)Please speak with Stefanie Butland, Karthik Ram, or Jenny Bryan if you have any concerns. You may also reach out to security who will be present all through the event if you are unable to reach Stef, Karthik, or Jenny.(/QCODE){#person_talk,#stefanie}
+
+(QCODE)If any attendee engages in harassing behavior, the conference organizers may take any lawful action we deem appropriate, including but not limited to warning the offender or asking the offender to leave the conference.(/QCODE){#consequences} (If you feel you have been unfairly accused of violating this code of conduct, you should contact the conference team with a concise description of your grievance.)
+
+We welcome your feedback on this and every other aspect of rOpenSci's events, and we thank you for working with us to make it a safe, enjoyable, and friendly experience for everyone who participates.
+
+(QCODE)Parts of above text is licensed {CC BY-SA 4.0}.(/QCODE){#license} Credit to SRCCON. Also inspired by the Ada Initiative’s “how to design a code of conduct for your community.”
+
+Contact us for more information about the event. This page is available at this repo. Corrections, changes, and suggestions for improvement are welcome as pull requests.

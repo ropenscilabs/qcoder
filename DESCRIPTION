@@ -5,9 +5,22 @@ Authors@R: c(
   person("Beth", "Duckles", email = "bduckles@gmail.com", role = c("aut")), 
   person("Dan", "Sholler", email = "sholler.daniel@gmail.com", role = c("aut")),
   person("Elin", "Waring", email= "elin.waring@gmail.com", role = c("aut", "cre"))
-  )
-Description: What the package does (one paragraph).
+  ), 
+  person("Jenny", "Draper", email = "learithe@gmail.com", role = c("aut"))
+Description: A free, lightweight, open source option for analyzing text-based qualitative data. Enables analysis of interview transcripts, observation notes, memos, and other sources. Supports the work of social scientists, historians, humanists, and other researchers who use qualitative methods. Addresses the unique challenges faced in analyzing qualitative data analysis. Provides opportunities for researchers who otherwise might not develop software to build software development skills. 
 Depends: R (>= 3.4.3)
 License: GPL-v3
 Encoding: UTF-8
 LazyData: true
+Imports:
+    readr,
+    shiny,
+    dplyr (>= 0.7),
+    magrittr,
+    shinyAce,
+    stringr
+Suggests:
+    rmarkdown,
+    testthat (>= 2.0.0),
+    withr,
+    covr

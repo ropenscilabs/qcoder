@@ -12,10 +12,12 @@ if (interactive()) {
   library(magrittr)
   library(shinyAce)
   # hard coded for now
+
   text_df <- readRDS("~/Code/rcode/qcoder/data/qcoder_example.rds")
   code_df <- readRDS("~/Code/rcode/qcoder/data/example_codes.rds")
-  doc_test <- "this_doc"
-  #fields <- c("doc_id", "doc_text")
+
+
+
 
   # Define UI for application that draws a histogram
   ui <- fluidPage(
@@ -62,6 +64,7 @@ if (interactive()) {
   # Define server logic
   server <- function(input, output) {
 
+
     doc <- reactive ({
       this_doc <- text_df %>%
         filter(doc_id == as.numeric(input$this_doc_id)) %>%
@@ -75,9 +78,8 @@ if (interactive()) {
     output$code_table <- renderTable({
       code_df
       })
+
     output$this_doc_id_r <- reactive ({as.numeric(input$this_doc_id)})
-
-
   }
 
 
