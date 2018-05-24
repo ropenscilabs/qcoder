@@ -10,60 +10,76 @@ if (interactive()) {
   library(shiny)
   library(dplyr)
   library(magrittr)
+  library(shinyAce)
+  # hard coded for now
+
   text_df <- readRDS("~/Code/rcode/qcoder/data/qcoder_example.rds")
   code_df <- readRDS("~/Code/rcode/qcoder/data/example_codes.rds")
-  #example
 
-  #fields <- c("doc_id", "doc_text")
+
+
 
   # Define UI for application that draws a histogram
   ui <- fluidPage(
 
     mainPanel(
         tabsetPanel(
-       # Application title
-           tabPanel("Adding codes to text data",
+           # Application title
+           tabPanel("Add codes to text data",
 
            # Edit box and document selector
 
-           ui <- fluidPage(
+          # ui <- fluidPage(
 
-            selectInput('this_doc_id', 'Document ID', choices =c(" ", unique(text_df$doc_id))),
+            selectInput('this_doc_id',
+                        'Document ID',
+                        choices =c(" ", unique(text_df$doc_id)),
+                        selected = ' '
+                        ),
+            actionButton("update", "Save - useless for now"),
+            #fix the bug in shineAce
+            aceEditor(
+              "edited_doc",
+              value = text_df[1, "document_text"],
+              #value = text_df["this_doc_id_r", "document_text"],
+              mode = "markdown"
 
-            textAreaInput("document", "Document",
-                           'this_doc',
-                           width = "500px",
-                           height= "800px"
-                           ),
-             verbatimTextOutput('this_doc'
-                                ),
-             actionButton("submit", "Submit")
+              ),
 
+            verbatimTextOutput("this_doc"
+                                )
 
-         )),
+       ),
        tabPanel("Codes",
                 tableOutput('code_table')
 
-      ),
+      ), # close codes tab panel
       tabPanel("Add Code",
-
-               actionButton("submit", "Submit"))
-
-    )
-)
-  )
+               actionButton("submit", "Submit")
+               )
+      ) # close add code panel
+    ) # close tab set
+  ) # close main panel
 }
   # Define server logic
   server <- function(input, output) {
 
-    output$this_doc <- reactive ({
-      this_doc<- text_df %>% filter(doc_id =='this_doc_id') %>% select("document_text")})
+
+    doc <- reactive ({
+      this_doc <- text_df %>%
+        filter(doc_id == as.numeric(input$this_doc_id)) %>%
+        select(document_text)
+
+       return(as.character(this_doc[1, "document_text"]))
+      })
+
+    output$this_doc <-isolate ({renderText(doc())})
 
     output$code_table <- renderTable({
       code_df
       })
 
-
+    output$this_doc_id_r <- reactive ({as.numeric(input$this_doc_id)})
   }
 
 
