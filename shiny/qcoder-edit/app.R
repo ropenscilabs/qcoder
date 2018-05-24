@@ -36,7 +36,7 @@ if (interactive()) {
                         choices =c(" ", unique(text_df$doc_id)),
                         selected = ' '
                         ),
-          #actionButton("update", "Load text"),
+            actionButton("update", "Save - useless for now"),
             #fix the bug in shineAce
             aceEditor(
               "edited_doc",
