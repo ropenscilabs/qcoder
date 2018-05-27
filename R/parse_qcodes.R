@@ -1,8 +1,5 @@
 # parse_qcodes.R
-# J.Draper 22 May 2018
 # part of the rOpenSci Unconf18 project "qcoder"
-#
-# requires stringr, readr
 #
 # Fuction to take a text document containing coded text of the form:
 # "stuff to ignore (QCODE) coded text we care about (/QCODE){#qcode} more stuff to ignore"
@@ -12,8 +9,9 @@
 # replaces newline characters [\n\r] with <br> in the captured text
 #
 #
-
-library(stringr, readr)
+#' @param x A data frame containing document texts
+#' @param ...  Other parameters optionally passed in
+#' @export
 
 parse_qcodes <- function(x, ...){
 
@@ -26,31 +24,35 @@ parse_qcodes <- function(x, ...){
 
   df <- data.frame(doc = integer(), qcode = factor(),
                    text = character(), stringsAsFactors = FALSE)
-
+ #needs to handle no codes and nested codes
   #parse the file for qcodes; results in individual entries of form:
   #coded_text(/Qcode){#qcode, #qcode2
   for (i in 1:nrow(x)) {
-  parsed <- unlist( stringr::str_extract_all(x$document_text[i],pattern=regex( "(?<=(QCODE\\))).*?(?=(\\{#)).*?(?=(\\}))" )) )
-  doc_id <- x$doc_id[i]
-  #parse each qcode flagged item and add it to the data frame as a new row
-  for(item in parsed){
-    splititems <- unlist(strsplit(item, "\\(/QCODE\\)\\{#"))
+    parsed <- unlist( stringr::str_extract_all(x$document_text[i],pattern=regex( "(?<=(QCODE\\))).*?(?=(\\{#)).*?(?=(\\}))" )) )
+    n_parsed <- length(parsed) - 1
+    doc_id <- x$doc_id[i]
+    #parse each qcode flagged item and add it to the data frame as a new row
+    if (n_parsed > 0){
+    for(item in 1:n_parsed){
+      splititems <- unlist(strsplit(parsed[item], "\\(/QCODE\\)\\{#"))
 
-    #handle cases where multiple codes are assigned to one text block
-    if( str_detect(splititems[2], ",[ ]*#") ){
-      splitcodes <- unlist(strsplit(splititems[2], ",[ ]*#"))
+      #handle cases where multiple codes are assigned to one text block
+      if( str_detect(splititems[2], ",[ ]*#") ){
+        splitcodes <- unlist(strsplit(splititems[2], ",[ ]*#"))
 
-      for(code in splitcodes){
-        rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(code), text = splititems[1])
+        for(code in 1:length(splitcodes)){
+          rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(splitcodes[2]), text = splitcodes[1])
+          df <- rbind(df,rowtoadd)
+        }
+
+    }
+      #otherwise just add the one entry to the df
+      else{
+        rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(splititems[2]), text = splititems[1])
         df <- rbind(df,rowtoadd)
       }
     }
-    #otherwise just add the one entry to the df
-    else{
-      rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(splititems[2]), text = splititems[1])
-      df <- rbind(df,rowtoadd)
     }
-  }
   }
 
   return(df)

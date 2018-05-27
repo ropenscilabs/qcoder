@@ -14,9 +14,14 @@ if (interactive()) {
   library(rlang)
   # hard coded for now
 
-  text_df <- readRDS("~/Code/rcode/qcoder/data/qcoder_example_markedup.rds")
-  code_df <- readRDS("~/Code/rcode/qcoder/data/example_codes.rds")
-
+  text_path <- "~/Code/rcode/qcoder/data/qcoder_example_markedup.rds"
+  text_df <- readRDS(text_path)
+  code_path <- "~/Code/rcode/qcoder/data/example_codes.rds"
+  code_df <- readRDS(code_path)
+  #make sure that integrity of IDs is ensured or throw an error
+ # ids <- unique(text_df$doc_id)
+#  names(ids) <- as.character(text_df$doc_path)
+ # choices <- ids
   # Define UI for application that draws a histogram
   ui <- fluidPage(
 
@@ -26,17 +31,17 @@ if (interactive()) {
            tabPanel("Add codes to text data",
 
            # Edit box and document selector
-            selectInput('this_doc_id',
-                        'Document ID',
-                        choices =c(" ", unique(text_df$doc_id)),
+           #make sure these are unique
+            selectInput('this_doc_path',
+                        'Document',
+                        choices =c(" ", unique(text_df$doc_path)),
                         selected = ' '
                         ),
-            actionButton("do_update_document", "Save - useless for now"),
+            actionButton("submit", "Save - useless for now"),
 
            uiOutput("mydocA"),
 
-          verbatimTextOutput("this_doc"
-                                )
+          verbatimTextOutput("this_doc" )
 
        ), # close editor panel
        tabPanel("Codes",
@@ -53,14 +58,14 @@ if (interactive()) {
       ) # close coded tab panel
     ) # close tab set
   ) # close main panel
-)}
+  )
+  }
   # Define server logic
-  server <- function(input, output) {
-
+  server <- function(input, output, session) {
 
     doc <- reactive ({
       this_doc <- text_df %>%
-        filter(doc_id == as.numeric(input$this_doc_id)) %>%
+        filter(doc_path == as.character(input$this_doc_path)) %>%
         select(document_text)
        # Sanitize this
        return(as.character(this_doc[1, "document_text"]))
@@ -69,21 +74,32 @@ if (interactive()) {
     output$this_doc <-isolate ({renderText(doc())})
 
     output$code_table <- renderTable({
-      code_df
+        code_df
       })
     output$coded <- renderTable({
-      parse_qcodes(text_df)
+      qcoder::parse_qcodes(text_df)
     })
 
 
-    output$this_doc_id_r <- reactive ({as.numeric(input$this_doc_id)})
-    do_update_document <- reactive({
-      text_df["this_doc_id", "document_text"] <- input$edited_doc
-      saveRDS(text_df, file = "~/Code/rcode/qcoder/data/qcoder_example.rds")
+    output$this_doc_path_r <- reactive ({input$this_doc_path})
 
+    new_text <- reactive({
+      input$edited_doc
     })
 
-    output$update_document <- reactive ({do_update_document()})
+    do_update_document <- function(updated){
+      row_num <- which(text_df[,"doc_path"] == input$this_doc_path)
+      text_df[row_num, 2] <- updated
+      # make sure this save happens
+      saveRDS(text_df, file = text_path)
+      invisible(TRUE)
+    }
+
+    update_document <-observeEvent(input$submit,
+          {
+             do_update_document(new_text())
+          }
+    )
 
     output$mydocA <- renderUI({
       aceEditor(
