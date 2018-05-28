@@ -12,37 +12,34 @@ if (interactive()) {
   library(magrittr)
   library(shinyAce)
   library(rlang)
+  library(shinyFiles)
   # hard coded for now
 
-  text_path <- "~/Code/rcode/qcoder/data/qcoder_example_markedup.rds"
-  text_df <- readRDS(text_path)
-  code_path <- "~/Code/rcode/qcoder/data/example_codes.rds"
-  code_df <- readRDS(code_path)
-  #make sure that integrity of IDs is ensured or throw an error
- # ids <- unique(text_df$doc_id)
-#  names(ids) <- as.character(text_df$doc_path)
- # choices <- ids
-  # Define UI for application that draws a histogram
+  # Define UI for application
   ui <- fluidPage(
 
     mainPanel(
-        tabsetPanel(
-           # Application title
+      textInput("text_doc_path", label = h4("Enter full path to your document data frame"),
+                value = "" ),
+      # test string
+      # "/Users/elinwaring/Code/rcode/qcoder/data/qcoder_example_markedup.rds"
+
+      textInput("code_path", label = h4("Enter full path to your code data frame"),
+                value = ""),
+           # test string /Users/elinwaring/Code/rcode/qcoder/data/example_codes.rds
+        # End upper section
+      # Start tabset
+      tabsetPanel(
+           # Tab title
            tabPanel("Add codes to text data",
-
-           # Edit box and document selector
-           #make sure these are unique
-            selectInput('this_doc_path',
-                        'Document',
-                        choices =c(" ", unique(text_df$doc_path)),
-                        selected = ' '
-                        ),
-            actionButton("submit", "Save - useless for now"),
-
-           uiOutput("mydocA"),
-
-          verbatimTextOutput("this_doc" )
-
+            conditionalPanel(condition = "input.text_doc_path == TRUE",
+             # Edit box and document selector
+             # make sure these are unique
+               uiOutput( 'choices' ),
+               uiOutput("saveButton"),
+               uiOutput("mydocA"),
+               verbatimTextOutput("this_doc" )
+            )
        ), # close editor panel
        tabPanel("Codes",
                 tableOutput('code_table')
@@ -63,7 +60,31 @@ if (interactive()) {
   # Define server logic
   server <- function(input, output, session) {
 
+    choices <- reactive({
+      text_df <- readRDS(input$text_doc_path)
+      options <- text_df["doc_path"]
+      options <- c(" ", options)
+      options
+    })
+    output$choices <-  renderUI({
+      if (input$text_doc_path == ""){
+        return()}
+      selectInput('this_doc_path', 'Document', choices())
+
+    })
+    output$saveButton <- renderUI({
+      if (input$text_doc_path == ""){
+        return()}
+      actionButton("submit", "Save changes")
+    })
+
+    # Functions related to rendering an individual text document in an editor and
+    # verbatim
+    # Consider making a backup each time you load this.
     doc <- reactive ({
+      if (input$text_doc_path == "") {return()}
+      if (length(input$this_doc_path) != 1) {return()}
+      text_df <- readRDS(input$text_doc_path)
       this_doc <- text_df %>%
         filter(doc_path == as.character(input$this_doc_path)) %>%
         select(document_text)
@@ -71,37 +92,9 @@ if (interactive()) {
        return(as.character(this_doc[1, "document_text"]))
       })
 
-    output$this_doc <-isolate ({renderText(doc())})
-
-    output$code_table <- renderTable({
-        code_df
-      })
-    output$coded <- renderTable({
-      qcoder::parse_qcodes(text_df)
-    })
-
-
-    output$this_doc_path_r <- reactive ({input$this_doc_path})
-
-    new_text <- reactive({
-      input$edited_doc
-    })
-
-    do_update_document <- function(updated){
-      row_num <- which(text_df[,"doc_path"] == input$this_doc_path)
-      text_df[row_num, 2] <- updated
-      # make sure this save happens
-      saveRDS(text_df, file = text_path)
-      invisible(TRUE)
-    }
-
-    update_document <-observeEvent(input$submit,
-          {
-             do_update_document(new_text())
-          }
-    )
-
+    # Create the text editor
     output$mydocA <- renderUI({
+      if (input$text_doc_path == "" ) {return()}
       aceEditor(
         "edited_doc",
         value = doc(),
@@ -110,8 +103,42 @@ if (interactive()) {
 
       )
     })
-  }
 
+    output$this_doc <-{renderText(doc())}
+
+    # Get the code data for display
+    output$code_table <- renderTable({
+        if (input$code_path == "") {return()}
+        code_df <- readRDS(input$code_path)
+        code_df
+      })
+
+    # Functions related to updating the text.
+    new_text <- reactive({
+      input$edited_doc
+    })
+
+    do_update_document <- function(updated){
+      row_num <- which(text_df[,"doc_path"] == input$this_doc_path)
+      text_df[row_num, 2] <- updated
+      # make sure this save happens
+      saveRDS(text_df, file = input$text_doc_path)
+      invisible(TRUE)
+    }
+
+    update_document <-observeEvent(input$submit,
+          {
+             do_update_document(new_text())
+          }
+    )
+    # Get the parsed values with codes.
+    output$coded <- renderTable({
+      if (input$text_doc_path == "" ) {return()}
+      text_df <- readRDS(input$text_doc_path)
+      qcoder::parse_qcodes(text_df)
+    })
+
+  }
 
 # Run the application
 shinyApp(ui = ui, server = server)
