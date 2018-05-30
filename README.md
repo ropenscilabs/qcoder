@@ -1,6 +1,14 @@
 # QCoder
 Lightweight package to conduct qualitative coding  
 <p><img src="hex/imgHex.png", width="150", align="right" /></p>
+## Installation
+
+To install the latest development version, run
+
+> ```r
+install.packages("devtools")
+devtools::install_github("ropenscilabs/qcoder")
+```
 
 ## Motivation
 
