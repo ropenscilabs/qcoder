@@ -2,6 +2,15 @@
 Lightweight package to conduct qualitative coding  
 <p><img src="hex/imgHex.png", width="150", align="right" /></p>
 
+## Installation
+
+To install the latest development version, run
+
+```r
+install.packages("devtools")
+devtools::install_github("ropenscilabs/qcoder")
+```
+
 ## Motivation
 
 The motivation stems from the need for a free, open source option for analyzing textual qualitative data. Textual qualitative data refers to text from interview transcripts, observation notes, memos, jottings and primary source/archival documents. 
