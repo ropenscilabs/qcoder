@@ -4,7 +4,7 @@ Lightweight package to conduct qualitative coding
 
 ## Motivation
 
-The motivation stems from the need for a free, open source option for analyzing textual qualitative data. Qualitative data refers to text from interview transcripts, observation notes, memos, and primary source/archival documents. 
+The motivation stems from the need for a free, open source option for analyzing textual qualitative data. Textual qualitative data refers to text from interview transcripts, observation notes, memos, jottings and primary source/archival documents. 
 
 Qualitative data analysis (QDA) processes, particularly those developed by Corbin and Strauss  (2014), Miles, Huberman, and Saldana (2013), and Glaser and Strauss (2017), can be thought of as layering interpretation onto the text. The researcher starts with open coding, meaning that she is free to tag snippets of text with whatever descriptions she deems appropriate. For instance, if the researcher is coding observation notes and senses that conversations between two individuals will be relevant to the research questions, she might tag the instances in which the two individuals speak with the code "conversation." In the next round of coding, she might classify what the participants discuss with a finer tag, like "conversation_package" if they were talking about creating packages in R.  In another round, she might get even more specific with codes such as "conversation_package_nomoney" if a participant discussed not having money to create a package in R. Later rounds involve conflating codes that might mean the same thing, relating codes to one another (often by documenting their meanings in a similar way to software documentation), and eliminating codes that no longer make sense.
 
@@ -16,14 +16,14 @@ QDA is an iterative process. Researchers will often change, lump together, split
 
 ## Current QDA software
 
-To date, researchers who conduct QDA largely rely upon proprietary software such as those listed below (credit to [bduckles](https://github.com/bduckles) for the descriptions): 
+To date, researchers who conduct QDA largely rely upon proprietary software such as those listed below. Free and open source options are limited, not easy to integrate with R and   (credit to [bduckles](https://github.com/bduckles) for the descriptions): 
 
 * [NVivo – QSR International](http://www.qsrinternational.com/product)
-Desktop based software with both Windows and Mac support. Has a lot of functionality including video and images as data and auto-coding processes. Tech support and training is available and a relatively large user base. 
+Desktop based software with both Windows and Mac support. Functionality includes video and images as data and auto-coding processes. Tech support and training is available and a relatively large user base. 
 
 * [Atlas.TI](http://atlasti.com/) Desktop based software for Mac and Windows, also has mobile apps for android and iOS. Similar functionality as NVivo including using video and visuals as data. Has training and support. 
 
-* [MAXQDA](http://www.maxqda.com/) Desktop based software that works for both Mac and Windows. Training and Several tiers of licenses.
+* [MAXQDA](http://www.maxqda.com/) Desktop based software that works for both Mac and Windows. Training and several tiers of licenses available.
 
 * [QDA Miner – Provalis Research](https://provalisresearch.com/products/qualitative-data-analysis-software/) A Windows application to analyze qualitative text, can be used with some visuals as well. They also have a “lite” package which is free. 
 
