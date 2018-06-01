@@ -12,7 +12,7 @@ if (interactive()) {
   library(magrittr)
   library(shinyAce)
   library(rlang)
-  library(stringr)
+  library(shinyFiles)
   # hard coded for now
 
   # Define UI for application
@@ -23,11 +23,10 @@ if (interactive()) {
                 value = "" ),
       # test string
       # "/Users/elinwaring/Code/rcode/qcoder/data/qcoder_example_markedup.rds"
-      actionButton("load_documents", "Load Documents"),
+
       textInput("code_path", label = h4("Enter full path to your code data frame"),
                 value = ""),
            # test string /Users/elinwaring/Code/rcode/qcoder/data/example_codes.rds
-      actionButton("load_codes", "Load Codes"),
         # End upper section
       # Start tabset
       tabsetPanel(
@@ -36,7 +35,7 @@ if (interactive()) {
             conditionalPanel(condition = "input.text_doc_path == TRUE",
              # Edit box and document selector
              # make sure these are unique
-               uiOutput( "doc_list" ),
+               uiOutput( 'choices' ),
                uiOutput("saveButton"),
                uiOutput("mydocA"),
                verbatimTextOutput("this_doc" )
@@ -47,7 +46,7 @@ if (interactive()) {
 
       ), # close codes tab panel
       tabPanel("Add Code",
-               actionButton("add_code", "Add")
+               actionButton("submit", "Submit")
 
       ), # close add code panel
       tabPanel("Coded data",
@@ -61,26 +60,22 @@ if (interactive()) {
   # Define server logic
   server <- function(input, output, session) {
 
-    choices <- function(text_df){
+    choices <- reactive({
       text_df <- readRDS(input$text_doc_path)
       options <- text_df["doc_path"]
       options <- c(" ", options)
       options
-    }
-    # This should observer the load_documents event
-    #output$doc_list <-  observeEvent(input$load_documents,{renderUI({
-    output$doc_list <-  renderUI({
+    })
+    output$choices <-  renderUI({
       if (input$text_doc_path == ""){
         return()}
-       selectInput('this_doc_path', 'Document', choices())
-      })
+      selectInput('this_doc_path', 'Document', choices())
 
-    #})
-
+    })
     output$saveButton <- renderUI({
       if (input$text_doc_path == ""){
         return()}
-      actionButton("submit", "Save changes")
+    actionButton("submit", "Save changes")
     })
 
     # Functions related to rendering an individual text document in an editor and
@@ -104,34 +99,38 @@ if (interactive()) {
         "edited_doc",
         value = doc(),
         mode = "markdown",
-        height = "500",
-        cursorId = "cursor",
-        hotkeys=list()
+        height = "500"
 
       )
     })
 
-    output$this_doc <-{
-          renderText(doc())
-      }
+    output$this_doc <-{renderText(doc())}
 
+    # Get the code data for display
+    output$code_table <- renderTable({
+        if (input$code_path == "") {return()}
+        code_df <- readRDS(input$code_path)
+        code_df
+      })
 
     # Functions related to updating the text.
-    do_update_document <- observeEvent(input$submit,{
-      text_df <- readRDS(input$text_doc_path)
+    new_text <- reactive({
+      input$edited_doc
+    })
+
+    do_update_document <- function(updated){
       row_num <- which(text_df[,"doc_path"] == input$this_doc_path)
-      text_df[row_num, "document_text"] <- input$edited_doc
+      text_df[row_num, 2] <- updated
       # make sure this save happens
       saveRDS(text_df, file = input$text_doc_path)
       invisible(TRUE)
-    })
-    # Get the code data for display
-    output$code_table <- renderTable({
-      if (input$code_path == "") {return()}
-      code_df <- readRDS(input$code_path)
-      code_df
-    })
+    }
 
+    update_document <-observeEvent(input$submit,
+          {
+             do_update_document(new_text())
+          }
+    )
     # Get the parsed values with codes.
     output$coded <- renderTable({
       if (input$text_doc_path == "" ) {return()}

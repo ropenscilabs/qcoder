@@ -28,7 +28,7 @@ parse_qcodes <- function(x, ...){
   #parse the file for qcodes; results in individual entries of form:
   #coded_text(/Qcode){#qcode, #qcode2
   for (i in 1:nrow(x)) {
-    parsed <- unlist( stringr::str_extract_all(x$document_text[i],pattern=regex( "(?<=(QCODE\\))).*?(?=(\\{#)).*?(?=(\\}))" )) )
+    parsed <- unlist( stringr::str_extract_all(x$document_text[i],pattern= "(?<=(QCODE\\))).*?(?=(\\{#)).*?(?=(\\}))" ) )
     n_parsed <- length(parsed) - 1
     doc_id <- x$doc_id[i]
     #parse each qcode flagged item and add it to the data frame as a new row
@@ -37,7 +37,7 @@ parse_qcodes <- function(x, ...){
       splititems <- unlist(strsplit(parsed[item], "\\(/QCODE\\)\\{#"))
 
       #handle cases where multiple codes are assigned to one text block
-      if( str_detect(splititems[2], ",[ ]*#") ){
+      if( stringr::str_detect(splititems[2], ",[ ]*#") ){
         splitcodes <- unlist(strsplit(splititems[2], ",[ ]*#"))
 
         for(code in 1:length(splitcodes)){

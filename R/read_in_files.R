@@ -49,7 +49,7 @@ read_code_data <- function(file_path, data_frame_name){
   invisible(TRUE)
 }
 #' @export
-create_empty_code_file <-function(file_path, data_frame_name){
+create_empty_code_file <-function(file_path, data_frame_name = "codes"){
   cn <- c("code_id", "code", "code.description")
   code_data <- as.data.frame(matrix(data = NA,0,length(cn)))
   colnames(code_data) <- cn

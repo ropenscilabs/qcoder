@@ -10,6 +10,11 @@ To install the latest development version, run
 install.packages("devtools")
 devtools::install_github("ropenscilabs/qcoder")
 ```
+Please note that this is not a release-ready version and should be considered
+experimental and subject to changes. Still, we encourage you to install and
+send us feedback on our issue tracker.
+
+For instructions for use, see the **Using QCoder** section below. 
 
 ## Motivation
 
@@ -69,7 +74,7 @@ We began this project at rOpenSci’s [runconf18](https://github.com/ropensci/un
   Our approach centers on the production of codebooks. Qualitative researchers create codebooks while coding their data. These codebooks match the code with a description of how and when the code is used. The creation of the codebook is an iterative process that is concurrent with the coding process. Codes are routinely combined, split and shifted as the researcher does their analysis. Codebooks are a way for the researcher to indicate to other members of their research team how to apply codes to the data. Historically, these code books have not been standard across different QDA packages. 
   There could be a benefit to having a standard codebook format which could be compared across projects and even as a project iterates. Using Git or other version control as a codebook is created could prevent mistakes and be a teaching and learning tool for qualitative research. Additionally, most codebooks do not contain sensitive or private data and they could be shared and made publicly available. One could envision the capacity for researchers to share their codebooks so that research that follows could draw on existing codes for future research. A key characteristic of QCoder is that it exposes QDA processes to critique in ways that proprietary software excludes. For example, it is unreasonable to expect that researchers interested in reviewing or reproducing the analysis done for a manuscript pay for a license to perform the task at hand. QCoder can be easily installed and potentially maintained so that critical mistakes in analysis might be caught and corrected in review processes.
 
-* *Money.* Some of the disciplines in which qualitative work occurs do not enjoy the same level of funding as, say, science and engineering. Expensive software packages, then, may not be available to researchers. The case is equally dire for students and researchers in under-resourced communities and countries. An R-based QDA package enables broader participation in qualitative research and, by extension, broader perspectives on the nature of human and social behavior.  
+* *Money.* Some of the disciplines in which qualitative work occurs do not enjoy the same level of funding as, say, natural sciences and engineering. Expensive software packages, then, may not be available to researchers. The case is equally dire for students and researchers in under-resourced communities and countries. An R-based QDA package enables broader participation in qualitative research and, by extension, broader perspectives on the nature of human and social behavior.  
 
 ## Conceptualizing a Minimum Viable Product: A vignette
 
