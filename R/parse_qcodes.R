@@ -1,14 +1,13 @@
-# parse_qcodes.R
-# part of the rOpenSci Unconf18 project "qcoder"
-#
-# Fuction to take a text document containing coded text of the form:
-# "stuff to ignore (QCODE) coded text we care about (/QCODE){#qcode} more stuff to ignore"
-# and turn it into a dataframe with one row per coded item, of the form:
-# docid,qcode,text
-#
-# replaces newline characters [\n\r] with <br> in the captured text
-#
-#
+#` Parse coded text`
+#'
+#' Take a text document containing coded text of the form:
+#' "stuff to ignore (QCODE) coded text we care about (/QCODE){#qcode} more stuff to ignore"
+#' and turn it into a dataframe with one row per coded item, of the form:
+#' docid,qcode,text
+#'
+#' replaces newline characters [\n\r] with <br> in the captured text
+#'
+#'
 #' @param x A data frame containing document texts
 #' @param ...  Other parameters optionally passed in
 #' @export

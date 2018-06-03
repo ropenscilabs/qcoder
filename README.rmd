@@ -1,3 +1,8 @@
+---
+output: 
+ md_document
+---
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 # QCoder
 Lightweight package to conduct qualitative coding  
 <p><img src="hex/imgHex.png", width="150", align="right" /></p>
@@ -118,42 +123,55 @@ Once you have installed QCoder, load it with the library command.
 ```
 library(qcoder)
 ```
+This readme file is going to use sample data to illustrate basic QCoder functionality.
+A full vignette will explain how to use non standard names and file locations.
 
 To begin we will explain how to set up your data.  To make this simpler 
 you can create a QCoder project by using the `create_qcoder_project()` 
-command.
+command. You can install the sample data used in this document by adding `sample = TRUE`.
 
 ```{}
 create_qcoder_project("my_qcoder_project")
+# Or to install sample data
+create_qcoder_project("my_qcoder_project", sample = TRUE)
 ```
 
-This will create one main folder and four subfolders.
+This will create one main folder and four subfolders. 
+Unless you specified otherwise it will be in your current working directory (you can find this
+with the `getwd()` command at the console). 
 These will hold the documents to be coded, information about the codes, unit
 information and the r data frames that will be the core of the analysis.
-For this example the folder and file structures will look similar to this.
+For this example the folder and file structures for the sample data will look similar to this. 
 
 ![](images/folderstructure.png)
 
 ### Documents
-After installing the QCoder package organize your data. 
-We _suggest_ but do not require using the `create_qcoder_project()` function. 
-If you don't use the function, create a folder to store your 
-documents.  In our example we'll call this "documents."
-Inside that folder put each individual document that will be coded. At this
-point we only have tested support for txt files though other types 
+After creating the QCoder project organize your data. In our example we've already placed
+our documents into the "documents" folder.
+At this point we only have tested support for txt files though other types 
 will probably work.  If you have documents in other
 formats you can use "Save As" to convert to txt. 
 
+```
+read_raw_data(project = "my_qcoder_project")
+```
+Will read the documents files into a data frame stored in the data_frames folder of your project
+in a data frame called qcoder_documents.  
+
+(Other options let you use other names and locations.)
+
+
 ### Codes
 
-QCoder has the option to import a list of predefined codes, currently from a CSV
+QCoder has the option to import a list of predefined codes from a CSV
 file (if you have this in a spreadsheet you can "Save As" csv).  This file should
-haveexactly 3 columns with headings:  
+have exactly 3 columns with headings: 
+
  - code_id  (A unique number for each code)
  - code (One word description, can use underscores or hyphens)
  - code.description (Longer description of the code, must be enclosed in quotation marks.)
  
- Here is the example csv file that comes with QCoder.
+ Here are the contents of the sample data csv file that comes with QCoder.
  
 ```
  code_id,code,code.description
@@ -166,42 +184,60 @@ haveexactly 3 columns with headings:
 
 ```
 You are not restricted to using the listed codes, but this file allows 
-you to produce a detailed codebook. (Qcoder will include a way to add new codes
-to this file for users who wish to do so.)
+you to produce a detailed codebook including descriptions. 
 
-If you have created a project, story this file in the codes folder.
+If you installed the sample data the example codes are in the codes folder.
 
-(There will be support for importing two additional basic data files. 
-The first is a list of "units" such as people or organizations along with any
-associated unit-level data.  The second is a list connecting units to specific 
-documents.  This will allow multiple units (people) to be associated with a
-single document.)
- 
-We have already created sample folders and files listed above.
-
-To get the full paths to the sample data for the codes and the 
-folder containing the sample documents type the following.
+Running this code will read your code file into a data frame called qcoder_codes.rds.
 
 ```
-system.file("example_codes/example_codes.csv",  package = "qcoder")
-
-system.file("Example_Data_Markedup",  package = "qcoder")
+read_raw_data(project = "my_qcoder_project")
 ```
-You will also need the full path for the location where you will store the 
-imported data, which will be the data_frames subfolder of your project folder
-if you created one.  You will need to add a name for the imported document data
-if you want it to be different than qcoder_documents. 
+Other options allow use of different names and locations as well as creation of an empty 
+data frame.
 
-You will need the path to your projects data_frames folder.
+Now it's time to start coding. 
 
-Once you know this information launch the shiny data importer.
+Coding uses a "Shiny App" to provide a user interface to the data.  To launch the app use
+the function `qcode_edit()`.
 
 ```
-shiny::runApp('shiny/data-reader')
+qcode_edit()
 ```
-![](images/data-reader-app.png)
+Which will launch this application.
 
-Put the code information into the appropriate spaces and click the button to import the codes.  
-Then put the document information and click the corresponding button.  
+![](images/qedit1.png)
 
-Once the 
+Put the full paths to your documents and codes data frames in the corresponding fields.
+To get these you may need to use the file explorer on your computer. Make sure to include
+the .rds at the end of paths.
+
+Once you have entered the paths there will be a drop down menu on the "Add codes to text"
+tab to allow you to pick a specific document to code. This will pull a document into the editor.
+
+![](images/qedit2.png)
+
+Switching to the "Codes" tab a list of codes from the codes file is displayed.
+
+![](images/codestab.png)
+
+Our sample data already has some coding done, and the code-text data is displayed on the 
+"Coded data" tab.
+
+![](images/codeddata.png)
+
+### Coding the data
+
+To add codes to the documents uses a tagging system.  Text to be assigned a code should be
+surrounded by (QCODER) (/QCODER) tags. The closing tag is followed immediately by the code
+enclosed in curly brackets and prefixed with a # for exmaple {#samplecode}
+
+ (QCODER)This is the text that is being assigned a code.(/QCODER){#instructions}
+
+One pair of {}  can contain multiple codes, each with at # and separated by commas.
+
+At this point nested codes are not supported but implementing that is a high priority goal.
+
+When you have finished tagging a document press the "Save changes" button.
+
+
