@@ -99,7 +99,8 @@ if (interactive()) {
         "edited_doc",
         value = doc(),
         mode = "markdown",
-        height = "500"
+        height = "500",
+        wordWrap = TRUE
 
       )
     })
