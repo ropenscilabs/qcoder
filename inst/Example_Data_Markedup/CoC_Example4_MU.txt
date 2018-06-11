@@ -4,9 +4,9 @@ This code of conduct applies to all R-Ladies spaces, including meetups, Twitter,
 
 Some R-Ladies spaces may have additional rules in place, which will be made clearly available to participants. Participants are responsible for knowing and abiding by these rules.
 
-(Qcode)Harassment includes:
+Harassment includes:
 
-Offensive comments related to (Qcode)gender(/Qcode){#gender}, (Qcode)gender identity and expression(/Qcode){#gender_id}, sexual orientation, disability, mental illness, neuro(a)typicality, physical appearance, body size, age, race, or religion.
+Offensive comments related to (QCODE)gender(/QCODE){#gender}, (QCODE)gender identity and expression(/QCODE){#gender_id}, sexual orientation, disability, mental illness, neuro(a)typicality, physical appearance, body size, age, race, or religion.
 Unwelcome comments regarding a person's lifestyle choices and practices, including those related to food, health, parenting, drugs, and employment.
 Deliberate misgendering or use of 'dead' or rejected names.
 Gratuitous or off-topic sexual images or behaviour in spaces where they're not appropriate.
@@ -21,7 +21,7 @@ Unwelcome sexual attention.
 Pattern of inappropriate social contact, such as requesting/assuming inappropriate levels of intimacy with others.
 Continued one-on-one communication after requests to cease.
 Deliberate "outing" of any aspect of a person's identity without their consent except as necessary to protect vulnerable people from intentional abuse.
-Publication of non-harassing private communication.(/Qcode){#harassment}
+Publication of non-harassing private communication.(/qCODE){harassment}
 R-Ladies prioritizes marginalized people's safety over privileged people's comfort. The Global Leadership Team will not act on complaints regarding:
 
 'Reverse' -isms, including 'reverse racism,' 'reverse sexism,' and 'cisphobia'.
@@ -46,4 +46,4 @@ Participants asked to stop any harassing behavior are expected to comply immedia
 
 If a participant engages in harassing behavior, the Global Leadership Team may take any action they deem appropriate, up to and including expulsion from all R-Ladies spaces and identification of the participant as a harasser to other R-Ladies members or the general public.
 
-(Qcode)This policy is licensed under the Creative Commons Zero license.(/Qcode){#license}
+(QCODE)This policy is licensed under the Creative Commons Zero license.(/QCODE){#license}
