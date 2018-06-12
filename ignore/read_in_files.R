@@ -18,6 +18,7 @@ read_raw_data <- function(folder_path, data_frame_name){
 
   data_set <- data.frame( doc_id = seq_along(1:length(file_list)),
                                 document_text = as.character(doc_text))
+  #trycatch this save
   saveRDS(data_set, file = paste0(data_frame_name,".rds" ))
   invisible(TRUE)
 }
@@ -33,7 +34,7 @@ read_raw_data <- function(folder_path, data_frame_name){
 #' dfn <- "test_codes"
 #' read_tag_data(fp, dfn)
 #' @export
-read_tag_data <- function(file_path, data_frame_name){
+read_code_data <- function(file_path, data_frame_name){
 
     code_data <- readr::read_csv(file = file_path)
     # validate column names etc here

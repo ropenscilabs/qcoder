@@ -5,7 +5,7 @@
 \title{Create a file of codes from csv file
 Use this is you have a spreadsheet of codes already created.}
 \usage{
-read_code_data(file_path = "codes/example_codes.csv",
+read_code_data(file_path = "codes/codes.csv",
   data_frame_name = "qcoder_codes", project_name)
 }
 \arguments{
@@ -20,5 +20,5 @@ Use this is you have a spreadsheet of codes already created.
 \examples{
 fp <-"inst/example_codes/"
 dfn <- "test_codes"
-read_tag_data(fp, dfn)
+read_code_data(fp, dfn)
 }

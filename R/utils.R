@@ -11,13 +11,19 @@ create_qcoder_project<- function(project_name, sample = FALSE){
   dir.create(paste0(project_name, "/codes"))
   dir.create(paste0(project_name, "/data_frames"))
   dir.create(paste0(project_name, "/units"))
+  dir.create(paste0(project_name, "/images"))
+  dir.create(paste0(project_name, "/media"))
+  dir.create(paste0(project_name, "/memos"))
+  dir.create(paste0(project_name, "/misc"))
   if (sample){
     examples <- list.files(system.file("Example_Data_Markedup",  package = "qcoder"))
     examples <- paste0(system.file("Example_Data_Markedup/",  package = "qcoder"), examples)
     file.copy(from = examples,
               paste0(project_name, "/documents"), recursive = TRUE )
-    file.copy(system.file("example_codes/example_codes.csv",  package = "qcoder"),
+    file.copy(system.file("example_codes/codes.csv",  package = "qcoder"),
               paste0(project_name, "/codes"))
+    file.copy(system.file("units/units.csv",  package = "qcoder"),
+              paste0(project_name, "/units"))
   }
   invisible(TRUE)
 }
@@ -33,9 +39,18 @@ read_data <- function() {
 
 #' This launches the coder Shiny app
 #'
-#' @examples qcode_edit()
+#' @examples qcode()
 #' @export
-qcode_edit <- function() {
+qcode <- function() {
   package_location <- system.file(package = "qcoder")
-  shiny::runApp(paste0(package_location, "/shiny/qcoder-edit"))
+  shiny::runApp(paste0(package_location, "/shiny/qcoder"))
+}
+
+#' This launches the coder custom Shiny app
+#'
+#' @examples qcode_custom()
+#' @export
+qcode_custom <- function() {
+  package_location <- system.file(package = "qcoder")
+  shiny::runApp(paste0(package_location, "/shiny/qcoder-custom"))
 }

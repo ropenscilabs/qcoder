@@ -5,7 +5,7 @@
 #' and turn it into a dataframe with one row per coded item, of the form:
 #' docid,qcode,text
 #'
-#' replaces newline characters [\n\r] with <br> in the captured text
+#' Replaces newline characters with "<br>" in the captured text
 #'
 #'
 #' @param x A data frame containing document texts

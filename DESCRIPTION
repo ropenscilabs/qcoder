@@ -14,7 +14,7 @@ Description: A free, lightweight, open source option for analyzing text-based qu
   Provides opportunities for researchers who otherwise might not develop 
   software to build software development skills. 
 Depends: R (>= 3.4.3)
-License: GPL-3
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -23,6 +23,7 @@ Imports:
     dplyr (>= 0.7),
     magrittr,
     shinyAce,
+    shinyFiles,
     stringr
 Suggests:
     rmarkdown,

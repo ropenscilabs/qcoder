@@ -15,5 +15,5 @@ parse_qcodes(x, ...)
 \item{...}{Other parameters optionally passed in}
 }
 \description{
-replaces newline characters \link{\n\r} with <br> in the captured text
+Replaces newline characters with "<br>" in the captured text
 }

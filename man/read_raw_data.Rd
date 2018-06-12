@@ -5,7 +5,7 @@
 \title{Create a data frame of documents}
 \usage{
 read_raw_data(folder_path = "/documents/",
-  data_frame_name = "data_frames/qcoder_documents", project_name)
+  data_frame_name = "qcoder_documents", project_name)
 }
 \arguments{
 \item{path}{to a folder contain text files to be analyzed.}
