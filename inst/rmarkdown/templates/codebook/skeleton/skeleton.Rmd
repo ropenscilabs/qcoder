@@ -1,0 +1,42 @@
+---
+title: "Project Summary"
+output: html_document
+---
+
+
+ 
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('qcoder')
+library('knitr')
+```
+
+```{r, echo=FALSE, message=FALSE}
+
+# This can be copied from the qcode() application. Include quotation marks.
+project_path <- PATH_TO_PROJECT_HERE
+
+```
+
+```{r, echo=FALSE, message=FALSE}
+# Do the code work
+    project_name <- basename(project_path)
+    codes_df_path <- paste0(project_path,  
+                            "/data_frames/qcoder_codes_", 
+                            project_name, ".rds")
+
+    codes_df <- readRDS(codes_df_path)
+```
+
+## Project `r project_name`
+## Codebook
+
+
+```{r}
+knitr::kable(codes_df)
+```
+
+
+
+
