@@ -25,6 +25,7 @@ Imports:
     shinyAce,
     stringr
 Suggests:
+    knitr,
     rmarkdown,
     testthat (>= 2.0.0),
     withr,
