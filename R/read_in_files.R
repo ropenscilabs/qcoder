@@ -14,7 +14,7 @@ read_raw_data <- function(folder_path = "/documents/",
     if (!is.null(project_name)){
       folder_path <- paste0(project_name, folder_path)
       data_frame_name <- paste0(project_name, "/data_frames/",
-                                paste0(data_frame_name,"-", project_name))
+                                paste0(data_frame_name,"_", project_name))
       }
     if (file.exists(folder_path)){
     file_list <- dir(folder_path)
