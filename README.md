@@ -66,11 +66,14 @@ unit information and the r data frames that will be the core of the
 analysis. For this example the folder and file structures for the sample
 data will look similar to this.
 
-![](images/folderstructure.png) \#\#\# Documents In our example we've
-already placed our documents into the "documents" folder. At this point
-we only have tested support for txt files though other types will
-probably work. If you have documents in other formats you can use "Save
-As" to convert to txt.
+![](images/folderstructure.png)
+
+### Documents
+
+In our example we've already placed our documents into the "documents"
+folder. At this point we only have tested support for txt files though
+other types will probably work. If you have documents in other formats
+you can use "Save As" to convert to txt.
 
 ### Codes
 
@@ -126,7 +129,7 @@ function.
     import_project_data(project = "my_qcoder_project")
 
 Now the data\_frames folder will contain the imported files.
-![](images/data_frames_folder.jpg)
+![](images/data_frames_folder.png)
 
 Now it's time to start coding.
 
@@ -148,7 +151,19 @@ Once you have entered the paths there will be a drop down menu on the
 "Add codes to text" tab to allow you to pick a specific document to
 code. This will pull a document into the editor.
 
-![](images/qedit2.png)
+![](images/coding_step1.png)
+
+Select your project folder.
+
+![](images/coding_step2_folder_select.png)
+
+Once you have a project, use the drop down menu to select a particular
+document to code. This will open in an editor. When done coding
+(instructions below), click Save changes.
+
+Select your project folder.
+
+![](images/coding_step3_document_select.png)
 
 Switching to the "Codes" tab a list of codes from the codes file is
 displayed.
@@ -165,16 +180,13 @@ displayed on the "Coded data" tab.
 To add codes to the documents uses a tagging system. Text to be assigned
 a code should be surrounded by (QCODER) (/QCODER) tags. The closing tag
 is followed immediately by the code enclosed in curly brackets and
-prefixed with a \# for exmaple {\#samplecode}
+prefixed with a \# for example {\#samplecode}
 
 (QCODE)This is the text that is being assigned a
 code.(/QCODE){\#instructions}
 
 One pair of {} can contain multiple codes, each with at \# and separated
 by commas.
-
-At this point nested codes are not supported but implementing that is a
-high priority goal.
 
 When you have finished coding a document press the "Save changes"
 button.
