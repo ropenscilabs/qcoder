@@ -4,7 +4,15 @@
 \alias{create_unit_doc_file}
 \title{Define a many to many unit to document map}
 \usage{
-create_unit_doc_file(file_path, data_frame_name)
+create_unit_doc_file(file_path = "data_frames",
+  data_frame_name = "unit_document_map", project_name)
+}
+\arguments{
+\item{file_path}{Path to store data frame on.}
+
+\item{data_frame_name}{Name of the data frame that will contain the map}
+
+\item{project_name}{Name of the project, if it exists}
 }
 \description{
 Define a many to many unit to document map

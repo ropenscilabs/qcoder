@@ -10,5 +10,7 @@ read_data()
 This launches the data-reader Shiny app
 }
 \examples{
-read_data()
+ \dontrun{
+ read_data()
+}
 }
