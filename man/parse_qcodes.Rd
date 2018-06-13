@@ -2,10 +2,7 @@
 % Please edit documentation in R/parse_qcodes.R
 \name{parse_qcodes}
 \alias{parse_qcodes}
-\title{Take a text document containing coded text of the form:
-"stuff to ignore (QCODE) coded text we care about (/QCODE){#qcode} more stuff to ignore"
-and turn it into a dataframe with one row per coded item, of the form:
-docid,qcode,text}
+\title{Parse coded text}
 \usage{
 parse_qcodes(x, ...)
 }
@@ -15,6 +12,12 @@ parse_qcodes(x, ...)
 \item{...}{Other parameters optionally passed in}
 }
 \description{
+Take a text document containing coded text of the form:
+"stuff to ignore (QCODE) coded text we care about (/QCODE){#qcode} more stuff to ignore"
+and turn it into a dataframe with one row per coded item, of the form:
+docid,qcode,text
+}
+\details{
 Replaces newline characters with "<br>" in the captured text
 returns an empty dataframe (no rows) if no qcodes were found.
 }

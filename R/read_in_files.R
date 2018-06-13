@@ -1,16 +1,19 @@
 
 #'  Create a data frame of documents
-#' @param path to a folder contain text files to be analyzed.
-#' @param The name of the RDS file that the data frame will be stored in.
+#' @param folder_path path to a folder contain text files to be analyzed.
+#' @param data_frame_name The name of the RDS file that the data frame will be stored in.
+#' @param project_name Name of the Qcoder project
 #'
 #' @examples
+#'  \dontrun{
 #' fp <-"/documents/"
 #' dfn <- "testdata"
-#' read_raw_data(fp, dfn)
+#' read_raw_data(fp, dfn, "")
+#' }
 #' @export
 read_raw_data <- function(folder_path = "/documents/",
                           data_frame_name = "qcoder_documents",
-                          project_name){
+                          project_name = NULL){
     if (!is.null(project_name)){
       folder_path <- paste0(project_name, folder_path)
       data_frame_name <- paste0(project_name, "/data_frames/",
@@ -38,13 +41,15 @@ read_raw_data <- function(folder_path = "/documents/",
 #'  Create a file of codes from csv file
 #'  Use this is you have a spreadsheet of codes already created.
 #'
-#' @param path to a file containing  code data in csv.
-#' @param The name of the RDS file that the data frame will be stored in.
-#'
+#' @param file_path Path to a file containing  code data in csv.
+#' @param data_frame_name The name of the RDS file that the data frame will be stored in.
+#' @param project_name Name of the project, which matches folder name
 #' @examples
+#'  \dontrun{
 #' fp <-"inst/example_codes/"
 #' dfn <- "test_codes"
 #' read_code_data(fp, dfn)
+#' }
 #' @export
 read_code_data <- function(file_path = "codes/codes.csv",
                            data_frame_name = "qcoder_codes", project_name){
@@ -61,13 +66,21 @@ read_code_data <- function(file_path = "codes/codes.csv",
   invisible(TRUE)
 }
 
+#' Create an empty codes data set
+#'
+#' Used to create a codes data frame with no data but that can
+#' have data added.
+#'
+#' @param data_frame_name Name of the data frame to be created
+#' @param project_name Name of the project that the codes are associated with
+#'
 #' @export
-create_empty_code_file <-function(file_path = "codes",
-                                  data_frame_name = "qcoder_codes",
+create_empty_code_file <-function( data_frame_name = "qcoder_codes",
                                   project_name){
   if (!is.null(project_name)){
     file_path <- paste0(project_name, "/", file_path)
-    data_frame_name <- paste0(project_name, "/data_frames/", data_frame_name)
+    data_frame_name <- paste0(project_name, "/data_frames/",
+                              paste0(data_frame_name, "_", project_name))
   }
   cn <- c("code_id", "code", "code.description")
   code_data <- as.data.frame(matrix(data = NA,0,length(cn)))
@@ -82,13 +95,16 @@ create_empty_code_file <-function(file_path = "codes",
 #'  Create a data frame of units from csv file
 #'  Use this is you have a spreadsheet of units already created.
 #'
-#' @param path to a file containing  unit data in csv.
-#' @param The name of the RDS file that the data frame will be stored in.
+#' @param file_path path to a file containing  unit data in csv.
+#' @param data_frame_name The name of the RDS file that the data frame will be stored in.
+#' @param project_name  Name of project if available
 #'
 #' @examples
+#'  \dontrun{
 #' fp <-"units/units.csv"
 #' dfn <- "my_units"
 #' read_unit_data(fp, dfn)
+#' }
 #' @export
 read_unit_data <- function(file_path = "units.csv",
                            data_frame_name = "qcoder_units", project_name){
@@ -106,10 +122,15 @@ read_unit_data <- function(file_path = "units.csv",
 }
 
 #' Define a many to many unit to document map
+#' @param file_path Path to store data frame on.
+#' @param data_frame_name Name of the data frame that will contain the map
+#' @param project_name Name of the project, if it exists
 #' @export
-create_unit_doc_file <- function(file_path, data_frame_name, project_name){
+create_unit_doc_file <- function(file_path = "data_frames",
+                                 data_frame_name = "unit_document_map",
+                                 project_name){
   ud <- c("unit_id", "doc_id")
-  code_data <- as.data.frame(matrix(data = NA,0,length(ud)))
+  code_data <- as.data.frame(matrix(data = NA, 0, length(ud)))
   colnames(unit_document_map) <- ud
   unit_document_map$code_description <- as.integer(unit_document_map$unit_id)
   unit_document_map$doc_id <- as.integer(unit_document_map$doc_id)
@@ -117,6 +138,12 @@ create_unit_doc_file <- function(file_path, data_frame_name, project_name){
   invisible(TRUE)
 }
 
+#' Read data into a project
+#' Convenience method to read raw data from standard locations and using
+#' standard names in a project folder structure.
+#'
+#' @param project_name The project name. This should represent a folder
+#'                     in the current working directory.
 #' @export
 import_project_data<- function(project_name){
   read_raw_data(project_name = project_name)

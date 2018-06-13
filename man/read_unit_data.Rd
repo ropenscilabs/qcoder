@@ -9,16 +9,20 @@ read_unit_data(file_path = "units.csv", data_frame_name = "qcoder_units",
   project_name)
 }
 \arguments{
-\item{path}{to a file containing  unit data in csv.}
+\item{file_path}{path to a file containing  unit data in csv.}
 
-\item{The}{name of the RDS file that the data frame will be stored in.}
+\item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
+
+\item{project_name}{Name of project if available}
 }
 \description{
 Create a data frame of units from csv file
 Use this is you have a spreadsheet of units already created.
 }
 \examples{
+ \dontrun{
 fp <-"units/units.csv"
 dfn <- "my_units"
 read_unit_data(fp, dfn)
+}
 }

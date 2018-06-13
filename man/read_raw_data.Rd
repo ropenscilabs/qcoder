@@ -5,18 +5,22 @@
 \title{Create a data frame of documents}
 \usage{
 read_raw_data(folder_path = "/documents/",
-  data_frame_name = "qcoder_documents", project_name)
+  data_frame_name = "qcoder_documents", project_name = NULL)
 }
 \arguments{
-\item{path}{to a folder contain text files to be analyzed.}
+\item{folder_path}{path to a folder contain text files to be analyzed.}
 
-\item{The}{name of the RDS file that the data frame will be stored in.}
+\item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
+
+\item{project_name}{Name of the Qcoder project}
 }
 \description{
 Create a data frame of documents
 }
 \examples{
+ \dontrun{
 fp <-"/documents/"
 dfn <- "testdata"
-read_raw_data(fp, dfn)
+read_raw_data(fp, dfn, "")
+}
 }

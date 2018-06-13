@@ -30,7 +30,10 @@ create_qcoder_project<- function(project_name, sample = FALSE){
 
 #' This launches the data-reader Shiny app
 #'
-#' @examples read_data()
+#' @examples
+#'  \dontrun{
+#'  read_data()
+#' }
 #' @export
 read_data <- function() {
   package_location <- system.file(package = "qcoder")

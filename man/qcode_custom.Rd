@@ -10,5 +10,7 @@ qcode_custom()
 This launches the coder custom Shiny app
 }
 \examples{
-qcode_custom()
+\dontrun{
+  qcode_custom()
+}
 }
