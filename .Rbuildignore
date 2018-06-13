@@ -1,2 +1,12 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\ignore
+^\.travis\.yml$
+^README\.Rmd
+^README\.html
+^CONTRIBUTING.md
+^CONDUCT.md
+^appveyor\.yml$
+^motivation\.Rmd
+^motivation\.html
+^\images

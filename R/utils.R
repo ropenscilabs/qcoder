@@ -39,7 +39,10 @@ read_data <- function() {
 
 #' This launches the coder Shiny app
 #'
-#' @examples qcode()
+#' @examples
+#' \dontrun{
+#'  qcode()
+#' }
 #' @export
 qcode <- function() {
   package_location <- system.file(package = "qcoder")
@@ -48,7 +51,10 @@ qcode <- function() {
 
 #' This launches the coder custom Shiny app
 #'
-#' @examples qcode_custom()
+#' @examples
+#' \dontrun{
+#'   qcode_custom()
+#' }
 #' @export
 qcode_custom <- function() {
   package_location <- system.file(package = "qcoder")

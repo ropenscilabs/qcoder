@@ -27,3 +27,5 @@ vignettes/*.pdf
 rsconnect/
 .Rproj.user
 qcoder.Rproj
+/ignore/
+

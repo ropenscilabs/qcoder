@@ -13,7 +13,7 @@ Description: A free, lightweight, open source option for analyzing text-based qu
   the unique challenges faced in analyzing qualitative data analysis. 
   Provides opportunities for researchers who otherwise might not develop 
   software to build software development skills. 
-Depends: R (>= 3.4.3)
+Depends: R (>= 3.4.0)
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
