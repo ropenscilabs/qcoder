@@ -96,7 +96,7 @@ parse_qcodes <- function(x, ...){
           ### clean up the text block & extract its codes
 
           #remove nested tags from the text block to return
-          txt = stringr::str_replace_all(txt,regex("\\(\\/QCODE\\)\\{#.*?\\}"),"")
+          txt = stringr::str_replace_all(txt,"\\(\\/QCODE\\)\\{#.*?\\}","")
 
           #get the qcode(s) for this text block
           codes <- unlist( stringr::str_extract( sp[level], "^.*?\\}" ) ) #the code block will be @ the start
