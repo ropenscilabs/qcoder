@@ -30,7 +30,8 @@ Suggests:
     rmarkdown,
     testthat (>= 2.0.0),
     withr,
-    covr
+    covr,
+    pander
 URL: https://github.com/ropenscilabs/qcoder
 BugReports: https://github.com/ropenscilabs/qcoder/issues
 VignetteBuilder: knitr

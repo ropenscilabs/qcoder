@@ -145,12 +145,10 @@ Which will launch this application.
 
 
 ## Coding
-Put the full paths to your documents and codes data frames in the corresponding fields.
-To get these you may need to use the file explorer on your computer. Make sure to include
-the .rds at the end of paths.
 
-Once you have entered the paths there will be a drop down menu on the "Add codes to text"
-tab to allow you to pick a specific document to code. This will pull a document into the editor.
+Once you have selected your project there will be a drop down menu on the 
+"Add codes to text" tab to allow you to pick a specific document to code. 
+This will pull a document into the editor.
 
 ![](images/coding_step1.png)
 

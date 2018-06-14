@@ -1,0 +1,59 @@
+---
+title: "Project Summary"
+output: html_document
+---
+
+
+ 
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('qcoder')
+library('dplyr')
+library('knitr')
+```
+
+```{r, echo=FALSE, message=FALSE}
+
+# This can be copied from the qcode() application. Include quotation marks.
+project_path <- PATH_TO_PROJECT_HERE
+
+```
+
+```{r, echo=FALSE, message=FALSE}
+# Do the code work
+    project_name <- basename(project_path)
+    docs_df_path <- paste0(project_path,  
+                           "/data_frames/qcoder_documents_", 
+                          project_name, ".rds")
+    codes_df_path <- paste0(project_path,  
+                            "/data_frames/qcoder_codes_", 
+                            project_name, ".rds")
+    units_df_path <- paste0(project_path,  
+                            "/data_frames/qcoder_units_", 
+                            basename(project_path), ".rds")
+
+
+      text_df <- readRDS(docs_df_path)
+      parsed <-  qcoder::parse_qcodes(text_df)
+      codes_df <- readRDS(codes_df_path)
+      units_df <- readRDS(units_df_path)
+       
+```
+
+## Project `r project_name`
+## Summary
+
+Number of documents: `r nrow(text_df)`  
+Number of codes: `r nrow(codes_df)`  
+Number of segments coded: `r nrow(parsed)`
+Number of units:  `r nrow(units_df)`
+
+Frequency of codes
+```{r}
+parsed %>% group_by(qcode) %>% summarise(n = n())
+```
+
+
+
+

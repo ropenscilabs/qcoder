@@ -1,0 +1,54 @@
+---
+title: ""
+output: html_document
+---
+
+
+ 
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('qcoder')
+library('dplyr')
+library('pander')
+```
+
+```{r, echo=FALSE, message=FALSE}
+# Put the exact code that this report should be about inside of quotation marks.
+# Example "gender"
+code_to_report_on <- CODE
+
+# This can be copied from the qcode() application. Include quotation marks.
+project_path <- PATH_TO_PROJECT_HERE
+
+
+```
+
+```{r, echo=FALSE, message=FALSE}
+# Do the code work
+    project_name <- basename(project_path)
+    docs_df_path <- paste0(project_path,  
+                           "/data_frames/qcoder_documents_", 
+                          project_name, ".rds")
+    codes_df_path <- paste0(project_path,  
+                            "/data_frames/qcoder_codes_", 
+                            project_name, ".rds")
+
+
+        text_df <- readRDS(docs_df_path)
+       parsed <-  qcoder::parse_qcodes(text_df)
+       parsed <- parsed %>% dplyr::filter(qcode == code_to_report_on) %>%
+                        dplyr::select(doc, text)
+       
+```
+
+## Project `r project_name`
+## Report on `r code_to_report_on` 
+
+```{r, echo=FALSE, message=FALSE}
+pander::pander(parsed)
+```
+
+
+
+Type your text here.
