@@ -10,6 +10,7 @@ output: html_document
 
 library('qcoder')
 library('dplyr')
+library('pander')
 ```
 
 ```{r, echo=FALSE, message=FALSE}
@@ -44,8 +45,8 @@ project_path <- PATH_TO_PROJECT_HERE
 ## Project `r project_name`
 ## Report on `r code_to_report_on` 
 
-```{r}
-parsed
+```{r, echo=FALSE, message=FALSE}
+pander::pander(parsed)
 ```
 
 
