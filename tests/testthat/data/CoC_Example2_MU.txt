@@ -1,0 +1,15 @@
+CoC_Example2
+
+Code of conduct
+The LIBD rstats club is committed to providing a welcoming and harassment-free experience for everyone, regardless of (QCODE)gender(/QCODE){#gender}, (QCODE)gender identity and expression(/QCODE){#gender_id}, age, sexual orientation, disability, physical appearance, body size, race, ethnicity, religion (or lack thereof), or technology choices. We do not tolerate harassment of website participants in any form. Sexual language and imagery is not appropriate for any venue related to this website, including blog posts, talks, workshops, parties, Twitter and other online media. Website participants violating these rules may be sanctioned or expelled from the website at the discretion of the LIBD rstats club members.
+
+This code of conduct applies to all participants, including LIBD rstats club members and applies to all modes of interaction, both in-person and online, including LieberInstitute GitHub project repos, the LIBD rstats club comments section, Slack channels and Twitter.
+
+LIBD rstats club participants agree to:
+
+Be considerate in speech and actions, and actively seek to acknowledge and respect the boundaries of fellow participants.
+Refrain from demeaning, discriminatory, or harassing behavior and speech. (QCODE)Harassment includes, but is not limited to: deliberate intimidation; stalking; unwanted photography or recording; sustained or willful disruption of talks or other events; inappropriate physical contact; use of sexual or discriminatory imagery, comments, or jokes; and unwelcome sexual attention.(/QCODE){#harassment} If you feel that someone has harassed you or otherwise treated you inappropriately, please alert any LIBD rstats club member.
+Take care of each other. Alert a LIBD rstats club member if you notice a dangerous situation, someone in distress, or violations of this code of conduct, even if they seem inconsequential.
+(QCODE)If any participant engages in harassing behavior, the LIBD rstats club organizers may take any lawful action we deem appropriate, including but not limited to warning the offender or asking the offender to leave the website. (/QCODE){#consequences}(If you feel you have been unfairly accused of violating this code of conduct, you should contact the LIBD rstats club organizers with a concise description of your grievance.)
+
+The above text has been modified from the rOpenSci 2018 unconference code of conduct, which in turn states that parts of the text are (QCODE)licensed CC BY-SA 4.0.(/QCODE){#license} Credit to SRCCON. Also inspired by the Ada Initiative’s “how to design a code of conduct for your community.”
