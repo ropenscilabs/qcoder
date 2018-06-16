@@ -20,8 +20,6 @@ Please note that this is not a release-ready version and should be considered
 experimental and subject to changes. Still, we encourage you to install and
 send us feedback on our issue tracker.
 
-For instructions for use, see the **Using QCoder** section below. 
-
 ## Motivation
 
 The motivation stems from the need for a free, open source option for analyzing 
@@ -29,7 +27,7 @@ textual qualitative data. Textual qualitative data refers to text from interview
 transcripts, observation notes, 
 memos, jottings and primary source/archival documents. 
 A detailed discussion of the motivation and other software can be found in our
-(motivation document)[motivation.rmd].
+(motivation document)[https://github.com/ropenscilabs/qcoder/blob/master/motivation.Rmd].
 
 
 ## Using QCoder
@@ -136,7 +134,7 @@ Now the data_frames folder will contain the imported files.
 Now it's time to start coding. 
 
 Coding uses a "Shiny App" to provide a user interface to the data.  To launch the app use
-the function `qcode_edit()`.
+the function `qcode()`.
 
 ```
 qcode()
@@ -184,6 +182,9 @@ enclosed in curly brackets and prefixed with a # for example {#samplecode}
 One pair of {}  can contain multiple codes, each with at # and separated by commas.
 
 When you have finished coding a document press the "Save changes" button.
+
+
+
 
 ## Contributors 
 * [Elin Waring](https://github.com/elinw) 
