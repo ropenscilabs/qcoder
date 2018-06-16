@@ -3,6 +3,7 @@
 export(create_empty_code_file)
 export(create_qcoder_project)
 export(create_unit_doc_file)
+export(error_check)
 export(import_project_data)
 export(parse_qcodes)
 export(qcode)

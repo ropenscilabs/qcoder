@@ -169,6 +169,7 @@ if (interactive()) {
     # Move to utils
     do_update_document <- function(updated){
 
+      qcoder::error_check(updated)
       project_path <- parseDirPath(user_folder, input$select_project)
       docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_", basename(project_path), ".rds")
 
