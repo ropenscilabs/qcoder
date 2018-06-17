@@ -166,24 +166,14 @@ if (interactive()) {
       input$edited_doc
     })
 
-    # Move to utils
-    do_update_document <- function(updated){
-
-      qcoder::error_check(updated)
-      project_path <- parseDirPath(user_folder, input$select_project)
-      docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_", basename(project_path), ".rds")
-
-      text_df <- readRDS(docs_df_path)
-      row_num <- which(text_df[,"doc_path"] == input$this_doc_path)
-      text_df[row_num, 2] <- updated
-      # make sure this save happens
-      saveRDS(text_df, file = docs_df_path)
-      invisible(TRUE)
-    }
     update_document <-observeEvent(input$submit,
-                                   {
-                                     do_update_document(new_text())
-                                   }
+           {
+             project_path <- parseDirPath(user_folder, input$select_project)
+             docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_",
+                                    basename(project_path), ".rds")
+             qcoder::do_update_document(new_text(), docs_df_path = docs_df_path,
+                                        this_doc_path = input$this_doc_path)
+           }
     )
   }
 
