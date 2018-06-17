@@ -25,7 +25,7 @@ parse_qcodes <- function(x, ...){
   for (i in 1:nrow(x)) {
 
     doc_id <- x$doc_id[i]
-    #cat(paste("parsing document: ",doc_id,"\n"))
+    #cat(paste("parsing document: ", doc_id, "\n"))
 
     #split the file on opening qcode tags
     #note: can't just use str_extract_all() with a nice clean regex, because qcodes can be nested
@@ -79,10 +79,9 @@ parse_qcodes <- function(x, ...){
             txt = paste(txt, toadd, sep="")
           }
 
+          ### Clean up the text block & extract its codes
 
-          ### clean up the text block & extract its codes
-
-          #remove nested tags from the text block to return
+          # Remove nested tags from the text block to return
           txt = stringr::str_replace_all(txt,"\\(\\/QCODE\\)\\{#.*?\\}","")
 
           #get the qcode(s) for this text block
@@ -110,7 +109,7 @@ parse_qcodes <- function(x, ...){
             rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(code), text = txt)
             df <- rbind(df,rowtoadd)
           }
-
+print(codes)
         }
 
       }
