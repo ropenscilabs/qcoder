@@ -65,6 +65,16 @@ qcode_custom <- function() {
   shiny::runApp(paste0(package_location, "/shiny/qcoder-custom"))
 }
 
+#' Update document
+#' Updates the text field of the documents data frame, typically after
+#' pressing Save button in the Shiny App.  May
+#' also be used in the console.
+#'
+#' @param updated The updated text as a character string
+#' @param docs_df_path  Location of the documents rds file.
+#' @param this_doc_path  Name of record to be updated, as recorded in "doc_path"
+#'         field of data frame.
+#'
 #' @export
 do_update_document <- function(updated, docs_df_path, this_doc_path){
 
