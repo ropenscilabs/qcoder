@@ -25,7 +25,7 @@ parse_qcodes <- function(x, ...){
   for (i in 1:nrow(x)) {
 
     doc_id <- x$doc_id[i]
-    #cat(paste("parsing document: ",doc_id,"\n"))
+    #cat(paste("parsing document: ", doc_id, "\n"))
 
     #split the file on opening qcode tags
     #note: can't just use str_extract_all() with a nice clean regex, because qcodes can be nested
@@ -33,24 +33,11 @@ parse_qcodes <- function(x, ...){
 
     ### skip this document/row if no qcodes were found
     if( length(splititems) == 1 ){
-      warning("WARNING: No QCODE blocks found in document ",as.character(doc_id),"\n")
+      warning("WARNING: No QCODE blocks found in document ","\n")
       next()
     }
 
-    ### basic tag error checking
-    #check whether there are an equal number of (QCODE) and (/QCODE) tags
-    open  = unlist( stringr::str_extract_all( x$document_text[i],"(\\(QCODE\\))"))
-    close = unlist( stringr::str_extract_all( x$document_text[i],"(\\(/QCODE\\))"))
-    if(length(open) != length(close)){
-      warning("WARNING: number of (QCODE) and (/QCODE) tags do not match in document ",doc_id,"; erroneous output is likely.\n")
-    }
-    #check whether there is a (/QCODE) tag missing its {#code}
-    close = unlist( stringr::str_extract_all( x$document_text[i],"(\\(/QCODE\\)[^\\}]*?\\})"))
-    for(tag in close){
-      if( !stringr::str_detect(tag, "\\(/QCODE\\)\\{#.*?\\}") ){
-        warning("WARNING: encoding error detected in document ",doc_id,"; erroneous output is likely. Error was detected at:\n\t'",tag,"'\n")
-      }
-    }
+    error_check(x$document_text[i])
 
     ### iterate through the split items
     extra_depth = 0
@@ -92,15 +79,16 @@ parse_qcodes <- function(x, ...){
             txt = paste(txt, toadd, sep="")
           }
 
+          ### Clean up the text block & extract its codes
 
-          ### clean up the text block & extract its codes
-
-          #remove nested tags from the text block to return
+          # Remove nested tags from the text block to return
           txt = stringr::str_replace_all(txt,"\\(\\/QCODE\\)\\{#.*?\\}","")
 
           #get the qcode(s) for this text block
-          codes <- unlist( stringr::str_extract( sp[level], "^.*?\\}" ) ) #the code block will be @ the start
-          codes <- unlist( strsplit(codes,"#") )#split on the "#"
+          #the code block will be @ the start
+          codes <- unlist( stringr::str_extract( sp[level], "^.*?\\}" ) )
+          #split on the "#"
+          codes <- unlist( strsplit(codes,"#") )
 
           #warn on qcode parsing error & remove blank first item is relevent
           if( is.na(codes[1]) ){
@@ -121,7 +109,7 @@ parse_qcodes <- function(x, ...){
             rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(code), text = txt)
             df <- rbind(df,rowtoadd)
           }
-
+print(codes)
         }
 
       }
@@ -134,4 +122,29 @@ parse_qcodes <- function(x, ...){
 
 }
 
-
+#' Check for coding errors
+#' Checks the current document for coding errors.
+#'
+#' @param document The document to be scanned for errors.
+#'
+#' @export
+error_check <- function(document) {
+    ### basic tag error checking
+    #check whether there are an equal number of (QCODE) and (/QCODE) tags
+    open  = unlist( stringr::str_extract_all( document,"(\\(QCODE\\))"))
+    close = unlist( stringr::str_extract_all( document,"(\\(/QCODE\\))"))
+    if(length(open) != length(close)){
+      warning("WARNING: number of (QCODE) and (/QCODE) tags do not match
+              in document ; erroneous output is likely.\n")
+    }
+    #check whether there is a (/QCODE) tag missing its {#code}
+    close = unlist( stringr::str_extract_all( document,
+                                              "(\\(/QCODE\\)[^\\}]*?\\})"))
+    for(tag in close){
+      if( !stringr::str_detect(tag, "\\(/QCODE\\)\\{#.*?\\}") ){
+        warning("WARNING: encoding error detected in document
+                erroneous output is likely. Error was detected at:\n\t'",
+                tag,"'\n")
+      }
+    }
+}
