@@ -17,7 +17,8 @@ create_qcoder_project<- function(project_name, sample = FALSE){
   dir.create(paste0(project_name, "/misc"))
   if (sample){
     examples <- list.files(system.file("Example_Data_Markedup",  package = "qcoder"))
-    examples <- paste0(system.file("Example_Data_Markedup/",  package = "qcoder"), examples)
+    examples <- paste0(system.file("Example_Data_Markedup",  package = "qcoder"), "/", examples)
+    print(examples)
     file.copy(from = examples,
               paste0(project_name, "/documents"), recursive = TRUE )
     file.copy(system.file("example_codes/codes.csv",  package = "qcoder"),
@@ -62,4 +63,27 @@ qcode <- function() {
 qcode_custom <- function() {
   package_location <- system.file(package = "qcoder")
   shiny::runApp(paste0(package_location, "/shiny/qcoder-custom"))
+}
+
+#' Update document
+#' Updates the text field of the documents data frame, typically after
+#' pressing Save button in the Shiny App.  May
+#' also be used in the console.
+#'
+#' @param updated The updated text as a character string
+#' @param docs_df_path  Location of the documents rds file.
+#' @param this_doc_path  Name of record to be updated, as recorded in "doc_path"
+#'         field of data frame.
+#'
+#' @export
+do_update_document <- function(updated, docs_df_path, this_doc_path){
+
+  qcoder::error_check(updated)
+
+  text_df <- readRDS(docs_df_path)
+  row_num <- which(text_df[,"doc_path"] == this_doc_path)
+  text_df[row_num, 2] <- updated
+  # make sure this save happens
+  saveRDS(text_df, file = docs_df_path)
+  invisible(TRUE)
 }

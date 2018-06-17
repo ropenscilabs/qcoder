@@ -85,23 +85,12 @@ if (interactive()) {
         options
       })
 
-      output$choices <-  #reactive({
-         renderUI({
-      #
-      #   if (length(input$project_directory) == 0){
-      #         return()
-      #   }
-      #   text_doc_path <- paste0(input$project_directory,  "/data_frames/qcoder_documents_", basename(input$project_directory), ".rds")
-      #
+      output$choices <- renderUI({
             selectInput('this_doc_path', 'Document', my_choices())
-      #
          })
-     # })
+
 
     output$saveButton <- renderUI({
-     # if (length(input$project_directory) == 0){
-      #  return()
-      #}
       actionButton("submit", "Save changes")
     })
 
@@ -109,7 +98,7 @@ if (interactive()) {
     # verbatim
     # Consider making a backup each time you load this.
     doc <- reactive ({
-     # if (text_doc_path == "") {return()}
+
       if (length(input$this_doc_path) != 1) {return()}
       # move to utils
       text_df <- readRDS(docs_df_path)
@@ -149,41 +138,30 @@ if (interactive()) {
         units_df
       })
 
-
-
-
-
         # Get the parsed values with codes.
         output$coded <- renderTable({
           if (docs_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
-          qcoder::parse_qcodes(text_df)
+          code_df <- readRDS(codes_df_path)
+          parsed <- qcoder::parse_qcodes(text_df)
+          saveRDS(code_df, file = codes_df_path)
+          parsed
         })
-    }) #close observer"
+    }) #close observer
 
     # Functions related to updating the text.
     new_text <- reactive({
       input$edited_doc
     })
 
-    # Move to utils
-    do_update_document <- function(updated){
-
-      qcoder::error_check(updated)
-      project_path <- parseDirPath(user_folder, input$select_project)
-      docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_", basename(project_path), ".rds")
-
-      text_df <- readRDS(docs_df_path)
-      row_num <- which(text_df[,"doc_path"] == input$this_doc_path)
-      text_df[row_num, 2] <- updated
-      # make sure this save happens
-      saveRDS(text_df, file = docs_df_path)
-      invisible(TRUE)
-    }
     update_document <-observeEvent(input$submit,
-                                   {
-                                     do_update_document(new_text())
-                                   }
+           {
+             project_path <- parseDirPath(user_folder, input$select_project)
+             docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_",
+                                    basename(project_path), ".rds")
+             qcoder::do_update_document(new_text(), docs_df_path = docs_df_path,
+                                        this_doc_path = input$this_doc_path)
+           }
     )
   }
 
