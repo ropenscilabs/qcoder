@@ -33,3 +33,21 @@ test_that("Project with sample data is created correctly.", {
   setwd(basewd)
 })
 
+test_that("Updating documents works", {
+  # Set up data
+  qcoder_documents_my_qcoder_project <- readRDS("./data/qcoder_documents_my_qcoder_project.rds")
+  save_path <- paste0(tempdir(), "/", "qcoder_documents_my_qcoder_project.rds")
+  # Do the test on a copy of the data.
+  saveRDS(qcoder_documents_my_qcoder_project, file = save_path)
+  updated_data <- as.character("A B C D")
+  do_update_document(updated_data, docs_df_path = save_path, "CoC_Example1_MU.txt")
+  input <- readRDS(file = save_path)
+  expect_equal(updated_data, input[2, 2])
+  # This should be 2 because we started with an empty directory.
+  expect_equal(length(list.files(tempdir())), 2)
+
+  unlink(save_path)
+  setwd(basewd)
+})
+
+

@@ -18,7 +18,6 @@ create_qcoder_project<- function(project_name, sample = FALSE){
   if (sample){
     examples <- list.files(system.file("Example_Data_Markedup",  package = "qcoder"))
     examples <- paste0(system.file("Example_Data_Markedup",  package = "qcoder"), "/", examples)
-    print(examples)
     file.copy(from = examples,
               paste0(project_name, "/documents"), recursive = TRUE )
     file.copy(system.file("example_codes/codes.csv",  package = "qcoder"),
@@ -81,6 +80,12 @@ do_update_document <- function(updated, docs_df_path, this_doc_path){
   qcoder::error_check(updated)
 
   text_df <- readRDS(docs_df_path)
+  # Make an archive of the unchanged data
+  time <- gsub(" ", "_", Sys.time())
+  time <- gsub(":", "_", time)
+  time <-gsub("-", "_", time)
+  archive_path <- sub(".rds", paste0("_", time, ".rds"), docs_df_path)
+  saveRDS(text_df, archive_path)
   row_num <- which(text_df[,"doc_path"] == this_doc_path)
   text_df[row_num, 2] <- updated
   # make sure this save happens
