@@ -31,7 +31,8 @@ Suggests:
     testthat (>= 2.0.0),
     withr,
     covr,
-    pander
+    pander,
+    shinythemes
 URL: https://github.com/ropenscilabs/qcoder
 BugReports: https://github.com/ropenscilabs/qcoder/issues
 VignetteBuilder: knitr

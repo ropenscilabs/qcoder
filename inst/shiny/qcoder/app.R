@@ -13,10 +13,12 @@ if (interactive()) {
   library(shinyAce)
   library(rlang)
   library(shinyFiles)
+  library(shinythemes)
   # hard coded for now
 
   # Define UI for application
   ui <- fluidPage(
+    theme = shinytheme("flatly"),
 
     mainPanel(
       tags$h2("Qcoder"),
@@ -24,9 +26,10 @@ if (interactive()) {
       verbatimTextOutput("project_directory"),
       shinyDirButton('select_project', label="Select Folder", title="Select your project folder",
                     buttonType = "default", class = NULL),
-
+      tags$br(),
+      tags$br(),
       # Start tabset
-      tabsetPanel(
+      navlistPanel(
            # Tab title
            tabPanel("Add codes to text data",
           #  conditionalPanel(condition = "input$project_directory == TRUE",
@@ -37,15 +40,15 @@ if (interactive()) {
                uiOutput('mydocA'),
                verbatimTextOutput("this_doc" )
            # )
-       ), # close editor panel
+       ), # close editor tab panel
        tabPanel("Codes",
                 tableOutput('code_table')
 
       ), # close codes tab panel
-      tabPanel("Add Code",
-               actionButton("submitNewCode", "Submit")
+     # tabPanel("Add Code",
+      #         actionButton("submitNewCode", "Submit")
 
-      ), # close add code panel
+      #), # close add code panel
       tabPanel("Coded data",
                tableOutput('coded')
 
@@ -53,9 +56,14 @@ if (interactive()) {
       tabPanel("Units",
                tableOutput('units_table')
 
-      ) # close codes units panel
+      ), # close units panel
+     tabPanel("Summary",
+              verbatimTextOutput('code_freq')
+
+     )
     ) # close tab set
   ) # close main panel
+
   )
 }
 
@@ -117,7 +125,8 @@ if (interactive()) {
           value = doc(),
           mode = "markdown",
           height = "500",
-          wordWrap = TRUE
+          wordWrap = TRUE,
+          autoCompleteList = list(qc = c("(QCODE)", "(/QCODE)", "{#}"))
 
         )
       })
@@ -144,8 +153,15 @@ if (interactive()) {
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df)
-          saveRDS(code_df, file = codes_df_path)
+
           parsed
+        })
+
+        output$code_freq <- renderPrint({
+          text_df <- readRDS(docs_df_path)
+          code_df <- readRDS(codes_df_path)
+          parsed <- qcoder::parse_qcodes(text_df)
+          parsed %>% dplyr::group_by(as.factor(qcode)) %>% dplyr::summarise(n = n()) %>% knitr::kable()
         })
     }) #close observer
 
