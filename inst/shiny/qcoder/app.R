@@ -152,7 +152,7 @@ if (interactive()) {
           if (docs_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
-          parsed <- qcoder::parse_qcodes(text_df)
+          parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
           parsed
         })
@@ -160,7 +160,7 @@ if (interactive()) {
         output$code_freq <- renderPrint({
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
-          parsed <- qcoder::parse_qcodes(text_df)
+          parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
           parsed %>% dplyr::group_by(as.factor(qcode)) %>% dplyr::summarise(n = n()) %>% knitr::kable()
         })
     }) #close observer
