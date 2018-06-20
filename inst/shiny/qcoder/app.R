@@ -77,8 +77,6 @@ if (interactive()) {
     user_folder <- c('Select Folder' = Sys.getenv("HOME"))
     shinyDirChoose(input, 'select_project',  roots = user_folder)
 
-
-
     observeEvent(input$select_project,{
       output$project_directory <- renderPrint({parseDirPath(user_folder, input$select_project)})
       project_path <- parseDirPath(user_folder, input$select_project)
@@ -160,7 +158,7 @@ if (interactive()) {
         output$code_freq <- renderPrint({
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
-          parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
+          parsed <- qcoder::parse_qcodes(text_df)
           parsed %>% dplyr::group_by(as.factor(qcode)) %>% dplyr::summarise(n = n()) %>% knitr::kable()
         })
     }) #close observer

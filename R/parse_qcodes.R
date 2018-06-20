@@ -14,6 +14,7 @@
 
 parse_qcodes <- function(x, ...){
   dots <- list(...)
+
   #replace all newlines in the document texts
   x$document_text <- stringr::str_replace_all(x$document_text, "[\r\n]", "<br>")
 
@@ -58,7 +59,7 @@ parse_qcodes <- function(x, ...){
         ### iterate through the codes in found in this block
         for(level in length(sp):2){
 
-          txt="" #will hold the entire text block to return for each qcode
+          txt = "" #will hold the entire text block to return for each qcode
 
           ### join up all the text fragments of this block for this level
 
@@ -110,7 +111,8 @@ parse_qcodes <- function(x, ...){
             df <- rbind(df,rowtoadd)
           }
 
-          if (length("dots") > 0 && !is.null(dots$code_data_frame) && !is.null(dots$save_path)) {
+          # Inefficient now because of the loop but eventually this should run on save (a single text).
+          if (length("dots") > 0 && !is.null(dots$code_data_frame) && !is.null(dots$save_path) ) {
             add_discovered_code(codes, dots$code_data_frame, dots$save_path)
 
           }
