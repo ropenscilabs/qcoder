@@ -13,6 +13,7 @@
 #' @export
 
 parse_qcodes <- function(x, ...){
+  dots <- list(...)
 
   #replace all newlines in the document texts
   x$document_text <- stringr::str_replace_all(x$document_text, "[\r\n]", "<br>")
@@ -58,7 +59,7 @@ parse_qcodes <- function(x, ...){
         ### iterate through the codes in found in this block
         for(level in length(sp):2){
 
-          txt="" #will hold the entire text block to return for each qcode
+          txt = "" #will hold the entire text block to return for each qcode
 
           ### join up all the text fragments of this block for this level
 
@@ -109,7 +110,12 @@ parse_qcodes <- function(x, ...){
             rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(code), text = txt)
             df <- rbind(df,rowtoadd)
           }
-print(codes)
+
+          # Inefficient now because of the loop but eventually this should run on save (a single text).
+          if (length("dots") > 0 && !is.null(dots$code_data_frame) && !is.null(dots$save_path) ) {
+            add_discovered_code(codes, dots$code_data_frame, dots$save_path)
+
+          }
         }
 
       }
@@ -146,5 +152,28 @@ error_check <- function(document) {
                 erroneous output is likely. Error was detected at:\n\t'",
                 tag,"'\n")
       }
+    }
+}
+
+
+#' Update codes data frame
+#' Add discovered codes to the codes data frame
+#'
+#' @param codes_list A list of codes (usually from a coded document)
+#' @param code_data_frame Existing data frame of QCODE codes
+#' @param save_path The path where the updated code data frame should be saved
+#'
+add_discovered_code <- function(codes_list = "", code_data_frame = NULL , save_path = "" ){
+    old_codes <- code_data_frame %>% dplyr::pull("code") %>% as.character()
+    new_codes <- unique(codes_list)
+    code <- setdiff(new_codes, old_codes)
+    if (length(code) > 0){
+      code_id <- integer(length(code))
+      code.description <- character(length(code))
+      new_rows <- data.frame(code_id, code, code.description)
+      code_data_frame <- rbind(code_data_frame, new_rows)
+      row_n <- row.names(code_data_frame)
+      code_data_frame$code_id <- ifelse(code_data_frame$code_id == 0, row_n, code_data_frame$code_id)
+      saveRDS(code_data_frame, file = save_path )
     }
 }
