@@ -159,8 +159,9 @@ error_check <- function(document) {
 #' Update codes data frame
 #' Add discovered codes to the codes data frame
 #'
-#' @param codes A list of codes (usually from a coded document)
-#' @param codes_data_frame Existing data frame of QCODE codes
+#' @param codes_list A list of codes (usually from a coded document)
+#' @param code_data_frame Existing data frame of QCODE codes
+#' @param save_path The path where the updated code data frame should be saved
 #'
 add_discovered_code <- function(codes_list = "", code_data_frame = NULL , save_path = "" ){
     old_codes <- code_data_frame %>% dplyr::pull("code") %>% as.character()
