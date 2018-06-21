@@ -115,6 +115,11 @@ if (interactive()) {
        return(as.character(this_doc[1, "document_text"]))
       })
 
+    comps <- list()
+    code_df <- readRDS(codes_df_path)
+    comps[["codes"]] <- dplyr::pull(code_df, code)
+    comps[["tags"]] <- c("QCODE",  "{#")
+
       # Create the text editor
       output$mydocA <- renderUI({
         #if (length(input$project_directory) == 0 ) {return()}
@@ -124,7 +129,9 @@ if (interactive()) {
           mode = "markdown",
           height = "500",
           wordWrap = TRUE,
-          autoCompleteList = list(qc = c("(QCODE)", "(/QCODE)", "{#}"))
+          autoComplete = "live",
+          autoCompleters = "static",
+          autoCompleteList = comps
 
         )
       })
