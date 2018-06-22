@@ -47,3 +47,19 @@ test_that("discovered codes are added to the existing codes data frame correctly
   expect_equal(as.character(dplyr::pull(input,"code_id")[8]), "8")
   unlink(paste0(tempdir(), "/qcoder_codes_my_qcoder_project.rds"))
 })
+
+test_that("get codes extracts codes from a single document correctly", {
+  data <- "rOpenSci is committed to providing a welcoming and harassment-free
+  experience for everyone, regardless of (QCODE)gender(/QCODE){#gender},
+  (QCODE)gender identity and expression(/QCODE){#gender_id}, age, sexual
+  orientation, disability, physical appearance, body size, race, ethnicity,
+  religion (or lack thereof), or technology choices. We do not tolerate
+  harassment of conference participants in any form. Sexual language and
+  imagery is not appropriate for any conference venue, including talks,
+  workshops, parties, Twitter and other online media. (QCODE)Unconf
+  participants violating these rules may be sanctioned or expelled from
+  the event at the discretion of the conference
+  organizers.(/QCODE){#consequences}"
+  input <- get_codes(data)
+  expect_equal(input, c("gender", "gender_id", "consequences"))
+})

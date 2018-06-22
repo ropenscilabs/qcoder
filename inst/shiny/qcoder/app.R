@@ -182,6 +182,10 @@ if (interactive()) {
                                     basename(project_path), ".rds")
              qcoder::do_update_document(new_text(), docs_df_path = docs_df_path,
                                         this_doc_path = input$this_doc_path)
+             codes <- get_codes(new_text())
+             if (length(codes) > 0){
+               add_discovered_code(codes, readRDS(codes_df_path), codes_df_path)
+             }
            }
     )
   }

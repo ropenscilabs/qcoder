@@ -20,10 +20,10 @@ test_that("Project with sample data is created correctly.", {
   create_qcoder_project("project2", sample = TRUE)
   dirs <- list.dirs("./project2")
   files <- list.files("./project2", recursive = TRUE, include.dirs = FALSE)
-  expect_equal(files, c("codes/codes.csv",
+  expect_equal(length(setdiff(files, c("codes/codes.csv",
           "documents/CoC_Example1_mod_MU.txt", "documents/CoC_Example1_MU.txt",
           "documents/CoC_Example2_MU.txt", "documents/CoC_Example3_MU.txt",
-          "documents/CoC_Example4_MU.txt", "units/units.csv"))
+          "documents/CoC_Example4_MU.txt", "units/units.csv") )), 0)
   expect_equal(dirs, c("./project2", "./project2/codes",
                        "./project2/data_frames", "./project2/documents",
                        "./project2/images", "./project2/media",

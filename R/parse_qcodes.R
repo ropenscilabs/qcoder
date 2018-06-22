@@ -173,7 +173,20 @@ add_discovered_code <- function(codes_list = "", code_data_frame = NULL , save_p
       new_rows <- data.frame(code_id, code, code.description)
       code_data_frame <- rbind(code_data_frame, new_rows)
       row_n <- row.names(code_data_frame)
-      code_data_frame$code_id <- ifelse(code_data_frame$code_id == 0, row_n, code_data_frame$code_id)
+      code_data_frame$code_id <- ifelse(code_data_frame$code_id == 0, row_n,
+                                        code_data_frame$code_id)
       saveRDS(code_data_frame, file = save_path )
     }
+}
+
+#' Extract codes from text
+#' Take coded text and extract the codes, assuming they are correctly formatted.
+#' @param doc_text  The text data for a single document
+#' @export
+
+get_codes <- function(doc_text){
+  codes <- stringr::str_extract_all(pattern = "\\{#.*?\\}", doc_text)
+  codes <- unlist(stringi::stri_split_boundaries(codes[[1]], type = "word"))
+  codes <- setdiff(codes, c("{", "}", "#", "", ",", " "))
+  codes
 }

@@ -24,6 +24,7 @@ Imports:
     magrittr,
     shinyAce,
     shinyFiles,
+    stringi,
     stringr
 Suggests:
     knitr,
