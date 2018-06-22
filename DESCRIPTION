@@ -24,6 +24,7 @@ Imports:
     magrittr,
     shinyAce,
     shinyFiles,
+    stringi,
     stringr
 Suggests:
     knitr,
@@ -41,4 +42,5 @@ RoxygenNote: 6.0.1
 Collate: 
   'read_in_files.R'
   'parse_qcodes.R'
+  'qcoder-package.R'
   'utils.R'
