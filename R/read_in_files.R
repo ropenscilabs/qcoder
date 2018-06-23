@@ -38,6 +38,36 @@ read_raw_data <- function(folder_path = "/documents/",
   invisible(TRUE)
 }
 
+#' Add new documents
+#' Adds new document or documents to an existing documents data frame.
+#' @param files  file tibble produced by ShinyFiles
+#' @param file_path  Full path to the data set of documents
+#' @param text_df  Existing data frame of text documents
+#' @export
+add_new_documents <- function(files, file_path = "", docs_df_path ){
+        text_df <- readRDS(docs_df_path)
+        file_list <- dplyr::pull(files, name)
+        old_docs <- dplyr::pull(text_df, doc_path)
+        if (length(intersect(file_list,old_docs)) != 0){
+          warning("One or more files are already imported")
+          return()
+        }
+        doc_text  <- character()
+        for (i in 1:length(file_list)){
+          doc_text[i] <- readr::read_file(paste0(file_path,
+                                                 file_list[i]))
+        }
+        ids <- integer(length(file_list))
+        new_rows <- data_frame(doc_id = ids, document_text = doc_text, doc_path = file_list)
+        text_df <- rbind( text_df, new_rows)
+        row_n <- row.names(text_df)
+        text_df$doc_id <- ifelse(text_df$doc_id == 0, row_n,
+                                          text_df$doc_id)
+
+      saveRDS(text_df, file = docs_df_path )
+      invisible(TRUE)
+}
+
 #'  Create a file of codes from csv file
 #'  Use this is you have a spreadsheet of codes already created.
 #'
