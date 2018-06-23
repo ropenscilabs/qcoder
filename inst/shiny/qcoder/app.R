@@ -60,7 +60,14 @@ if (interactive()) {
      tabPanel("Summary",
               verbatimTextOutput('code_freq')
 
-     )
+     ),
+     tabPanel("Add data",
+             tags$h2("Add new data"),
+             shinyFilesButton('file', label="Select File", title="Select your new files from
+                            the project folder", multiple= TRUE,
+                            buttonType = "default", class = NULL)
+
+     ) # close add data tab
     ) # close tab set
   ) # close main panel
 
@@ -77,7 +84,7 @@ if (interactive()) {
     user_folder <- c('Select Folder' = Sys.getenv("HOME"))
     shinyDirChoose(input, 'select_project',  roots = user_folder)
 
-    observeEvent(input$select_project,{
+    observeEvent(c(input$select_project, input$file),{
       output$project_directory <- renderPrint({parseDirPath(user_folder, input$select_project)})
       project_path <- parseDirPath(user_folder, input$select_project)
       docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_", basename(project_path), ".rds")
@@ -188,7 +195,25 @@ if (interactive()) {
              }
            }
     )
-  }
+
+    # Adding a new document
+    observeEvent(input$select_project,{
+       project_path <- parseDirPath(user_folder, input$select_project)
+       doc_folder <- c(paste0(project_path, "/documents"))
+       shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
+
+    })
+    observeEvent(input$file, {
+      project_path <- parseDirPath(user_folder, input$select_project)
+      doc_folder <- c(paste0(project_path, "/documents/"))
+      files <- parseFilePaths(doc_folder, input$file)
+      docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_",
+                             basename(project_path), ".rds")
+
+      qcoder::add_new_documents(files, doc_folder, docs_df_path)
+
+    })
+  } # close server
 
 # Run the application
 shinyApp(ui = ui, server = server)
