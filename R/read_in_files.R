@@ -42,13 +42,13 @@ read_raw_data <- function(folder_path = "/documents/",
 #' Adds new document or documents to an existing documents data frame.
 #' @param files  file tibble produced by ShinyFiles
 #' @param file_path  Full path to the data set of documents
-#' @param text_df  Existing data frame of text documents
+#' @param docs_df_path  Existing data frame of text documents
 #' @export
 add_new_documents <- function(files, file_path = "", docs_df_path ){
         text_df <- readRDS(docs_df_path)
-        file_list <- dplyr::pull(files, name)
-        old_docs <- dplyr::pull(text_df, doc_path)
-        if (length(intersect(file_list,old_docs)) != 0){
+        file_list <- files[["name"]]
+        old_docs <- text_df[["doc_path"]]
+        if (length(intersect(file_list, old_docs)) != 0){
           warning("One or more files are already imported")
           return()
         }
@@ -58,7 +58,7 @@ add_new_documents <- function(files, file_path = "", docs_df_path ){
                                                  file_list[i]))
         }
         ids <- integer(length(file_list))
-        new_rows <- data_frame(doc_id = ids, document_text = doc_text, doc_path = file_list)
+        new_rows <- data.frame(doc_id = ids, document_text = doc_text, doc_path = file_list)
         text_df <- rbind( text_df, new_rows)
         row_n <- row.names(text_df)
         text_df$doc_id <- ifelse(text_df$doc_id == 0, row_n,
@@ -88,7 +88,11 @@ read_code_data <- function(file_path = "codes/codes.csv",
     data_frame_name <- paste0(project_name, "/data_frames/",
                               paste0(data_frame_name, "_", project_name))
   }
+  if (file.exists(file_path)){
     code_data <- readr::read_csv(file = file_path)
+   } else {
+     create_empty_code_file()
+   }
     # validate column names etc here
     code_data$code <- as.factor(code_data$code)
   # try catch this save

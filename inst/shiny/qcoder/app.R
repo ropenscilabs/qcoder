@@ -201,7 +201,7 @@ if (interactive()) {
        project_path <- parseDirPath(user_folder, input$select_project)
        doc_folder <- c(paste0(project_path, "/documents"))
        shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
-       #output$new_files <- renderPrint({parseFilesPath(user_folder, input$select_new_file)})
+
     })
     observeEvent(input$file, {
       project_path <- parseDirPath(user_folder, input$select_project)
