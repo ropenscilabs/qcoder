@@ -41,10 +41,10 @@ read_raw_data <- function(folder_path = "/documents/",
 #' Add new documents
 #' Adds new document or documents to an existing documents data frame.
 #' @param files  file tibble produced by ShinyFiles
-#' @param file_path  Full path to the data set of documents
+#' @param file_path  Full path to the data set of documents including trailing slash
 #' @param docs_df_path  Existing data frame of text documents
 #' @export
-add_new_documents <- function(files, file_path = "", docs_df_path ){
+add_new_documents <- function(files, file_path = "", docs_df_path = ""){
         text_df <- readRDS(docs_df_path)
         file_list <- files[["name"]]
         old_docs <- text_df[["doc_path"]]
