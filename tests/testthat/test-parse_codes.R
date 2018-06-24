@@ -7,7 +7,7 @@ doctxt3 <- readr::read_file(paste0(data_path, "CoC_Example3_MU.txt"))
 doctxt4 <- readr::read_file(paste0(data_path, "CoC_Example2_MU_unbalanced_tags.txt"))
 doctxt5 <- readr::read_file(paste0(data_path, "CoC_Example2_MU_missing_close_curly.txt"))
 doctxt6 <- readr::read_file(paste0(data_path, "CoC_Example2_MU_missinghashtag.txt"))
-getwd()
+
 test_that("error_check passes a correct document without nested codes.", {
   expect_null(error_check(doctxt2))
 })
