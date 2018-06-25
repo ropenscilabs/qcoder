@@ -24,7 +24,10 @@ create_qcoder_project<- function(project_name, sample = FALSE){
               paste0(project_name, "/codes"))
     file.copy(system.file("units/units.csv",  package = "qcoder"),
               paste0(project_name, "/units"))
+    file.copy(system.file("units/unit_document_map.csv",  package = "qcoder"),
+              paste0(project_name, "/units"))
   }
+
   invisible(TRUE)
 }
 
