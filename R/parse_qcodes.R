@@ -163,6 +163,7 @@ error_check <- function(document) {
 #' @param code_data_frame Existing data frame of QCODE codes
 #' @param save_path The path where the updated code data frame should be saved
 #'
+#' @export
 add_discovered_code <- function(codes_list = "", code_data_frame = NULL , save_path = "" ){
     old_codes <- code_data_frame %>% dplyr::pull("code") %>% as.character()
     new_codes <- unique(codes_list)

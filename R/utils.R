@@ -95,3 +95,23 @@ do_update_document <- function(updated, docs_df_path, this_doc_path){
   saveRDS(text_df, file = docs_df_path)
   invisible(TRUE)
 }
+
+#'  Update document to unit links
+#'  Saves or updates the links between observation units and documents
+#'
+#' @param checked  vector of new or updated links
+#' @param data_path full path to document dataset
+#' @param doc_path value of doc_path for the document
+#' @param units_docs_path  full path of the data frame of unit to docs links
+#'
+#' @export
+update_links <- function(checked = "", data_path = docs_df_path, this_doc_path = "", units_docs_path = units_docs_path){
+  text_df <- readRDS(data_path)
+  new_rows <- data.frame(doc_path = this_doc_path, unit_id = checked)
+  # We could be removing or adding so we need to delete all the old links
+  unit_doc_links <- readRDS(units_docs_path)
+  unit_doc_links <- unit_doc_links %>% filter(doc_path != this_doc_path)
+  unit_doc_links <- rbind(unit_doc_links, new_rows)
+  saveRDS(unit_doc_links, file = units_docs_path)
+  invisible(TRUE)
+}

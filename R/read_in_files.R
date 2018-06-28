@@ -176,11 +176,11 @@ read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
     data_frame_name <- paste0(project_name, "/data_frames/",
                               paste0(data_frame_name, "_", project_name))
   }
-  unit_document_map <- readr::read_csv(file = file_path)
+  qcoder_unit_document_map <- readr::read_csv(file = file_path)
   # validate column names etc here
 
   # try catch this save
-  saveRDS(unit_document_map, file = paste0(data_frame_name,".rds" ))
+  saveRDS(qcoder_unit_document_map, file = paste0(data_frame_name,".rds" ))
   invisible(TRUE)
 }
 
