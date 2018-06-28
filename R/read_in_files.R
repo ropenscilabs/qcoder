@@ -155,6 +155,35 @@ read_unit_data <- function(file_path = "units.csv",
   invisible(TRUE)
 }
 
+#'  Create a data frame of unit to document links from csv file
+#'  Use this is you have a spreadsheet already created.
+#'
+#' @param file_path path to a file containing  unit document map data in csv.
+#' @param data_frame_name The name of the RDS file that the data frame will be stored in.
+#' @param project_name  Name of project if available
+#'
+#' @examples
+#'  \dontrun{
+#' fp <-"units/units.csv"
+#' dfn <- "my_units"
+#' read_unit_data(fp, dfn)
+#' }
+#' @export
+read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
+                           data_frame_name = "qcoder_unit_document_map", project_name){
+  if (!is.null(project_name)){
+    file_path <- paste0(project_name, "/units/", file_path)
+    data_frame_name <- paste0(project_name, "/data_frames/",
+                              paste0(data_frame_name, "_", project_name))
+  }
+  qcoder_unit_document_map <- readr::read_csv(file = file_path)
+  # validate column names etc here
+
+  # try catch this save
+  saveRDS(qcoder_unit_document_map, file = paste0(data_frame_name,".rds" ))
+  invisible(TRUE)
+}
+
 #' Define a many to many unit to document map
 #' @param file_path Path to store data frame on.
 #' @param data_frame_name Name of the data frame that will contain the map
@@ -163,11 +192,12 @@ read_unit_data <- function(file_path = "units.csv",
 create_unit_doc_file <- function(file_path = "data_frames",
                                  data_frame_name = "unit_document_map",
                                  project_name){
-  ud <- c("unit_id", "doc_id")
+  ud <- c("doc_path", "unit_id")
   code_data <- as.data.frame(matrix(data = NA, 0, length(ud)))
   colnames(unit_document_map) <- ud
-  unit_document_map$code_description <- as.integer(unit_document_map$unit_id)
-  unit_document_map$doc_id <- as.integer(unit_document_map$doc_id)
+  unit_document_map$doc_path <- as.character(unit_document_map$doc_path)
+
+  unit_document_map$unit_id <- as.integer(unit_document_map$unit_id)
   saveRDS(unit_document_map, file = paste0(file_path,".rds" ))
   invisible(TRUE)
 }
@@ -183,4 +213,5 @@ import_project_data<- function(project_name){
   read_raw_data(project_name = project_name)
   read_code_data(project_name = project_name)
   read_unit_data(project_name = project_name)
+  read_unit_document_map_data(project_name = project_name)
 }

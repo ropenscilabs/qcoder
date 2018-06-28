@@ -107,8 +107,8 @@ if (interactive()) {
       # move to utils
       text_df <- readRDS(input$text_doc_path)
       this_doc <- text_df %>%
-        filter(doc_path == as.character(input$this_doc_path)) %>%
-        select(document_text)
+        dplyr::filter(!!rlang::sym("doc_path") == as.character(input$this_doc_path)) %>%
+        dplyr::select(document_text)
        # Sanitize this
        return(as.character(this_doc[1, "document_text"]))
       })

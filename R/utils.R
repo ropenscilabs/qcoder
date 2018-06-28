@@ -24,7 +24,10 @@ create_qcoder_project<- function(project_name, sample = FALSE){
               paste0(project_name, "/codes"))
     file.copy(system.file("units/units.csv",  package = "qcoder"),
               paste0(project_name, "/units"))
+    file.copy(system.file("units/unit_document_map.csv",  package = "qcoder"),
+              paste0(project_name, "/units"))
   }
+
   invisible(TRUE)
 }
 
@@ -90,5 +93,44 @@ do_update_document <- function(updated, docs_df_path, this_doc_path){
   text_df[row_num, 2] <- updated
   # make sure this save happens
   saveRDS(text_df, file = docs_df_path)
+  invisible(TRUE)
+}
+
+#'  Update document to unit links
+#'  Saves or updates the links between observation units and documents
+#'
+#' @param checked  vector of new or updated links
+#' @param data_path full path to document dataset
+#' @param this_doc_path value of doc_path for the document
+#' @param units_docs_path  full path of the data frame of unit to docs links
+#'
+#' @export
+update_links <- function(checked = "", data_path = "", this_doc_path = "", units_docs_path = ""){
+  text_df <- readRDS(data_path)
+  new_rows <- data.frame(doc_path = this_doc_path, unit_id = checked)
+  # We could be removing or adding so we need to delete all the old links
+  unit_doc_links <- readRDS(units_docs_path)
+  unit_doc_links <- unit_doc_links %>% dplyr::filter(doc_path != this_doc_path)
+  unit_doc_links <- rbind(unit_doc_links, new_rows)
+  saveRDS(unit_doc_links, file = units_docs_path)
+  invisible(TRUE)
+}
+
+#' Add unit
+#' Append a new unit record to the existing data frame
+#' @param units_df Existing units data frame
+#' @param new_unit  text name of a new unit (single name only)
+#' @param units_df_path  full path to the units data frame
+#' @export
+
+add_unit <- function(units_df, new_unit, units_df_path){
+  if (new_unit %in% units_df$name){
+    warning("A unit with the name already exists, please choose a unique name.")
+    return()
+  }
+  new_id <- max(units_df$unit_id) +1
+  new_row <- data.frame("unit_id" = new_id, "name" = new_unit)
+  units_df <- rbind(units_df, new_row)
+  saveRDS(units_df, file = units_df_path)
   invisible(TRUE)
 }

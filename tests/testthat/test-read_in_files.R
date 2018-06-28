@@ -13,7 +13,7 @@ test_that("A new file is successfully added to the documents", {
   unlink(save_path)
 })
 
-test_that("A new file is successfully added to the documents", {
+test_that("A new file with the same name as an existing file generates a warning", {
   new_file_name <- "CoC_Example2_MU.txt"
   file_list <- data.frame(name = new_file_name, size = c(NA), type = c(""), datapath = c("NA/CoC_Example2_MU.txt"))
   file_path <- "./data/"
