@@ -10,9 +10,9 @@ add_unit(units_df, new_unit, units_df_path)
 \arguments{
 \item{units_df}{Existing units data frame}
 
-\item{new}{unit  text name of a new unit (single name only)}
+\item{new_unit}{text name of a new unit (single name only)}
 
-\item{unit_df_path}{full path to the units data frame}
+\item{units_df_path}{full path to the units data frame}
 }
 \description{
 Add unit

@@ -5,17 +5,17 @@
 \title{Update document to unit links
 Saves or updates the links between observation units and documents}
 \usage{
-update_links(checked = "", data_path = docs_df_path, this_doc_path = "",
-  units_docs_path = units_docs_path)
+update_links(checked = "", data_path = "", this_doc_path = "",
+  units_docs_path = "")
 }
 \arguments{
 \item{checked}{vector of new or updated links}
 
 \item{data_path}{full path to document dataset}
 
-\item{units_docs_path}{full path of the data frame of unit to docs links}
+\item{this_doc_path}{value of doc_path for the document}
 
-\item{doc_path}{value of doc_path for the document}
+\item{units_docs_path}{full path of the data frame of unit to docs links}
 }
 \description{
 Update document to unit links

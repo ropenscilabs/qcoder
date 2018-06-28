@@ -275,10 +275,6 @@ if (interactive()) {
 
     observeEvent(   input$add_new_unit, {
       units_df <- readRDS(units_df_path)
-      if (input$new_unit %in% units_df$name){
-        warning("A unit with the name already exists, please choose a unique name.")
-        return()
-      }
       qcoder::add_unit(units_df, input$new_unit, units_df_path)
     })
   } # close server
