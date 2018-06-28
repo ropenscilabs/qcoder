@@ -72,7 +72,10 @@ if (interactive()) {
              tags$h2("Add new document"),
              shinyFilesButton('file', label="Select File", title="Select your new files from
                             the project folder", multiple= TRUE,
-                            buttonType = "default", class = NULL)
+                            buttonType = "default", class = NULL),
+             tags$h2("Add new unit"),
+             textInput("new_unit",  "Unit name"),
+             uiOutput('add_new_unit')
 
      ) # close add data tab
     ) # close tab set
@@ -266,6 +269,18 @@ if (interactive()) {
                            this_doc_path = input$this_doc_path, units_docs_path = units_docs_path)
     })
 
+    output$add_new_unit <- renderUI({
+      actionButton("add_new_unit", "Add unit")
+    })
+
+    observeEvent(   input$add_new_unit, {
+      units_df <- readRDS(units_df_path)
+      if (input$new_unit %in% units_df$name){
+        warning("A unit with the name already exists, please choose a unique name.")
+        return()
+      }
+      qcoder::add_unit(units_df, input$new_unit, units_df_path)
+    })
   } # close server
 
 # Run the application

@@ -195,7 +195,7 @@ create_unit_doc_file <- function(file_path = "data_frames",
   ud <- c("doc_path", "unit_id")
   code_data <- as.data.frame(matrix(data = NA, 0, length(ud)))
   colnames(unit_document_map) <- ud
-  unit_document_map$doc_path <- as.chacter(unit_document_map$doc_path)
+  unit_document_map$doc_path <- as.character(unit_document_map$doc_path)
 
   unit_document_map$unit_id <- as.integer(unit_document_map$unit_id)
   saveRDS(unit_document_map, file = paste0(file_path,".rds" ))

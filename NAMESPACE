@@ -3,6 +3,7 @@
 export("%>%")
 export(add_discovered_code)
 export(add_new_documents)
+export(add_unit)
 export(create_empty_code_file)
 export(create_qcoder_project)
 export(create_unit_doc_file)

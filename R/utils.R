@@ -115,3 +115,18 @@ update_links <- function(checked = "", data_path = docs_df_path, this_doc_path =
   saveRDS(unit_doc_links, file = units_docs_path)
   invisible(TRUE)
 }
+
+#' Add unit
+#' Append a new unit record to the existing data frame
+#' @param units_df Existing units data frame
+#' @param new unit  text name of a new unit (single name only)
+#' @param unit_df_path  full path to the units data frame
+#' @export
+
+add_unit <- function(units_df, new_unit, units_df_path){
+  new_id <- max(units_df$unit_id) +1
+  new_row <- data.frame("unit_id" = new_id, "name" = new_unit)
+  units_df <- rbind(units_df, new_row)
+  saveRDS(units_df, file = units_df_path)
+  invisible(TRUE)
+}
