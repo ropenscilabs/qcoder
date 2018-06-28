@@ -85,7 +85,6 @@ if (interactive()) {
 }
 
 
-
   # Define server logic
   server <- function(input, output, session) {
 
@@ -150,7 +149,6 @@ if (interactive()) {
 
       # Create the text editor
       output$mydocA <- renderUI({
-        #if (length(input$project_directory) == 0 ) {return()}
         aceEditor(
           "edited_doc",
           value = doc(),
@@ -218,43 +216,34 @@ if (interactive()) {
 
     # Adding a new document
     observeEvent(input$select_project,{
-       project_path <- parseDirPath(user_folder, input$select_project)
        doc_folder <- c(paste0(project_path, "/documents"))
        shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
-
     })
+
     observeEvent(input$file, {
-      project_path <- parseDirPath(user_folder, input$select_project)
       doc_folder <- c(paste0(project_path, "/documents/"))
       files <- parseFilePaths(doc_folder, input$file)
-      docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_",
-                             basename(project_path), ".rds")
-
       qcoder::add_new_documents(files, doc_folder, docs_df_path)
-
     })
 
     # Set up for associating units and documents
     observeEvent(input$select_project, {
       output$checkbox_links <- renderUI({
-      project_path <- parseDirPath(user_folder, input$select_project)
-      units_df_path <- paste0(project_path,  "/data_frames/qcoder_units_", basename(project_path), ".rds")
-      units_docs_path <- paste0(project_path,  "/data_frames/qcoder_unit_document_map_", basename(project_path), ".rds")
+        units_df <- as.data.frame(readRDS(units_df_path))
+        units_docs_df <- as.data.frame(readRDS(units_docs_path))
 
-      units_df <- as.data.frame(readRDS(units_df_path))
-      units_docs_df <- as.data.frame(readRDS(units_docs_path))
+        checknames <- units_df$name
+        checkvalues <- units_df$unit_id
+        this_selected_df <- units_docs_df %>% filter(doc_path == input$this_doc_path)
+        this_selected <- as.character(this_selected_df$unit_id)
 
-      checknames <- units_df$name
-      checkvalues <- units_df$unit_id
-      this_selected_df <- units_docs_df %>% filter(doc_path == input$this_doc_path)
-      this_selected <- as.character(this_selected_df$unit_id)
+        checkboxGroupInput(inputId =  "unit_doc_links", label = "Units connected to this document:",
+                                 choiceNames = checknames,
+                                 choiceValues = checkvalues,
+                                 selected = this_selected
+        )
+      })
 
-      checkboxGroupInput(inputId =  "unit_doc_links", label = "Units connected to this document:",
-                               choiceNames = checknames,
-                               choiceValues = checkvalues,
-                               selected = this_selected
-      )
-    })
       output$checkbox_save_links <- renderUI({
         actionButton("save_links", "Save links")
       })
@@ -262,9 +251,6 @@ if (interactive()) {
 
     observeEvent(input$save_links, {
       checks <- input$unit_doc_links
-      project_path <- parseDirPath(user_folder, input$select_project)
-      docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_", basename(project_path), ".rds")
-
       qcoder::update_links(checked = checks, data_path = docs_df_path,
                            this_doc_path = input$this_doc_path, units_docs_path = units_docs_path)
     })
