@@ -51,4 +51,8 @@ test_that("Updating documents works", {
   setwd(basewd)
 })
 
-
+test_that("Converting to HTML works", {
+  text <- "This is a test (QCODE)highlighted(/QCODE){#something} more text"
+  expected <- "<p>This is a test <mark>highlighted</mark>{#something} more text</p>"
+  expect_equal(txt2html(text), expected)
+})

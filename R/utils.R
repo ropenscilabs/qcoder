@@ -134,3 +134,15 @@ add_unit <- function(units_df, new_unit, units_df_path){
   saveRDS(units_df, file = units_df_path)
   invisible(TRUE)
 }
+
+#' Format text as HTML
+#' Minimal conversion of a text to html
+#' @param text text to be converted
+#' @export
+txt2html <- function(text){
+  text <- paste0("<p>", text, "</p>")
+  text <- gsub("[\r\n]", "</p><p>", text)
+  text <- gsub("(QCODE)", "<mark>", text, fixed = TRUE)
+  text <- gsub("(/QCODE)", "</mark>", text, fixed = TRUE)
+  text
+}
