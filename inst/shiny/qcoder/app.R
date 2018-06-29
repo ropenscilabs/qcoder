@@ -39,7 +39,7 @@ if (interactive()) {
                uiOutput('saveButton'),
                uiOutput('mydocA')),
             tabPanel("Existing file",
-               verbatimTextOutput("this_doc" )
+               htmlOutput("this_doc" )
                ),
             tabPanel("Unit to Document Links" ,
                      uiOutput('checkbox_save_links'),
@@ -162,7 +162,7 @@ if (interactive()) {
         )
       })
 
-      output$this_doc <-{renderText(doc())}
+      output$this_doc <-{renderText(qcoder::txt2html(doc()))}
 
       # Get the code data for display
       output$code_table <- renderTable({
