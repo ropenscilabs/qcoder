@@ -18,8 +18,6 @@ Please note that this is not a release-ready version and should be
 considered experimental and subject to changes. Still, we encourage you
 to install and send us feedback on our issue tracker.
 
-For instructions for use, see the **Using QCoder** section below.
-
 Motivation
 ----------
 
@@ -28,7 +26,7 @@ analyzing textual qualitative data. Textual qualitative data refers to
 text from interview transcripts, observation notes, memos, jottings and
 primary source/archival documents. A detailed discussion of the
 motivation and other software can be found in our [motivation
-document](motivation.rmd).
+document](https://github.com/ropenscilabs/qcoder/blob/master/motivation.Rmd).
 
 Using QCoder
 ------------
@@ -116,10 +114,23 @@ be creatd by using "Save As" csv.
 (Treatment of units is a work in progress and subject to change.)
 
     Filename,unit_id,Name
-    CoC_Example1.txt,1,"rOpenSci"
-    CoC_Example2.txt,2,"LIBD Rstats Club"
-    CoC_Example3.txt,3,"Carpentries"
-    CoC_Example4.txt,4,"Rladies
+    1,"rOpenSci"
+    2,"LIBD Rstats Club"
+    3,"Carpentries"
+    4,"Rladies
+
+A second file (and data frame once imported) connects units to
+documents.  
+Our framework allows each unit to be associated with multiple documents
+and each document with multiple units. (Note that the sample data is
+designed to allow you to add more unit-document links and hence does not
+link each unit to a document.)
+
+    doc_path,unit_id
+    CoC_Example1_mod_MU.txt,1
+    CoC_Example1_MU.txt,2
+    CoC_Example3_MU.txt,3
+    CoC_Example4_MU.txt,4
 
 ### Importing the data
 
@@ -134,7 +145,7 @@ Now the data\_frames folder will contain the imported files.
 Now it's time to start coding.
 
 Coding uses a "Shiny App" to provide a user interface to the data. To
-launch the app use the function `qcode_edit()`.
+launch the app use the function `qcode()`.
 
     qcode()
 
@@ -143,12 +154,8 @@ Which will launch this application.
 Coding
 ------
 
-Put the full paths to your documents and codes data frames in the
-corresponding fields. To get these you may need to use the file explorer
-on your computer. Make sure to include the .rds at the end of paths.
-
-Once you have entered the paths there will be a drop down menu on the
-"Add codes to text" tab to allow you to pick a specific document to
+Once you have selected your project there will be a drop down menu on
+the "Add codes to text" tab to allow you to pick a specific document to
 code. This will pull a document into the editor.
 
 ![](images/coding_step1.png)
@@ -190,6 +197,27 @@ by commas.
 
 When you have finished coding a document press the "Save changes"
 button.
+
+### Cautions and known issues
+
+Each time you save, Qcoder makes a backup copy of your documents data
+frame. This is for safety and reproducability. This can end up with a
+lot of files if you save often. You may want to periodically delete some
+backups to save storage space.
+
+Currently when you create a new code while coding, this code will be
+displayed on the Coded data tab, but not on the Codes or Summary tabs.
+You must restart the qcode application to update those displays. This is
+a high priority development item.
+
+### Road map
+
+QCoder can be used right now for coding. However, we are not yet ready
+for release.
+
+Our immediate goal is to create a somewhat more advanced minimum viable
+product. This includes creating user interfaces to add new documents,
+codes and units and adding javascript support for inserting codes.
 
 Contributors
 ------------
