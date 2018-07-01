@@ -27,8 +27,8 @@ The motivation stems from the need for a free, open source option for
 analyzing textual qualitative data. Textual qualitative data refers to
 text from interview transcripts, observation notes, memos, jottings and
 primary source/archival documents. A detailed discussion of the
-motivation and other software can be found in our (motivation
-document)\[motivation.rmd\].
+motivation and other software can be found in our [motivation
+document](motivation.rmd).
 
 Using QCoder
 ------------
