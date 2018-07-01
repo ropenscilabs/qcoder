@@ -114,10 +114,24 @@ using "Save As" csv.
 (Treatment of units is a work in progress and subject to change.)
 ```
 Filename,unit_id,Name
-CoC_Example1.txt,1,"rOpenSci"
-CoC_Example2.txt,2,"LIBD Rstats Club"
-CoC_Example3.txt,3,"Carpentries"
-CoC_Example4.txt,4,"Rladies
+1,"rOpenSci"
+2,"LIBD Rstats Club"
+3,"Carpentries"
+4,"Rladies
+```
+A second file (and data frame once imported) connects units to documents.  
+Our framework allows each unit to be associated with multiple documents and
+each document with multiple units. (Note that the sample data is designed 
+to allow you to add more unit-document links and hence does not link each 
+unit to a document.)
+
+```
+doc_path,unit_id
+CoC_Example1_mod_MU.txt,1
+CoC_Example1_MU.txt,2
+CoC_Example3_MU.txt,3
+CoC_Example4_MU.txt,4
+
 ```
 
 ### Importing the data 

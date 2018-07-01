@@ -56,3 +56,12 @@ test_that("Converting to HTML works", {
   expected <- "<p>This is a test <mark>highlighted</mark>{#something} more text</p>"
   expect_equal(txt2html(text), expected)
 })
+
+test_that("Converting to HTML with two lines works and multiple tags works", {
+  text <- "This is a test (QCODE)highlighted(/QCODE){#something} more text
+  This is some more  (QCODE)highlighted(/QCODE){#something} text"
+  e1 <- "<p>This is a test <mark>highlighted</mark>{#something} more text</p>"
+  e2 <- "<p>  This is some more  <mark>highlighted</mark>{#something} text</p>"
+  expected <- paste0(e1, e2)
+  expect_equal(txt2html(text), expected)
+})
