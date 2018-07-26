@@ -196,20 +196,18 @@ if (interactive()) {
     update_editor <- observeEvent(input$replace, {
       
       text <- new_text()
-      selected_text <- input$selected
-      code_vec <- paste0("#", input$select_codes)
-  
-      codes <- paste0(code_vec, collapse = ",")
-      new_text <- paste0("(QCODE)", selected_text, "(/QCODE){", codes, "}")
-      print(new_text)
-      text2 <- sub(pattern = selected_text,replacement = new_text, x = text, fixed = TRUE)
+      codes <- input$select_codes
+      selected <- input$selected
       
-      updateAceEditor(session=session, editorId=editor_name, value=text2)
+      updated_selection <- qcoder:::add_codes_to_selection(selection=selected, codes=codes)
+      updated_text <- qcoder:::replace_selection(text, selected, updated_selection)
+      
+      updateAceEditor(session=session, editorId=editor_name, value=updated_text)
       #put js code to move cursor here
       jump_to <- input$cursorpos
      # print(jump_to)
       row_num <- jump_to$row + 1
-      col_num <- jump_to$column + (nchar(new_text) - nchar(selected_text))
+      col_num <- jump_to$column + (nchar(updated_selection) - nchar(selected))
       
       #print(jump_to)
       
