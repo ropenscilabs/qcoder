@@ -14,7 +14,10 @@ if (interactive()) {
   library(rlang)
   library(shinyFiles)
   library(shinythemes)
+  library(shinyjs)
+  library(here)
   # hard coded for now
+  editor_name <- "aceeditor"
 
   # Define UI for application
   ui <- fluidPage(
@@ -77,6 +80,7 @@ if (interactive()) {
     user_folder <- c('Select Folder' = Sys.getenv("HOME"))
     shinyDirChoose(input, 'select_project',  roots = user_folder)
 
+    
     observeEvent(input$select_project,{
       output$project_directory <- renderPrint({parseDirPath(user_folder, input$select_project)})
       project_path <- parseDirPath(user_folder, input$select_project)
@@ -119,21 +123,32 @@ if (interactive()) {
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- dplyr::pull(code_df, code)
     comps[["tags"]] <- c("QCODE",  "{#")
+    
+    codes <- reactive({
+      code_df <- readRDS(codes_df_path)
+      return(dplyr::pull(code_df, code))
+      
+    })
 
       # Create the text editor
-      output$mydocA <- renderUI({
+      output$mydocA <- renderUI({list(useShinyjs(),
+        selectInput(inputId = "select_codes", label = "Select Tags to Add", 
+                    choices = codes(), selected=codes()[1], multiple = TRUE), 
+        actionButton("replace", "Add selected code"),
         #if (length(input$project_directory) == 0 ) {return()}
         aceEditor(
-          "edited_doc",
+          editor_name,
           value = doc(),
           mode = "markdown",
           height = "500",
           wordWrap = TRUE,
           autoComplete = "live",
           autoCompleters = "static",
+          selectionId = "selected",
+          cursorId = "cursorpos",
           autoCompleteList = comps
 
-        )
+        ))
       })
 
       output$this_doc <-{renderText(doc())}
@@ -170,20 +185,55 @@ if (interactive()) {
         })
     }) #close observer
 
+    #update_editor <- observeEvent()
+    
+    
     # Functions related to updating the text.
     new_text <- reactive({
-      input$edited_doc
+      input$aceeditor
     })
+    
+    update_editor <- observeEvent(input$replace, {
+      
+      text <- new_text()
+      selected_text <- input$selected
+      code_vec <- paste0("#", input$select_codes)
+  
+      codes <- paste0(code_vec, collapse = ",")
+      new_text <- paste0("(QCODE)", selected_text, "(/QCODE){", codes, "}")
+      print(new_text)
+      text2 <- sub(pattern = selected_text,replacement = new_text, x = text, fixed = TRUE)
+      
+      updateAceEditor(session=session, editorId=editor_name, value=text2)
+      #put js code to move cursor here
+      jump_to <- input$cursorpos
+     # print(jump_to)
+      row_num <- jump_to$row + 1
+      col_num <- jump_to$column + (nchar(new_text) - nchar(selected_text))
+      
+      #print(jump_to)
+      
+      js_statement <- paste0("editor__",editor_name,".focus(); editor__",editor_name,".gotoLine(", row_num, ",", col_num, ");")
+      #print(js_statement)
+      
+      shinyjs::runjs(js_statement)
+    })
+    
 
     update_document <-observeEvent(input$submit,
            {
              project_path <- parseDirPath(user_folder, input$select_project)
              docs_df_path <- paste0(project_path,  "/data_frames/qcoder_documents_",
                                     basename(project_path), ".rds")
+             
+             codes_df_path <- paste0(project_path,  "/data_frames/qcoder_codes_", basename(project_path), ".rds")
              qcoder::do_update_document(new_text(), docs_df_path = docs_df_path,
                                         this_doc_path = input$this_doc_path)
-             codes <- get_codes(new_text())
-             if (length(codes) > 0){
+             codes <- qcoder::get_codes(new_text())
+            
+             new_codes <- setdiff(codes, codes())
+             
+             if (length(new_codes) > 0){
                add_discovered_code(codes, readRDS(codes_df_path), codes_df_path)
              }
            }
