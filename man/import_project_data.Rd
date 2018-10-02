@@ -9,8 +9,8 @@ standard names in a project folder structure.}
 import_project_data(project_name)
 }
 \arguments{
-\item{project_name}{The project name. This should represent a folder
-in the current working directory.}
+\item{project_name}{The project name. This should represent the folder
+holding the project.}
 }
 \description{
 Read data into a project

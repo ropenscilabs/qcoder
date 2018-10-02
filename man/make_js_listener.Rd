@@ -4,7 +4,7 @@
 \alias{make_js_listener}
 \title{Makes a bit of javascript that lets us listen in on the selection}
 \usage{
-make_js_listener(editor_var)
+make_js_listener(editor_name, position)
 }
 \arguments{
 \item{editor_var}{}

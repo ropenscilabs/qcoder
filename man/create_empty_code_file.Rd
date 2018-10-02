@@ -4,7 +4,8 @@
 \alias{create_empty_code_file}
 \title{Create an empty codes data set}
 \usage{
-create_empty_code_file(data_frame_name = "qcoder_codes", project_name)
+create_empty_code_file(data_frame_name = "qcoder_codes", project_name,
+  file_path)
 }
 \arguments{
 \item{data_frame_name}{Name of the data frame to be created}
