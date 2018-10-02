@@ -44,3 +44,4 @@ Collate:
   'parse_qcodes.R'
   'qcoder-package.R'
   'utils.R'
+  'selection.R'

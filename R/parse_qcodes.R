@@ -184,7 +184,6 @@ add_discovered_code <- function(codes_list = "", code_data_frame = NULL , save_p
 #' Take coded text and extract the codes, assuming they are correctly formatted.
 #' @param doc_text  The text data for a single document
 #' @export
-
 get_codes <- function(doc_text){
   codes <- stringr::str_extract_all(pattern = "\\{#.*?\\}", doc_text)
   codes <- unlist(stringi::stri_split_boundaries(codes[[1]], type = "word"))

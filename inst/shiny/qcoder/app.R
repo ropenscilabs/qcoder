@@ -13,6 +13,11 @@ if (interactive()) {
   library(shinyFiles)
   library(shinythemes)
 
+  library(shinyjs)
+  library(here)
+  # hard coded for now
+  editor_name <- "aceeditor"
+
   # Define UI for application
   ui <- fluidPage(
     theme = shinytheme("flatly"),
@@ -144,22 +149,36 @@ if (interactive()) {
 
     comps <- list()
     code_df <- readRDS(codes_df_path)
-    comps[["codes"]] <- dplyr::pull(code_df, code)
+    comps[["codes"]] <- code_df["code"]
     comps[["tags"]] <- c("QCODE",  "{#")
 
+    codes <- reactive({
+      code_df <- readRDS(codes_df_path)
+      return(code_df["code"])
+
+    })
+
       # Create the text editor
-      output$mydocA <- renderUI({
+
+      output$mydocA <- renderUI({list(useShinyjs(),
+        selectInput(inputId = "select_codes", label = "Select Tags to Add",
+                    choices = codes(), selected=codes()[1], multiple = TRUE),
+        actionButton("replace", "Add selected code"),
+        #if (length(input$project_directory) == 0 ) {return()}
+
         aceEditor(
-          "edited_doc",
+          editor_name,
           value = doc(),
           mode = "markdown",
           height = "500",
           wordWrap = TRUE,
           autoComplete = "live",
           autoCompleters = "static",
+          selectionId = "selected",
+          cursorId = "cursorpos",
           autoCompleteList = comps
 
-        )
+        ))
       })
 
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
@@ -198,10 +217,38 @@ if (interactive()) {
         })
     }) #close observer
 
+    #update_editor <- observeEvent()
+
+
     # Functions related to updating the text.
     new_text <- reactive({
-      input$edited_doc
+      input$aceeditor
     })
+
+    update_editor <- observeEvent(input$replace, {
+
+      text <- new_text()
+      codes <- input$select_codes
+      selected <- input$selected
+
+      updated_selection <- qcoder:::add_codes_to_selection(selection = selected, codes = codes)
+      updated_text <- qcoder:::replace_selection(text, selected, updated_selection)
+
+      updateAceEditor(session=session, editorId=editor_name, value=updated_text)
+      #put js code to move cursor here
+      jump_to <- input$cursorpos
+     # print(jump_to)
+      row_num <- jump_to$row + 1
+      col_num <- jump_to$column + (nchar(updated_selection) - nchar(selected))
+
+      #print(jump_to)
+
+      js_statement <- paste0("editor__",editor_name,".focus(); editor__",editor_name,".gotoLine(", row_num, ",", col_num, ");")
+      #print(js_statement)
+
+      shinyjs::runjs(js_statement)
+    })
+
 
     update_document <-observeEvent(input$submit,
            {
