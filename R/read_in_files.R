@@ -15,7 +15,7 @@ read_raw_data <- function(folder_path = "/documents/",
                           data_frame_name = "qcoder_documents",
                           project_name = NULL){
     if (!is.null(project_name)){
-      folder_path <- paste0(project_name, folder_path)
+      folder_path <- paste0(project_path, folder_path)
       data_frame_name <- paste0(project_name, "/data_frames/",
                                 paste0(data_frame_name,"_", project_name))
       }
@@ -34,7 +34,7 @@ read_raw_data <- function(folder_path = "/documents/",
                           document_text = doc_text,
                           doc_path = file_list,
                           stringsAsFactors = FALSE)
-  saveRDS(data_set, file = paste0(data_frame_name,".rds" ))
+  saveRDS(data_set, file = docs_df_path)
   invisible(TRUE)
 }
 
@@ -84,19 +84,20 @@ add_new_documents <- function(files, file_path = "", docs_df_path = ""){
 read_code_data <- function(file_path = "codes/codes.csv",
                            data_frame_name = "qcoder_codes", project_name){
   if (!is.null(project_name)){
-    file_path <- paste0(project_name, "/", file_path)
-    data_frame_name <- paste0(project_name, "/data_frames/",
+    file_path <- paste0(project_path, "/", file_path)
+    data_frame_name <- paste0(project_path, "/data_frames/",
                               paste0(data_frame_name, "_", project_name))
   }
   if (file.exists(file_path)){
     code_data <- readr::read_csv(file = file_path)
-   } else {
-     create_empty_code_file()
-   }
     # validate column names etc here
     code_data$code <- as.factor(code_data$code)
+   } else {
+     code_data <- create_empty_code_file(project_name = project_path , file_path = file_path)
+   }
+
   # try catch this save
-  saveRDS(code_data, file = paste0(data_frame_name,".rds" ))
+  saveRDS(code_data, file = codes_df_path)
   invisible(TRUE)
 }
 
@@ -110,10 +111,10 @@ read_code_data <- function(file_path = "codes/codes.csv",
 #'
 #' @export
 create_empty_code_file <-function( data_frame_name = "qcoder_codes",
-                                  project_name){
+                                  project_name, file_path){
   if (!is.null(project_name)){
     file_path <- paste0(project_name, "/", file_path)
-    data_frame_name <- paste0(project_name, "/data_frames/",
+    data_frame_name <- paste0(project_path, "/data_frames/",
                               paste0(data_frame_name, "_", project_name))
   }
   cn <- c("code_id", "code", "code.description")
@@ -122,8 +123,8 @@ create_empty_code_file <-function( data_frame_name = "qcoder_codes",
   code_data$code_description <- as.character(code_data$code.description)
   code_data$code_id <- as.numeric(code_data$code_id)
   code_data$code <-as.factor(code_data$code)
-  saveRDS(code_data, file = paste0(data_frame_name,".rds" ))
- invisible( TRUE)
+  saveRDS(code_data, file = codes_df_path)
+
 }
 
 #'  Create a data frame of units from csv file
@@ -143,15 +144,15 @@ create_empty_code_file <-function( data_frame_name = "qcoder_codes",
 read_unit_data <- function(file_path = "units.csv",
                            data_frame_name = "qcoder_units", project_name){
   if (!is.null(project_name)){
-    file_path <- paste0(project_name, "/units/", file_path)
-    data_frame_name <- paste0(project_name, "/data_frames/",
+    file_path <- paste0(project_path, "/units/", file_path)
+    data_frame_name <- paste0(project_path, "/data_frames/",
                               paste0(data_frame_name, "_", project_name))
   }
   units <- readr::read_csv(file = file_path)
   # validate column names etc here
 
   # try catch this save
-  saveRDS(units, file = paste0(data_frame_name,".rds" ))
+  saveRDS(units, file = units_df_path)
   invisible(TRUE)
 }
 
@@ -172,7 +173,7 @@ read_unit_data <- function(file_path = "units.csv",
 read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
                            data_frame_name = "qcoder_unit_document_map", project_name){
   if (!is.null(project_name)){
-    file_path <- paste0(project_name, "/units/", file_path)
+    file_path <- paste0(project_path, "/units/", file_path)
     data_frame_name <- paste0(project_name, "/data_frames/",
                               paste0(data_frame_name, "_", project_name))
   }
@@ -180,7 +181,7 @@ read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
   # validate column names etc here
 
   # try catch this save
-  saveRDS(qcoder_unit_document_map, file = paste0(data_frame_name,".rds" ))
+  saveRDS(qcoder_unit_document_map, file = units_docs_path)
   invisible(TRUE)
 }
 
@@ -206,8 +207,8 @@ create_unit_doc_file <- function(file_path = "data_frames",
 #' Convenience method to read raw data from standard locations and using
 #' standard names in a project folder structure.
 #'
-#' @param project_name The project name. This should represent a folder
-#'                     in the current working directory.
+#' @param project_name The project name. This should represent the folder
+#'                     holding the project.
 #' @export
 import_project_data<- function(project_name){
   read_raw_data(project_name = project_name)

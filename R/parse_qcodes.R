@@ -165,7 +165,7 @@ error_check <- function(document) {
 #'
 #' @export
 add_discovered_code <- function(codes_list = "", code_data_frame = NULL , save_path = "" ){
-    old_codes <- code_data_frame %>% dplyr::pull("code") %>% as.character()
+    old_codes <- as.character(code_data_frame["code"])
     new_codes <- unique(codes_list)
     code <- setdiff(new_codes, old_codes)
     if (length(code) > 0){
@@ -176,6 +176,9 @@ add_discovered_code <- function(codes_list = "", code_data_frame = NULL , save_p
       row_n <- row.names(code_data_frame)
       code_data_frame$code_id <- ifelse(code_data_frame$code_id == 0, row_n,
                                         code_data_frame$code_id)
+      if (save_path == ""){
+        save_path <- codes_df_path
+      }
       saveRDS(code_data_frame, file = save_path )
     }
 }
