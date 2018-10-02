@@ -7,7 +7,9 @@
 make_js_listener(editor_name, position)
 }
 \arguments{
-\item{editor_var}{}
+\item{editor_name}{The name given the editor}
+
+\item{position}{The starting row and column location}
 }
 \value{
 javascript text

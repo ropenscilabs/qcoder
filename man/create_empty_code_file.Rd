@@ -5,12 +5,15 @@
 \title{Create an empty codes data set}
 \usage{
 create_empty_code_file(data_frame_name = "qcoder_codes", project_name,
-  file_path)
+  file_path = "data_frames")
 }
 \arguments{
 \item{data_frame_name}{Name of the data frame to be created}
 
 \item{project_name}{Name of the project that the codes are associated with}
+
+\item{file_path}{Path to the file location to be used (under project root).
+defaults to "data_frames".}
 }
 \description{
 Used to create a codes data frame with no data but that can

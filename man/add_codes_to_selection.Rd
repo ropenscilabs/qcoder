@@ -2,13 +2,15 @@
 % Please edit documentation in R/selection.R
 \name{add_codes_to_selection}
 \alias{add_codes_to_selection}
-\title{Title}
+\title{Adds codes surrounding the selected text}
 \usage{
 add_codes_to_selection(selection, codes)
 }
 \arguments{
-\item{codes}{}
+\item{selection}{The selection of text to be coded}
+
+\item{codes}{The code or codes to be added to the document}
 }
 \description{
-Title
+Adds codes surrounding the selected text
 }

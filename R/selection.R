@@ -1,6 +1,7 @@
 #' Makes a bit of javascript that lets us listen in on the selection
 #'
-#' @param editor_var
+#' @param editor_name  The name given the editor
+#' @param position The starting row and column location
 #'
 #' @return javascript text
 #' @export
@@ -18,11 +19,10 @@ make_js_listener <- function(editor_name, position){
   return(script)
 }
 
-#' Title
+#' Adds codes surrounding the selected text
 #'
-#' @param text
-#' @param selection
-#' @param codes
+#' @param selection The selection of text to be coded
+#' @param codes The code or codes to be added to the document
 #'
 #' @return
 #'

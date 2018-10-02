@@ -108,17 +108,19 @@ read_code_data <- function(file_path = "codes/codes.csv",
 #'
 #' @param data_frame_name Name of the data frame to be created
 #' @param project_name Name of the project that the codes are associated with
+#' @param file_path Path to the file location to be used (under project root).
+#'                  defaults to "data_frames".
 #'
 #' @export
 create_empty_code_file <-function( data_frame_name = "qcoder_codes",
-                                  project_name, file_path){
+                                  project_name, file_path = "data_frames"){
   if (!is.null(project_name)){
     file_path <- paste0(project_name, "/", file_path)
-    data_frame_name <- paste0(project_path, "/data_frames/",
+    data_frame_name <- paste0(project_path, "/", file_path, "/",
                               paste0(data_frame_name, "_", project_name))
   }
   cn <- c("code_id", "code", "code.description")
-  code_data <- as.data.frame(matrix(data = NA,0,length(cn)))
+  code_data <- as.data.frame(matrix(data = NA, 0, length(cn)))
   colnames(code_data) <- cn
   code_data$code_description <- as.character(code_data$code.description)
   code_data$code_id <- as.numeric(code_data$code_id)
