@@ -298,7 +298,7 @@ if (interactive()) {
 
     observeEvent(input$save_links, {
       checks <- input$unit_doc_links
-      qcoder::update_links(checked = checks, data_path = docs_df_path,
+      qcoder::update_links(checked = checks, docs_df_path = docs_df_path,
                            this_doc_path = input$this_doc_path, units_docs_path = units_docs_path)
     })
 

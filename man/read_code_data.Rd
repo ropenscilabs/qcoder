@@ -5,15 +5,19 @@
 \title{Create a file of codes from csv file
 Use this is you have a spreadsheet of codes already created.}
 \usage{
-read_code_data(file_path = "codes/codes.csv",
-  data_frame_name = "qcoder_codes", project_name)
+read_code_data(file_path = "codes/codes.csv", codes_df_path = "",
+  data_frame_name = "qcoder_codes", project_name, project_path = "")
 }
 \arguments{
 \item{file_path}{Path to a file containing  code data in csv.}
 
+\item{codes_df_path}{Full path to the codes data frame.}
+
 \item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
 
 \item{project_name}{Name of the project, which matches folder name}
+
+\item{project_path}{Full path to the project folder}
 }
 \description{
 Create a file of codes from csv file

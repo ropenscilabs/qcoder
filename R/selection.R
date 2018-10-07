@@ -2,13 +2,15 @@
 #'
 #' @param editor_name  The name given the editor
 #' @param position The starting row and column location
+#' @param new_text  The new text including the code markup
+#' @param selected_text The text to be marked with a code or codes
 #'
 #' @return javascript text
 #' @export
 #'
 #' @examples
 #'
-make_js_listener <- function(editor_name, position){
+make_js_listener <- function(editor_name, position, new_text, selected_text){
 
   row_num <- position$row + 1
   col_num <- position$column + (nchar(new_text) - nchar(selected_text))
@@ -16,7 +18,7 @@ make_js_listener <- function(editor_name, position){
   script <- paste0("editor__",editor_name,".focus(); editor__",
                    editor_name,".gotoLine(", row_num, ",", col_num, ");")
 
-  return(script)
+  script
 }
 
 #' Adds codes surrounding the selected text
@@ -34,7 +36,7 @@ add_codes_to_selection <-  function(selection, codes) {
   codes <- paste0(code_vec, collapse = ",")
   new_text <- paste0("(QCODE)", selection, "(/QCODE){", codes, "}")
 
-  return(new_text)
+  new_text
 
 }
 
@@ -42,5 +44,5 @@ add_codes_to_selection <-  function(selection, codes) {
 replace_selection <- function(text, selection, replacement){
 
   text2 <- sub(pattern = selection, replacement = replacement, x = text, fixed = TRUE)
-  return(text2)
+  text2
 }

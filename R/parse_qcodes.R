@@ -161,10 +161,10 @@ error_check <- function(document) {
 #'
 #' @param codes_list A list of codes (usually from a coded document)
 #' @param code_data_frame Existing data frame of QCODE codes
-#' @param save_path The path where the updated code data frame should be saved
+#' @param codes_df_path The path where the updated code data frame should be saved
 #'
 #' @export
-add_discovered_code <- function(codes_list = "", code_data_frame = NULL , save_path = "" ){
+add_discovered_code <- function(codes_list = "", code_data_frame = NULL , codes_df_path = "" ){
     old_codes <- as.character(code_data_frame["code"])
     new_codes <- unique(codes_list)
     code <- setdiff(new_codes, old_codes)
@@ -176,10 +176,8 @@ add_discovered_code <- function(codes_list = "", code_data_frame = NULL , save_p
       row_n <- row.names(code_data_frame)
       code_data_frame$code_id <- ifelse(code_data_frame$code_id == 0, row_n,
                                         code_data_frame$code_id)
-      if (save_path == ""){
-        save_path <- codes_df_path
-      }
-      saveRDS(code_data_frame, file = save_path )
+
+      saveRDS(code_data_frame, file = codes_df_path )
     }
 }
 

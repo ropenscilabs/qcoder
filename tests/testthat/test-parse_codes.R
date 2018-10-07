@@ -39,7 +39,7 @@ test_that("discovered codes are added to the existing codes data frame correctly
 
   add_discovered_code(codes_list = c("new_tag", "gender"),
                       code_data_frame = readRDS("./data/qcoder_codes_my_qcoder_project.rds"),
-                      save_path = paste0(tempdir(), "/qcoder_codes_my_qcoder_project.rds"))
+                      codes_df_path = paste0(tempdir(), "/qcoder_codes_my_qcoder_project.rds"))
   # The function should have saved the data frame to the save_path folder
   input <- readRDS(paste0(tempdir(), "/qcoder_codes_my_qcoder_project.rds"))
 

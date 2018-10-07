@@ -6,7 +6,7 @@
 Use this is you have a spreadsheet of units already created.}
 \usage{
 read_unit_data(file_path = "units.csv", data_frame_name = "qcoder_units",
-  project_name)
+  project_name, project_path = "", units_df_path = "")
 }
 \arguments{
 \item{file_path}{path to a file containing  unit data in csv.}
@@ -14,6 +14,10 @@ read_unit_data(file_path = "units.csv", data_frame_name = "qcoder_units",
 \item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
 
 \item{project_name}{Name of project if available}
+
+\item{project_path}{Full path to the project folder.}
+
+\item{units_df_path}{Full path to the units data frame.}
 }
 \description{
 Create a data frame of units from csv file

@@ -4,12 +4,16 @@
 \alias{make_js_listener}
 \title{Makes a bit of javascript that lets us listen in on the selection}
 \usage{
-make_js_listener(editor_name, position)
+make_js_listener(editor_name, position, new_text, selected_text)
 }
 \arguments{
 \item{editor_name}{The name given the editor}
 
 \item{position}{The starting row and column location}
+
+\item{new_text}{The new text including the code markup}
+
+\item{selected_text}{The text to be marked with a code or codes}
 }
 \value{
 javascript text
