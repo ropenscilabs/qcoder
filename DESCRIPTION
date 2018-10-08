@@ -4,8 +4,9 @@ Version: 0.0.1
 Authors@R: c( 
   person("Beth", "Duckles", email = "bduckles@gmail.com", role = c("aut")), 
   person("Dan", "Sholler", email = "sholler.daniel@gmail.com", role = c("aut")),
-  person("Elin", "Waring", email= "elin.waring@gmail.com", role = c("aut", "cre")), 
-  person("Jenny", "Draper", email = "learithe@gmail.com", role = c("aut")))
+  person("Elin", "Waring", email= "elin.waring@gmail.com", role = c("cre")), 
+  person("Jenny", "Draper", email = "learithe@gmail.com", role = c("aut")),
+  person("Ted", "Laderas", email = "roshioshi@gmail.com", role = c("aut")))
 Description: A free, lightweight, open source option for analyzing text-based qualitative data.
   Enables analysis of interview transcripts, observation notes, memos, 
   and other sources. Supports the work of social scientists, historians, 
@@ -19,11 +20,13 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     readr,
-    shiny,
     dplyr (>= 0.7),
+    here,
     magrittr,
-    shinyAce,
+    shiny,
+    shinyAce (>= 0.3.1.9000),
     shinyFiles,
+    shinyjs,
     shinythemes,
     stringi,
     stringr
@@ -34,6 +37,8 @@ Suggests:
     withr,
     covr,
     pander
+Remotes:
+    trestletech/shinyAce
 URL: https://github.com/ropenscilabs/qcoder
 BugReports: https://github.com/ropenscilabs/qcoder/issues
 VignetteBuilder: knitr
@@ -44,3 +49,4 @@ Collate:
   'parse_qcodes.R'
   'qcoder-package.R'
   'utils.R'
+  'selection.R'

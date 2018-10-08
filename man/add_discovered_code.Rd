@@ -6,14 +6,14 @@
 Add discovered codes to the codes data frame}
 \usage{
 add_discovered_code(codes_list = "", code_data_frame = NULL,
-  save_path = "")
+  codes_df_path = "")
 }
 \arguments{
 \item{codes_list}{A list of codes (usually from a coded document)}
 
 \item{code_data_frame}{Existing data frame of QCODE codes}
 
-\item{save_path}{The path where the updated code data frame should be saved}
+\item{codes_df_path}{The path where the updated code data frame should be saved}
 }
 \description{
 Update codes data frame

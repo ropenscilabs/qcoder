@@ -4,10 +4,18 @@
 \alias{create_empty_code_file}
 \title{Create an empty codes data set}
 \usage{
-create_empty_code_file(data_frame_name = "qcoder_codes", project_name)
+create_empty_code_file(data_frame_name = "qcoder_codes", codes_df_path = "",
+  project_path = "", file_path = "data_frames", project_name = "")
 }
 \arguments{
 \item{data_frame_name}{Name of the data frame to be created}
+
+\item{codes_df_path}{The full path to the codes data frame}
+
+\item{project_path}{The full path to the project folder}
+
+\item{file_path}{Path to the file location to be used (under project root).
+defaults to "data_frames".}
 
 \item{project_name}{Name of the project that the codes are associated with}
 }

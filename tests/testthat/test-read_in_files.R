@@ -19,6 +19,6 @@ test_that("A new file with the same name as an existing file generates a warning
   file_path <- "./data/"
   save_path <- paste0(tempdir(), "/rqcoder_documents_my_qcoder_project.rds")
   file.copy("./data/qcoder_documents_my_qcoder_project.rds", save_path)
-  expect_warning( add_new_documents(files = file_list, file_path = file_path, docs_df_path = save_path))
+  expect_warning( add_new_documents(files = file_list, docs_df_path = save_path, file_path = file_path))
   unlink(save_path)
 })
