@@ -81,8 +81,8 @@ qcode_custom <- function() {
 do_update_document <- function(updated, docs_df_path, this_doc_path){
 
   qcoder::error_check(updated)
-
-  text_df <- readRDS(docs_df_path)
+  path <- docs_df_path
+  text_df <- readRDS(path)
   # Make an archive of the unchanged data
   time <- gsub(" ", "_", Sys.time())
   time <- gsub(":", "_", time)

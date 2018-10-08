@@ -102,6 +102,7 @@ if (interactive()) {
       output$project_directory <- renderPrint({parseDirPath(user_folder,
                                                       input$select_project)
                                               })
+
       project_path <<- parseDirPath(user_folder, input$select_project)
       docs_df_path <<- paste0(project_path,
                               "/data_frames/qcoder_documents_",
@@ -263,7 +264,7 @@ if (interactive()) {
 
     # Adding a new document
     observeEvent(input$select_project,{
-       doc_folder <- c(paste0(project_path, "/documents"))
+       doc_folder <- c(paste0(input$select_project, "/documents"))
        shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
     })
 
@@ -299,7 +300,8 @@ if (interactive()) {
     observeEvent(input$save_links, {
       checks <- input$unit_doc_links
       qcoder::update_links(checked = checks, docs_df_path = docs_df_path,
-                           this_doc_path = input$this_doc_path, units_docs_path = units_docs_path)
+                           this_doc_path = input$this_doc_path,
+                           units_docs_path = units_docs_path)
     })
 
     output$add_new_unit <- renderUI({
