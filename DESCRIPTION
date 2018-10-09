@@ -23,7 +23,7 @@ Imports:
     here,
     magrittr,
     shiny,
-    shinyAce (>=0.3.2),
+    shinyAce,
     shinyFiles,
     shinyjs,
     shinythemes,
