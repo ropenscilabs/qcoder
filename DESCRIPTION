@@ -19,17 +19,17 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    readr,
     dplyr (>= 0.7),
     here,
     magrittr,
     shiny,
-    shinyAce (>= 0.3.1.9000),
+    shinyAce (>=0.3.2),
     shinyFiles,
     shinyjs,
     shinythemes,
     stringi,
-    stringr
+    stringr,
+    textreadr
 Suggests:
     knitr,
     rmarkdown,
@@ -37,8 +37,6 @@ Suggests:
     withr,
     covr,
     pander
-Remotes:
-    trestletech/shinyAce
 URL: https://github.com/ropenscilabs/qcoder
 BugReports: https://github.com/ropenscilabs/qcoder/issues
 VignetteBuilder: knitr

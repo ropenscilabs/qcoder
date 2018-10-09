@@ -31,9 +31,9 @@ read_raw_data <- function(folder_path = "/documents/",
       file_list <- dir(folder_path)
       doc_text  <- character()
       for (i in 1:length(file_list)){
-         doc_text[i] <- readr::read_file(paste0(
+         doc_text[i] <- textreadr::read_document(paste0(
                                                 folder_path,
-                                                file_list[i]))
+                                                file_list[i]), combine = TRUE)
     }
   } else {
     return(sprintf("Filepath %s does not exist", folder_path))
