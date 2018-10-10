@@ -19,9 +19,12 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
+    antiword,
     dplyr (>= 0.7),
     here,
     magrittr,
+    pdftools,
+    readr,
     shiny,
     shinyAce,
     shinyFiles,
