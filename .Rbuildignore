@@ -4,9 +4,11 @@
 ^\.travis\.yml$
 ^README\.Rmd
 ^README\.html
+^README\.pdf
 ^CONTRIBUTING.md
 ^CONDUCT.md
 ^appveyor\.yml$
 ^motivation\.Rmd
 ^motivation\.html
+^motivation\.pdf
 ^\images
