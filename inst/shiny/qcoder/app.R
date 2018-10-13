@@ -96,8 +96,9 @@ if (interactive()) {
 
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
-    shinyDirChoose(input, 'select_project',  roots = user_folder)
-
+    if (user_folder != ""){
+         shinyDirChoose(input, 'select_project',  roots = user_folder)
+    }
     observeEvent(c(input$select_project, input$file),{
       output$project_directory <- renderPrint({parseDirPath(user_folder,
                                                       input$select_project)
