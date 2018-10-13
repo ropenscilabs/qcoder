@@ -131,7 +131,9 @@ if (interactive()) {
       })
 
       output$choices <- renderUI({
-            if (docs_df_path == "") {return()}
+          req(input$select_project)
+          if (input$select_project[1] == ""){return()}
+          if (docs_df_path == "") {return()}
             selectInput('this_doc_path', 'Document', my_choices())
          })
 
