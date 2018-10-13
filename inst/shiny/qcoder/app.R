@@ -139,7 +139,8 @@ if (interactive()) {
     # Consider making a backup each time you load this.
     doc <- reactive ({
 
-      if (length(input$this_doc_path) != 1) {return()}
+      if (is.null(input$this_doc_path)) {return()}
+      #if (length(input$this_doc_path) != 1) {return()}
       # move to utils
       text_df <- readRDS(docs_df_path)
       this_doc <- text_df %>%
