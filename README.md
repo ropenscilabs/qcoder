@@ -69,9 +69,17 @@ data will look similar to this.
 ### Documents
 
 In our example we've already placed our documents into the "documents"
-folder. At this point we only have tested support for txt files though
-other types will probably work. If you have documents in other formats
-you can use "Save As" to convert to txt.
+folder. At this point we only have tested support for txt files. If you
+have documents in other formats you can use "Save As" to convert to txt.
+If you have doc, docx, html, pdf, rtf or some other formats these can be
+processed if you install the `textreadr` package. For many users this
+will simply require
+
+    install.packages(textreadr)
+
+However for other users, particularly those on linux systems, additional
+steps are required. Please follow the [installation instructions for
+pdftools](https://github.com/ropensci/pdftools).
 
 ### Codes
 

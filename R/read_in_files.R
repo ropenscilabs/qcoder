@@ -30,14 +30,21 @@ read_raw_data <- function(folder_path = "/documents/",
     if (file.exists(folder_path)){
       file_list <- dir(folder_path)
       doc_text  <- character()
-      for (i in 1:length(file_list)){
-         doc_text[i] <- textreadr::read_document(paste0(
-                                                folder_path,
-                                                file_list[i]), combine = TRUE)
+      # This is because not all users will be able to install textreadr.
+      if (!texreadr_present){
+        for (i in 1:length(file_list)){
+          doc_text[i] <- readr::read_file(paste0(folder_path, file_list[i]))
+        }
+      } else {
+        for (i in 1:length(file_list)){
+           doc_text[i] <- textreadr::read_document(
+                                  paste0( folder_path, file_list[i]),
+                                  combine = TRUE)
+        }
+      }
+    } else {
+      return(sprintf("Filepath %s does not exist", folder_path))
     }
-  } else {
-    return(sprintf("Filepath %s does not exist", folder_path))
-  }
 
   data_set <- data.frame( doc_id = seq_along(1:length(file_list)),
                           document_text = doc_text,
@@ -62,9 +69,18 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
           return()
         }
         doc_text  <- character()
-        for (i in 1:length(file_list)){
-          doc_text[i] <- textreadr::read_document(paste0(file_path,
+        if (!textreadr_present){
+          for (i in 1:length(file_list)){
+            doc_text[i] <- readr::read_file(paste0(file_path,
+                                                           file_list[i]))
+
+          }
+
+        } else {
+          for (i in 1:length(file_list)){
+                       doc_text[i] <- textreadr::read_document(paste0(file_path,
                                                  file_list[i]))
+          }
         }
         ids <- integer(length(file_list))
         new_rows <- data.frame(doc_id = ids, document_text = doc_text, doc_path = file_list)
@@ -100,20 +116,22 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
     }
 
     if (!is.null(project_name)){
-    file_path <- paste0(project_path, "/", file_path)
-    codes_df_path <- paste0(project_path, "/data_frames/",
-                              data_frame_name, "_", project_name, ".rds" )
+      file_path <- paste0(project_path, "/", file_path)
+      codes_df_path <- paste0(project_path, "/data_frames/",
+                                data_frame_name, "_", project_name, ".rds" )
     }
-
+print(file_path)
+print(file.exists(file_path))
+print(codes_df_path)
   if (file.exists(file_path)){
-    code_data <- readr::read_csv(file = file_path,
-                                col_types = readr::cols(code_id = "i",
-                                                 code = "c",
-                                                 code.description = "c"))
-    # validate column names etc here
-    code_data$code <- as.factor(code_data$code)
+      code_data <- readr::read_csv(file = file_path,
+                                  col_types = readr::cols(code_id = "i",
+                                                   code = "c",
+                                                   code.description = "c"))
+      # validate column names etc here
+      code_data$code <- as.factor(code_data$code)
    } else {
-     code_data <- create_empty_code_file(project_name = project_path , codes_df_path = codes_df_path)
+      code_data <- create_empty_code_file(project_name = project_path , codes_df_path = codes_df_path)
    }
 
   # try catch this save
@@ -274,3 +292,9 @@ import_project_data<- function(project_name){
   read_unit_data(project_name = project_name)
   read_unit_document_map_data(project_name = project_name)
 }
+
+textreadr_test <- function(){
+  x <- requireNamespace("textreadr", quietly = TRUE)
+  x
+}
+textreadr_present <- textreadr_test()
