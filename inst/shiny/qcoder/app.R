@@ -100,6 +100,7 @@ if (interactive()) {
          shinyDirChoose(input, 'select_project',  roots = user_folder)
     }
     observeEvent(c(input$select_project, input$file),{
+      req(input$select_project)
       output$project_directory <- renderPrint({parseDirPath(user_folder,
                                                       input$select_project)
                                               })
