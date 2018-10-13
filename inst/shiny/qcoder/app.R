@@ -105,24 +105,25 @@ if (interactive()) {
       output$project_directory <- renderPrint({parseDirPath(user_folder,
                                                       input$select_project)
                                               })
-
-      project_path <<- parseDirPath(user_folder, input$select_project)
-      docs_df_path <<- paste0(project_path,
-                              "/data_frames/qcoder_documents_",
-                              basename(project_path), ".rds")
-      codes_df_path <<- paste0(project_path,
-                               "/data_frames/qcoder_codes_",
-                               basename(project_path), ".rds")
-      units_df_path <<- paste0(project_path,
-                               "/data_frames/qcoder_units_",
-                               basename(project_path), ".rds")
-      units_docs_path <<- paste0(project_path,
-                                 "/data_frames/qcoder_unit_document_map_",
+      if (input$select_project[1] != ""){
+        project_path <<- parseDirPath(user_folder, input$select_project)
+        docs_df_path <<- paste0(project_path,
+                                "/data_frames/qcoder_documents_",
+                                basename(project_path), ".rds")
+        codes_df_path <<- paste0(project_path,
+                                 "/data_frames/qcoder_codes_",
                                  basename(project_path), ".rds")
-
+        units_df_path <<- paste0(project_path,
+                                 "/data_frames/qcoder_units_",
+                                 basename(project_path), ".rds")
+        units_docs_path <<- paste0(project_path,
+                                   "/data_frames/qcoder_unit_document_map_",
+                                   basename(project_path), ".rds")
+      }
 
       my_choices <- reactive({
         req(input$select_project)
+        if (input$select_project[1] == ""){return()}
         text_df <- readRDS(file = docs_df_path)
         options <- text_df["doc_path"]
         options <- c(" ", options)
