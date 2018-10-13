@@ -119,6 +119,7 @@ if (interactive()) {
 
 
       my_choices <- reactive({
+        if (is.null(input$this_doc_path)) {return()}
         text_df <- readRDS(file = docs_df_path)
         options <- text_df["doc_path"]
         options <- c(" ", options)
