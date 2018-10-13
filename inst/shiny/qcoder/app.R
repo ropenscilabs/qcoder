@@ -106,7 +106,8 @@ if (interactive()) {
                                                       input$select_project)
                                               })
 
-      if (as.character(input$select_project[1]) != "1" & input$select_project[1] != "" ){
+      if (as.character(input$select_project[1]) == "1" |
+          input$select_project[1] == "" ) {return()}
         project_path <<- parseDirPath(user_folder, input$select_project)
         docs_df_path <<- paste0(project_path,
                                 "/data_frames/qcoder_documents_",
@@ -120,7 +121,7 @@ if (interactive()) {
         units_docs_path <<- paste0(project_path,
                                    "/data_frames/qcoder_unit_document_map_",
                                    basename(project_path), ".rds")
-      }
+
 
       my_choices <- reactive({
         req(input$select_project)
