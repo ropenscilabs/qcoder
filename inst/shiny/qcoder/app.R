@@ -105,7 +105,8 @@ if (interactive()) {
       output$project_directory <- renderPrint({parseDirPath(user_folder,
                                                       input$select_project)
                                               })
-      if (input$select_project[1] != ""){
+      print(input$select_project[1])
+      if (input$select_project[1] != "" ){
         project_path <<- parseDirPath(user_folder, input$select_project)
         docs_df_path <<- paste0(project_path,
                                 "/data_frames/qcoder_documents_",
@@ -133,6 +134,7 @@ if (interactive()) {
       output$choices <- renderUI({
           req(input$select_project)
           if (input$select_project[1] == ""){return()}
+
           if (docs_df_path == "") {return()}
             selectInput('this_doc_path', 'Document', my_choices())
          })
