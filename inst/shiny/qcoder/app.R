@@ -101,6 +101,7 @@ if (interactive()) {
     }
     observeEvent(c(input$select_project, input$file),{
       req(input$select_project)
+      if (input$select_project[1] == ""){return()}
       output$project_directory <- renderPrint({parseDirPath(user_folder,
                                                       input$select_project)
                                               })
