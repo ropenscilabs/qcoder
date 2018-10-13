@@ -63,7 +63,7 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
         }
         doc_text  <- character()
         for (i in 1:length(file_list)){
-          doc_text[i] <- readr::read_file(paste0(file_path,
+          doc_text[i] <- textreadr::read_document(paste0(file_path,
                                                  file_list[i]))
         }
         ids <- integer(length(file_list))
@@ -106,7 +106,10 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
     }
 
   if (file.exists(file_path)){
-    code_data <- readr::read_csv(file = file_path)
+    code_data <- readr::read_csv(file = file_path,
+                                col_types = readr::cols(code_id = "i",
+                                                 code = "c",
+                                                 code.description = "c"))
     # validate column names etc here
     code_data$code <- as.factor(code_data$code)
    } else {
@@ -185,7 +188,9 @@ read_unit_data <- function(file_path = "units.csv",
     units_df_path <- paste0(project_path, "/data_frames/",
                               data_frame_name, "_", project_name, ".rds" )
   }
-  units <- readr::read_csv(file = file_path)
+  units <- readr::read_csv(file = file_path,
+                           col_types = readr::cols(unit_id = "i",
+                                       name = "c"))
   # validate column names etc here
 
   # try catch this save
@@ -223,7 +228,9 @@ read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
                               paste0(data_frame_name, "_", project_name ))
   }
 
-  qcoder_unit_document_map <- readr::read_csv(file = file_path)
+  qcoder_unit_document_map <- readr::read_csv(file = file_path,
+                                              col_types = readr::cols(doc_path = "c",
+                                                                unit_id = "i"))
   # validate column names etc here
 
   if (units_docs_path == ""){
