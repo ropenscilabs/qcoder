@@ -119,7 +119,7 @@ if (interactive()) {
 
 
       my_choices <- reactive({
-        if (is.null(input$this_doc_path)) {return()}
+        req(input$select_project)
         text_df <- readRDS(file = docs_df_path)
         options <- text_df["doc_path"]
         options <- c(" ", options)
@@ -127,6 +127,7 @@ if (interactive()) {
       })
 
       output$choices <- renderUI({
+            if (docs_df_path == "") {return()}
             selectInput('this_doc_path', 'Document', my_choices())
          })
 
@@ -138,11 +139,12 @@ if (interactive()) {
     # verbatim
     # Consider making a backup each time you load this.
     doc <- reactive ({
-
       if (is.null(input$this_doc_path)) {return()}
-      #if (length(input$this_doc_path) != 1) {return()}
+      if (docs_df_path == "") {return()}
       # move to utils
       text_df <- readRDS(docs_df_path)
+      if (length(text_df) == 0){return()}
+
       this_doc <- text_df %>%
         filter(doc_path == as.character(input$this_doc_path)) %>%
         select(document_text)
@@ -151,38 +153,39 @@ if (interactive()) {
       })
 
     comps <- list()
+    if (codes_df_path == "") {return()}
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- code_df["code"]
     comps[["tags"]] <- c("QCODE",  "{#")
 
     codes <- reactive({
+      if (codes_df_path == "") {return()}
       code_df <- readRDS(codes_df_path)
       return(code_df["code"])
 
     })
 
       # Create the text editor
+       output$mydocA <- renderUI({list(useShinyjs(),
+         selectInput(inputId = "select_codes", label = "Select Codes to Add",
+                     choices = codes(), selected=codes()[1], multiple = TRUE),
+         actionButton("replace", "Add selected code"),
 
-      output$mydocA <- renderUI({list(useShinyjs(),
-        selectInput(inputId = "select_codes", label = "Select Tags to Add",
-                    choices = codes(), selected=codes()[1], multiple = TRUE),
-        actionButton("replace", "Add selected code"),
-        #if (length(input$project_directory) == 0 ) {return()}
+           aceEditor(
+             editor_name,
+             value = doc(),
+             mode = "markdown",
+             height = "500",
+             wordWrap = TRUE,
+             autoComplete = "live",
+             autoCompleters = "static",
+             selectionId = "selected",
+             cursorId = "cursorpos",
+             autoCompleteList = comps
 
-        aceEditor(
-          editor_name,
-          value = doc(),
-          mode = "markdown",
-          height = "500",
-          wordWrap = TRUE,
-          autoComplete = "live",
-          autoCompleters = "static",
-          selectionId = "selected",
-          cursorId = "cursorpos",
-          autoCompleteList = comps
-
-        ))
-      })
+           )
+         )
+       })
 
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
 
@@ -204,7 +207,7 @@ if (interactive()) {
 
         # Get the parsed values with codes.
         output$coded <- renderTable({
-          if (docs_df_path == "" ) {return()}
+          if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
@@ -213,14 +216,13 @@ if (interactive()) {
         })
 
         output$code_freq <- renderPrint({
+          if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df)
           parsed %>% dplyr::group_by(as.factor(qcode)) %>% dplyr::summarise(n = n()) %>% knitr::kable()
         })
     }) #close observer
-
-    #update_editor <- observeEvent()
 
 
     # Functions related to updating the text.
@@ -230,24 +232,26 @@ if (interactive()) {
 
     update_editor <- observeEvent(input$replace, {
 
-      text <- new_text()
+      text_old <- new_text()
       codes <- input$select_codes
       selected <- input$selected
+      if (length(selected) == 0) {return(message("No text selected"))}
 
       updated_selection <- qcoder:::add_codes_to_selection(selection = selected, codes = codes)
-      updated_text <- qcoder:::replace_selection(text, selected, updated_selection)
+
+      updated_text <- qcoder:::replace_selection(text_old, selected, updated_selection)
 
       updateAceEditor(session=session, editorId=editor_name, value=updated_text)
-      #put js code to move cursor here
+      # put js code to move cursor here
       jump_to <- input$cursorpos
-     # print(jump_to)
+      # print(jump_to)
       row_num <- jump_to$row + 1
       col_num <- jump_to$column + (nchar(updated_selection) - nchar(selected))
 
-      #print(jump_to)
+      # print(jump_to)
 
       js_statement <- paste0("editor__",editor_name,".focus(); editor__",editor_name,".gotoLine(", row_num, ",", col_num, ");")
-      #print(js_statement)
+      # print(js_statement)
 
       shinyjs::runjs(js_statement)
     })

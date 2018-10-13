@@ -41,8 +41,8 @@ add_codes_to_selection <-  function(selection, codes) {
 }
 
 
-replace_selection <- function(text, selection, replacement){
+replace_selection <- function(text_search, selection, replacement){
 
-  text2 <- sub(pattern = selection, replacement = replacement, x = text, fixed = TRUE)
+  text2 <- sub(pattern = selection, replacement = replacement, x = text_search, fixed = TRUE)
   text2
 }
