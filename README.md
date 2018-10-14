@@ -4,8 +4,28 @@ QCoder
 
 Lightweight package to conduct qualitative coding  
 <p>
-<img src="hex/imgHex.png", width="150", align="right" />
+<img src="images/hex/imgHex.png", width="150", align="right" />
 </p>
+tl;dr
+-----
+
+To test with some sample data:
+
+    install.packages("devtools")
+    devtools::install_github("ropenscilabs/qcoder")
+    library(qcoder)
+    create_qcoder_project("my_qcoder_project", sample = TRUE)
+    import_project_data(project = "my_qcoder_project")
+    qcode()
+
+Click "Select project folder" and "my qcoder project."  
+There are two ways to add codes. To use an existing code, highlight the
+text to be coded, select the code, click "Add selected code" and then
+"Save changes." Text to be assigned a new (or exisitng) code should be
+surrounded by (QCODER) (/QCODER) tags. The closing tag is followed
+immediately by the code enclosed in curly brackets and prefixed with a
+\# for example {\#samplecode}
+
 Installation
 ------------
 
@@ -13,6 +33,7 @@ To install the latest development version, run
 
     install.packages("devtools")
     devtools::install_github("ropenscilabs/qcoder")
+    library(qcoder)
 
 Please note that this is not a release-ready version and should be
 considered experimental and subject to changes. Still, we encourage you
@@ -105,8 +126,8 @@ are the contents of the sample data csv file that comes with QCoder.
 
 You are not restricted to using the listed codes in the csv file, but
 this file allows you to produce a detailed codebook including
-descriptions. (A method for adding new codes is high priority item on
-the project road map.)
+descriptions. (Creating a user interface for adding new codes is high
+priority item on the project road map.)
 
 ### Units
 
@@ -202,6 +223,9 @@ code.(/QCODE){\#instructions}
 
 One pair of {} can contain multiple codes, each with at \# and separated
 by commas.
+
+Alternatively, to use an existing code, highlight the text to be coded,
+select the code or codes, click "Add selected code."
 
 When you have finished coding a document press the "Save changes"
 button.
