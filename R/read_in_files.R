@@ -120,9 +120,7 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
       codes_df_path <- paste0(project_path, "/data_frames/",
                                 data_frame_name, "_", project_name, ".rds" )
     }
-print(file_path)
-print(file.exists(file_path))
-print(codes_df_path)
+
   if (file.exists(file_path)){
       code_data <- readr::read_csv(file = file_path,
                                   col_types = readr::cols(code_id = "i",
@@ -292,9 +290,3 @@ import_project_data<- function(project_name){
   read_unit_data(project_name = project_name)
   read_unit_document_map_data(project_name = project_name)
 }
-
-textreadr_test <- function(){
-  x <- requireNamespace("textreadr", quietly = TRUE)
-  x
-}
-textreadr_present <- textreadr_test()

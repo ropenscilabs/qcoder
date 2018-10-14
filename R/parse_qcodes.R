@@ -99,7 +99,7 @@ parse_qcodes <- function(x, ...){
                     sp[level],
                     "'\n")
             codes = c(NA,NA)
-          }else if(codes[1] == ""){
+          } else if(codes[1] == ""){
             codes <- codes[2:length(codes)] #remove blank first vector item
           }
 
@@ -112,8 +112,8 @@ parse_qcodes <- function(x, ...){
           }
 
           # Inefficient now because of the loop but eventually this should run on save (a single text).
-          if (length("dots") > 0 && !is.null(dots$code_data_frame) && !is.null(dots$save_path) ) {
-            add_discovered_code(codes, dots$code_data_frame, dots$save_path)
+          if (length("dots") > 0 & !is.null(dots$code_data_frame) & !is.null(dots$save_path) ) {
+            qcoder::add_discovered_code(codes, dots$code_data_frame, dots$save_path)
 
           }
         }
@@ -165,17 +165,20 @@ error_check <- function(document) {
 #'
 #' @export
 add_discovered_code <- function(codes_list = "", code_data_frame = NULL , codes_df_path = "" ){
-    old_codes <- as.character(code_data_frame["code"])
+    code_data_frame <- as.data.frame(code_data_frame)
+    old_codes <- as.character(code_data_frame[,"code"])
     new_codes <- unique(codes_list)
     code <- setdiff(new_codes, old_codes)
     if (length(code) > 0){
       code_id <- integer(length(code))
       code.description <- character(length(code))
       new_rows <- data.frame(code_id, code, code.description)
+
       code_data_frame <- rbind(code_data_frame, new_rows)
       row_n <- row.names(code_data_frame)
-      code_data_frame$code_id <- ifelse(code_data_frame$code_id == 0, row_n,
-                                        code_data_frame$code_id)
+      code_data_frame$code_id[length(old_codes):
+                      (length(old_codes) + length(code))] <-
+        row_n[length(old_codes):(length(old_codes) + length(code))]
 
       saveRDS(code_data_frame, file = codes_df_path )
     }
