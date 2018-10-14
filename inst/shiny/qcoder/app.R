@@ -272,7 +272,8 @@ if (interactive()) {
                                         this_doc_path = input$this_doc_path)
              codes <- get_codes(new_text())
              if (length(codes) > 0){
-               qcoder::add_discovered_code(codes, readRDS(codes_df_path), codes_df_path)
+               x <- readRDS(codes_df_path)
+               qcoder::add_discovered_code(codes, x, codes_df_path)
              }
            }
     )
