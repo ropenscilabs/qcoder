@@ -31,7 +31,7 @@ read_raw_data <- function(folder_path = "/documents/",
       file_list <- dir(folder_path)
       doc_text  <- character()
       # This is because not all users will be able to install textreadr.
-      if (!texreadr_present){
+      if (!requireNamespace("textreadr", quietly = TRUE)){
         for (i in 1:length(file_list)){
           doc_text[i] <- readr::read_file(paste0(folder_path, file_list[i]))
         }
@@ -69,7 +69,7 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
           return()
         }
         doc_text  <- character()
-        if (!textreadr_present){
+        if (!requireNamespace("textreadr", quietly = TRUE)){
           for (i in 1:length(file_list)){
             doc_text[i] <- readr::read_file(paste0(file_path,
                                                            file_list[i]))
