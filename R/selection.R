@@ -25,10 +25,7 @@ make_js_listener <- function(editor_name, position, new_text, selected_text){
 #'
 #' @param selection The selection of text to be coded
 #' @param codes The code or codes to be added to the document
-#'
-#' @return
-#'
-#' @examples
+
 add_codes_to_selection <-  function(selection, codes) {
 
   code_vec <- paste0("#", codes)
@@ -41,8 +38,8 @@ add_codes_to_selection <-  function(selection, codes) {
 }
 
 
-replace_selection <- function(text, selection, replacement){
+replace_selection <- function(text_search, selection, replacement){
 
-  text2 <- sub(pattern = selection, replacement = replacement, x = text, fixed = TRUE)
+  text2 <- sub(pattern = selection, replacement = replacement, x = text_search, fixed = TRUE)
   text2
 }
