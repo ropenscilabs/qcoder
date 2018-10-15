@@ -6,7 +6,7 @@ Lightweight package to conduct qualitative coding
 <p>
 <img src="images/hex/imgHex.png", width="150", align="right" />
 </p>
-tl;dr
+tl,dr
 -----
 
 To test with some sample data:
