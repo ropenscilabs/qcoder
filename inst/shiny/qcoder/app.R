@@ -28,7 +28,7 @@ if (interactive()) {
       verbatimTextOutput("project_directory"),
       shinyDirButton('select_project', label="Select Folder", title="Select your project folder",
                      buttonType = "default", class = NULL),
-      actionButton("update", "Update project data",
+      actionButton("update", "Reload project for data updating",
                            icon = icon("refresh")),
       tags$br(),
       tags$br(),
