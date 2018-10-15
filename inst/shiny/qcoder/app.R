@@ -12,6 +12,7 @@ if (interactive()) {
   library(rlang)
   library(shinyFiles)
   library(shinythemes)
+  library(DT)
 
   library(shinyjs)
   library(here)
@@ -54,7 +55,7 @@ if (interactive()) {
             ) # close document sub-tabset
        ), # close editor tab panel
        tabPanel("Codes",
-                tableOutput('code_table')
+                dataTableOutput('code_table')
 
       ), # close codes tab panel
      # tabPanel("Add Code",
@@ -62,15 +63,15 @@ if (interactive()) {
 
       #), # close add code panel
       tabPanel("Coded data",
-               tableOutput('coded')
+               dataTableOutput('coded')
 
       ), # close coded tab panel
       tabPanel("Units",
-               tableOutput('units_table')
+               dataTableOutput('units_table')
 
       ), # close units panel
      tabPanel("Summary",
-              verbatimTextOutput('code_freq')
+              dataTableOutput('code_freq')
 
      ),
      tabPanel("Add data",
@@ -199,37 +200,40 @@ if (interactive()) {
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
 
       # Get the code data for display
-      output$code_table <- renderTable({
+      output$code_table <- DT::renderDataTable({
           if (codes_df_path == "") {return()}
           code_df <- readRDS(codes_df_path)
-          code_df
+          DT::datatable(code_df,options = list(paging = FALSE))
         })
 
       # Get the units data for display
       p("Units are units of analysis which might be individuals, organizations,
         events, locations or any other entity relevant to the project.")
-      output$units_table <- renderTable({
+      output$units_table <- DT::renderDataTable({
         if (units_df_path == "") {return()}
         units_df <- readRDS(units_df_path)
-        units_df
+        DT::datatable(units_df,options = list(paging = FALSE))
       })
 
         # Get the parsed values with codes.
-        output$coded <- renderTable({
+        output$coded <- DT::renderDataTable({
           if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
-          parsed
+          DT::datatable(parsed,options = list(paging = FALSE))
         })
 
-        output$code_freq <- renderPrint({
+      output$code_freq <- DT::renderDataTable({
           if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df)
-          parsed %>% dplyr::group_by(as.factor(qcode)) %>% dplyr::summarise(n = n()) %>% knitr::kable()
+          parsed %>% dplyr::group_by(as.factor(qcode)) %>%
+              dplyr::summarise(n = n()) %>%
+              rename('code'='as.factor(qcode)') %>%
+              DT::datatable(options = list(paging = FALSE))
         })
     }) #close observer
 
