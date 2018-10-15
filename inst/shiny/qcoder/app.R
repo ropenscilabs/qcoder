@@ -27,7 +27,9 @@ if (interactive()) {
       tags$p("Select your project folder"),
       verbatimTextOutput("project_directory"),
       shinyDirButton('select_project', label="Select Folder", title="Select your project folder",
-                    buttonType = "default", class = NULL),
+                     buttonType = "default", class = NULL),
+      actionButton("update", "Update project data",
+                           icon = icon("refresh")),
       tags$br(),
       tags$br(),
       # Start tabset
@@ -99,7 +101,7 @@ if (interactive()) {
     if (user_folder != ""){
          shinyDirChoose(input, 'select_project',  roots = user_folder)
     }
-    observeEvent(c(input$select_project, input$file),{
+    observeEvent(c(input$select_project, input$file, input$update),{
       req(input$select_project)
       if (input$select_project[1] == ""){return()}
       output$project_directory <- renderPrint({parseDirPath(user_folder,
@@ -279,7 +281,7 @@ if (interactive()) {
     )
 
     # Adding a new document
-    observeEvent(input$select_project,{
+    observeEvent(c(input$select_project,input$update),{
        doc_folder <- c(paste0(input$select_project, "/documents"))
        shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
     })
@@ -291,7 +293,7 @@ if (interactive()) {
     })
 
     # Set up for associating units and documents
-    observeEvent(input$select_project, {
+    observeEvent(c(input$select_project,input$update), {
       output$checkbox_links <- renderUI({
         units_df <- as.data.frame(readRDS(units_df_path))
         units_docs_df <- as.data.frame(readRDS(units_docs_path))
