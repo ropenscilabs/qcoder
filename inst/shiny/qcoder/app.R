@@ -77,9 +77,12 @@ if (interactive()) {
      ),
      tabPanel("Add data",
              tags$h2("Add new document"),
-             shinyFilesButton('file', label="Select File", title="Select your new files from
-                            the project folder", multiple= TRUE,
-                            buttonType = "default", class = NULL),
+             ## shinyFilesButton('file', label="Select File", title="Select your new files from
+             ##                the project folder", multiple= TRUE,
+             ##                buttonType = "default", class = NULL),
+             ## textInput("file",  "The full name of your file in the document folder"),
+             uiOutput("select_new_document"),
+             uiOutput('add_new_document'),
              tags$h2("Add new unit"),
              textInput("new_unit",  "Unit name"),
              uiOutput('add_new_unit')
