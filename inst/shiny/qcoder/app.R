@@ -281,12 +281,30 @@ if (interactive()) {
     )
 
     # Adding a new document
-    observeEvent(c(input$select_project,input$update),{
-       doc_folder <- c(paste0(input$select_project, "/documents"))
-       shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
+      observeEvent(c(input$select_project,input$update),{
+          req(input$select_project)
+          doc_folder <- paste0(parseDirPath(user_folder,
+                                     input$select_project),"/documents/")
+          text_df <- readRDS(docs_df_path)
+          old_docs <- text_df[["doc_path"]]
+          files.series <- list.files(doc_folder)
+          files.series <- grep('.txt$',
+                                   setdiff(files.series,old_docs),
+                                   value=TRUE,perl=TRUE)
+          
+          output$select_new_document <- renderUI({             
+              selectInput("file",
+                          label = "Select a new '.txt' file in the document folder of the project",
+                          choices = files.series
+                          )
+          })
+      })
+      
+    output$add_new_document <- renderUI({
+      actionButton("send_new_document", "Add new document")
     })
 
-    observeEvent(input$file, {
+    observeEvent(input$send_new_document, {
       doc_folder <- c(paste0(project_path, "/documents/"))
       files <- parseFilePaths(doc_folder, input$file)
       qcoder::add_new_documents(files, doc_folder, docs_df_path)
