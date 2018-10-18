@@ -101,7 +101,7 @@ if (interactive()) {
 
 
     # Select the project directory
-    # user_folder <- c('Select Volume' = Sys.getenv("HOME"))
+    user_folder <- c('Select Volume' = Sys.getenv("HOME"))
     if (user_folder != ""){
          shinyDirChoose(input, 'select_project',  roots = user_folder)
     }
@@ -300,7 +300,7 @@ if (interactive()) {
     )
 
     # Adding a new document
-      observeEvent(c(input$add_new_document),{
+      observeEvent(c(input$add_new_document,input$update),{
           req(input$select_project)
           doc_folder <- c(paste0(project_path, "/documents/"))
           text_df <- readRDS(docs_df_path)
