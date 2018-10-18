@@ -76,13 +76,14 @@ if (interactive()) {
 
      ),
      tabPanel("Add data",
-             tags$h2("Add new document"),
+              tags$h2("Add new document"),
+              actionButton("add_new_document", "Add a new document",
+                     icon = icon("layer-plus")),
              ## shinyFilesButton('file', label="Select File", title="Select your new files from
              ##                the project folder", multiple= TRUE,
              ##                buttonType = "default", class = NULL),
              ## textInput("file",  "The full name of your file in the document folder"),
-             uiOutput("select_new_document"),
-             uiOutput('add_new_document'),
+             uiOutput("selectsend_new_document"),
              tags$h2("Add new unit"),
              textInput("new_unit",  "Unit name"),
              uiOutput('add_new_unit')
@@ -100,7 +101,7 @@ if (interactive()) {
 
 
     # Select the project directory
-    user_folder <- c('Select Volume' = Sys.getenv("HOME"))
+    # user_folder <- c('Select Volume' = Sys.getenv("HOME"))
     if (user_folder != ""){
          shinyDirChoose(input, 'select_project',  roots = user_folder)
     }
@@ -284,7 +285,7 @@ if (interactive()) {
     )
 
     # Adding a new document
-      observeEvent(c(input$select_project,input$update),{
+      observeEvent(c(input$add_new_document),{
           req(input$select_project)
           doc_folder <- c(paste0(project_path, "/documents/"))
           text_df <- readRDS(docs_df_path)
@@ -294,19 +295,19 @@ if (interactive()) {
                                    setdiff(files.series,old_docs),
                                    value=TRUE,perl=TRUE)
           
-          output$select_new_document <- renderUI({             
+          output$selectsend_new_document <- renderUI({
+              tagList(
               selectInput("file",
                           label = "Select a new '.txt' file in the document folder of the project",
                           choices = files.series
-                          )
+                          ),
+              actionButton("send_new_document", "Send new document",
+                           icon = icon("share-square"))
+              )
           })
       })
       
-    output$add_new_document <- renderUI({
-        actionButton("send_new_document", "Add new document",
-                     icon = icon("share-square"))
-    })
-
+             
     observeEvent(input$send_new_document, {
       doc_folder <- c(paste0(project_path, "/documents/"))
       files <- list(name = input$file)
