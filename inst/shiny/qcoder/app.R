@@ -325,7 +325,11 @@ if (interactive()) {
     observeEvent(input$send_new_document, {
       doc_folder <- c(paste0(project_path, "/documents/"))
       files <- list(name = input$file)
-      qcoder::add_new_documents(files, docs_df_path, doc_folder)
+      if (files != "") {
+          qcoder::add_new_documents(files, docs_df_path, doc_folder)
+      }  else {
+          warning("no new file selected")
+      }
     })
 
     # Set up for associating units and documents
