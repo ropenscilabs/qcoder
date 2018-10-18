@@ -78,7 +78,7 @@ if (interactive()) {
      tabPanel("Add data",
               tags$h2("Add new document"),
               actionButton("add_new_document", "Add a new document",
-                     icon = icon("layer-plus")),
+                     icon = icon("plus")),
              ## shinyFilesButton('file', label="Select File", title="Select your new files from
              ##                the project folder", multiple= TRUE,
              ##                buttonType = "default", class = NULL),
