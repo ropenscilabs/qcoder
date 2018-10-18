@@ -303,7 +303,8 @@ if (interactive()) {
       })
       
     output$add_new_document <- renderUI({
-      actionButton("send_new_document", "Add new document")
+        actionButton("send_new_document", "Add new document",
+                     icon = icon("share-square"))
     })
 
     observeEvent(input$send_new_document, {
