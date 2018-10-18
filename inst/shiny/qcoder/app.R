@@ -286,8 +286,7 @@ if (interactive()) {
     # Adding a new document
       observeEvent(c(input$select_project,input$update),{
           req(input$select_project)
-          doc_folder <- paste0(parseDirPath(user_folder,
-                                     input$select_project),"/documents/")
+          doc_folder <- c(paste0(project_path, "/documents/"))
           text_df <- readRDS(docs_df_path)
           old_docs <- text_df[["doc_path"]]
           files.series <- list.files(doc_folder)
@@ -309,8 +308,8 @@ if (interactive()) {
 
     observeEvent(input$send_new_document, {
       doc_folder <- c(paste0(project_path, "/documents/"))
-      files <- parseFilePaths(doc_folder, input$file)
-      qcoder::add_new_documents(files, doc_folder, docs_df_path)
+      files <- list(name = input$file)
+      qcoder::add_new_documents(files, docs_df_path, doc_folder)
     })
 
     # Set up for associating units and documents
