@@ -306,14 +306,12 @@ if (interactive()) {
           text_df <- readRDS(docs_df_path)
           old_docs <- text_df[["doc_path"]]
           files.series <- list.files(doc_folder)
-          files.series <- grep('.txt$',
-                                   setdiff(files.series,old_docs),
-                                   value=TRUE,perl=TRUE)
+          files.series <- setdiff(files.series,old_docs)
           
           output$selectsend_new_document <- renderUI({
               tagList(
               selectInput("file",
-                          label = "Select a new '.txt' file in the document folder of the project",
+                          label = "Select a new file in the document folder of the project",
                           choices = files.series
                           ),
               actionButton("send_new_document", "Send new document",
