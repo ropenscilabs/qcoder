@@ -135,6 +135,29 @@ add_unit <- function(units_df, new_unit, units_df_path){
   invisible(TRUE)
 }
 
+#' Add code
+#' Append a new unit record to the existing data frame
+#' @param codes_df Existing codes data frame
+#' @param new_code  text name of a new code (single name only)
+#' @param new_code_desc  text description of the code
+#' @param codes_df_path  full path to the codes data frame
+#' @export
+
+add_code <- function(codes_df, new_code, new_code_desc, codes_df_path){
+  if (new_code %in% codes_df$code){
+    warning("A code with the name already exists, please choose a unique name.")
+    return()
+  }
+  new_id <- as.integer(max(codes_df$code_id) +1)
+  new_row <- data.frame("code_id" = new_id, "code" = new_code,
+                        "code.description" = new_code_desc)
+  codes_df <- rbind(codes_df, new_row)
+  saveRDS(codes_df, file = codes_df_path)
+  invisible(TRUE)
+}
+
+
+
 #' Format text as HTML
 #' Minimal conversion of a text to html
 #' @param text text to be converted
