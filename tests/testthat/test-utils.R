@@ -65,3 +65,18 @@ test_that("Converting to HTML with two lines works and multiple tags works", {
   expected <- paste0(e1, e2)
   expect_equal(txt2html(text), expected)
 })
+
+test_that("Adding a code works", {
+  new_code <- "test"
+  new_description <- "new code description"
+  codes_df_test <- readRDS("data/qcoder_codes_my_qcoder_project.rds")
+  add_code(codes_df_test, new_code, new_description,
+           paste0(tempdir(),"/codes_test.rds"))
+  codes_df_test <- readRDS(paste0(tempdir(),"/codes_test.rds"))
+  expect_equal(tail(codes_df_test, 1),
+               data.frame(code_id = as.integer(7),
+                          code = "test",
+                          code.description ="new code description",
+                          stringsAsFactors = FALSE))
+  unlink(paste0(tempdir(), "/codes_test.rds"))
+})
