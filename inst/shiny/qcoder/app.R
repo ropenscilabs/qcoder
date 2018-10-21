@@ -81,6 +81,7 @@ if (interactive()) {
              shinyFilesButton('file', label="Select File", title="Select your new files from
                             the project folder", multiple= TRUE,
                             buttonType = "default", class = NULL),
+
              tags$h2("Add new unit"),
              textInput("new_unit",  "Unit name"),
              uiOutput('add_new_unit')
@@ -286,14 +287,14 @@ if (interactive()) {
 
     # Adding a new document
     observeEvent(c(input$select_project,input$update),{
-       doc_folder <- c(paste0(input$select_project, "/documents"))
+       doc_folder <- c(paste0(project_path, "/documents"))
        shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
     })
 
     observeEvent(input$file, {
       doc_folder <- c(paste0(project_path, "/documents/"))
       files <- parseFilePaths(doc_folder, input$file)
-      qcoder::add_new_documents(files, doc_folder, docs_df_path)
+      qcoder::add_new_documents(files, docs_df_path, doc_folder)
     })
 
     # Set up for associating units and documents
@@ -307,7 +308,8 @@ if (interactive()) {
         this_selected_df <- units_docs_df %>% filter(doc_path == input$this_doc_path)
         this_selected <- as.character(this_selected_df$unit_id)
 
-        checkboxGroupInput(inputId =  "unit_doc_links", label = "Units connected to this document:",
+        checkboxGroupInput(inputId =  "unit_doc_links",
+                                 label = "Units connected to this document:",
                                  choiceNames = checknames,
                                  choiceValues = checkvalues,
                                  selected = this_selected
