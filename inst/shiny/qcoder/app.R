@@ -83,7 +83,12 @@ if (interactive()) {
 
              tags$h2("Add new unit"),
              textInput("new_unit",  "Unit name"),
-             uiOutput('add_new_unit')
+             uiOutput('add_new_unit'),
+             tags$h2("Add new code"),
+             uiOutput("add_new_code"),
+             textInput("new_code", "Code"),
+             textInput("new_code_desc", "Description")
+
 
      ) # close add data tab
     ) # close tab set
@@ -331,6 +336,14 @@ if (interactive()) {
     observeEvent(   input$add_new_unit, {
       units_df <- readRDS(units_df_path)
       qcoder::add_unit(units_df, input$new_unit, units_df_path)
+    })
+    output$add_new_code <- renderUI({
+      actionButton("add_new_code", "Add code")
+    })
+    observeEvent(   input$add_new_code, {
+      codes_df <- readRDS(codes_df_path)
+      qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
+                       codes_df_path)
     })
   } # close server
 
