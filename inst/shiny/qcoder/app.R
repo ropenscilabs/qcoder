@@ -66,7 +66,7 @@ if (interactive()) {
       #), # close add code panel
       tabPanel("Coded data",
                ## Button
-               downloadButton("download_coded", "Download the table ('.csv')")
+               downloadButton("download_coded", "Download the table ('.csv')"),
                dataTableOutput('coded')
 
       ), # close coded tab panel
