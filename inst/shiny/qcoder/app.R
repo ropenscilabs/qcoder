@@ -12,6 +12,7 @@ if (interactive()) {
   library(rlang)
   library(shinyFiles)
   library(shinythemes)
+  library(DT)
 
   library(shinyjs)
   library(here)
@@ -56,7 +57,7 @@ if (interactive()) {
             ) # close document sub-tabset
        ), # close editor tab panel
        tabPanel("Codes",
-                tableOutput('code_table')
+                dataTableOutput('code_table')
 
       ), # close codes tab panel
      # tabPanel("Add Code",
@@ -64,29 +65,31 @@ if (interactive()) {
 
       #), # close add code panel
       tabPanel("Coded data",
-               tableOutput('coded')
+               dataTableOutput('coded')
 
       ), # close coded tab panel
       tabPanel("Units",
-               tableOutput('units_table')
+               dataTableOutput('units_table')
 
       ), # close units panel
      tabPanel("Summary",
-              verbatimTextOutput('code_freq')
+              dataTableOutput('code_freq')
 
      ),
      tabPanel("Add data",
-              tags$h2("Add new document"),
-              actionButton("add_new_document", "Add a new document",
-                     icon = icon("plus")),
-             ## shinyFilesButton('file', label="Select File", title="Select your new files from
-             ##                the project folder", multiple= TRUE,
-             ##                buttonType = "default", class = NULL),
-             ## textInput("file",  "The full name of your file in the document folder"),
-             uiOutput("selectsend_new_document"),
+             tags$h2("Add new document"),
+             shinyFilesButton('file', label="Select File", title="Select your new files from
+                            the project folder", multiple= TRUE,
+                            buttonType = "default", class = NULL),
+
              tags$h2("Add new unit"),
              textInput("new_unit",  "Unit name"),
-             uiOutput('add_new_unit')
+             uiOutput('add_new_unit'),
+             tags$h2("Add new code"),
+             uiOutput("add_new_code"),
+             textInput("new_code", "Code"),
+             textInput("new_code_desc", "Description")
+
 
      ) # close add data tab
     ) # close tab set
@@ -128,9 +131,7 @@ if (interactive()) {
                                    "/data_frames/qcoder_unit_document_map_",
                                    basename(project_path), ".rds")
 
-      project.status <- reactiveValues(saved=TRUE
-                                       )
-      
+
       my_choices <- reactive({
         req(input$select_project)
         if (input$select_project[1] == ""){return()}
@@ -148,18 +149,9 @@ if (interactive()) {
             selectInput('this_doc_path', 'Document', my_choices())
          })
 
-      output$saveButton <- renderUI({
-          if (project.status$saved) {
-              saving.alert <- "check-circle"
-          } else {
-              saving.alert <- "exclamation-triangle"
-          }        
-          actionButton("submit", "Save changes",icon= icon(saving.alert))
-      })
-
-      observeEvent(input$submit,{
-          project.status$saved=TRUE
-      })
+    output$saveButton <- renderUI({
+      actionButton("submit", "Save changes")
+    })
 
     # Functions related to rendering an individual text document in an editor and
     # verbatim
@@ -213,44 +205,43 @@ if (interactive()) {
          )
        })
 
-      observeEvent(input$replace,{
-          project.status$saved=FALSE
-          })
-
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
 
       # Get the code data for display
-      output$code_table <- renderTable({
+      output$code_table <- DT::renderDataTable({
           if (codes_df_path == "") {return()}
           code_df <- readRDS(codes_df_path)
-          code_df
+          DT::datatable(code_df,options = list(paging = FALSE))
         })
 
       # Get the units data for display
       p("Units are units of analysis which might be individuals, organizations,
         events, locations or any other entity relevant to the project.")
-      output$units_table <- renderTable({
+      output$units_table <- DT::renderDataTable({
         if (units_df_path == "") {return()}
         units_df <- readRDS(units_df_path)
-        units_df
+        DT::datatable(units_df,options = list(paging = FALSE))
       })
 
         # Get the parsed values with codes.
-        output$coded <- renderTable({
+        output$coded <- DT::renderDataTable({
           if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
-          parsed
+          DT::datatable(parsed,options = list(paging = FALSE))
         })
 
-        output$code_freq <- renderPrint({
+      output$code_freq <- DT::renderDataTable({
           if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df)
-          parsed %>% dplyr::group_by(as.factor(qcode)) %>% dplyr::summarise(n = n()) %>% knitr::kable()
+          parsed %>% dplyr::group_by(as.factor(qcode)) %>%
+              dplyr::summarise(n = n()) %>%
+              rename('code'='as.factor(qcode)') %>%
+              DT::datatable(options = list(paging = FALSE))
         })
     }) #close observer
 
@@ -300,37 +291,15 @@ if (interactive()) {
     )
 
     # Adding a new document
-      observeEvent(c(input$add_new_document,input$update),{
-          req(input$select_project)
-          doc_folder <- c(paste0(project_path, "/documents/"))
-          text_df <- readRDS(docs_df_path)
-          old_docs <- text_df[["doc_path"]]
-          files.series <- list.files(doc_folder)
-          files.series <- grep('.txt$',
-                                   setdiff(files.series,old_docs),
-                                   value=TRUE,perl=TRUE)
-          
-          output$selectsend_new_document <- renderUI({
-              tagList(
-              selectInput("file",
-                          label = "Select a new '.txt' file in the document folder of the project",
-                          choices = files.series
-                          ),
-              actionButton("send_new_document", "Send new document",
-                           icon = icon("share-square"))
-              )
-          })
-      })
-      
-             
-    observeEvent(input$send_new_document, {
+    observeEvent(c(input$select_project,input$update),{
+       doc_folder <- c(paste0(project_path, "/documents"))
+       shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
+    })
+
+    observeEvent(input$file, {
       doc_folder <- c(paste0(project_path, "/documents/"))
-      files <- list(name = input$file)
-      if (files != "") {
-          qcoder::add_new_documents(files, docs_df_path, doc_folder)
-      }  else {
-          warning("no new file selected")
-      }
+      files <- parseFilePaths(doc_folder, input$file)
+      qcoder::add_new_documents(files, docs_df_path, doc_folder)
     })
 
     # Set up for associating units and documents
@@ -344,7 +313,8 @@ if (interactive()) {
         this_selected_df <- units_docs_df %>% filter(doc_path == input$this_doc_path)
         this_selected <- as.character(this_selected_df$unit_id)
 
-        checkboxGroupInput(inputId =  "unit_doc_links", label = "Units connected to this document:",
+        checkboxGroupInput(inputId =  "unit_doc_links",
+                                 label = "Units connected to this document:",
                                  choiceNames = checknames,
                                  choiceValues = checkvalues,
                                  selected = this_selected
@@ -370,6 +340,14 @@ if (interactive()) {
     observeEvent(   input$add_new_unit, {
       units_df <- readRDS(units_df_path)
       qcoder::add_unit(units_df, input$new_unit, units_df_path)
+    })
+    output$add_new_code <- renderUI({
+      actionButton("add_new_code", "Add code")
+    })
+    observeEvent(   input$add_new_code, {
+      codes_df <- readRDS(codes_df_path)
+      qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
+                       codes_df_path)
     })
   } # close server
 

@@ -123,11 +123,9 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
 
   if (file.exists(file_path)){
       code_data <- readr::read_csv(file = file_path,
-                                  col_types = readr::cols(code_id = "i",
-                                                   code = "c",
-                                                   code.description = "c"))
+                                  col_types = "icc")
       # validate column names etc here
-      code_data$code <- as.factor(code_data$code)
+      #code_data$code <- as.character(code_data$code)
    } else {
       code_data <- create_empty_code_file(project_name = project_path , codes_df_path = codes_df_path)
    }
@@ -168,8 +166,8 @@ create_empty_code_file <-function( data_frame_name = "qcoder_codes",
   code_data <- as.data.frame(matrix(data = NA, 0, length(cn)))
   colnames(code_data) <- cn
   code_data$code_description <- as.character(code_data$code.description)
-  code_data$code_id <- as.numeric(code_data$code_id)
-  code_data$code <-as.factor(code_data$code)
+  code_data$code_id <- as.integer(code_data$code_id)
+  code_data$code <-as.character(code_data$code)
   saveRDS(code_data, file = codes_df_path)
 
 }
@@ -205,8 +203,7 @@ read_unit_data <- function(file_path = "units.csv",
                               data_frame_name, "_", project_name, ".rds" )
   }
   units <- readr::read_csv(file = file_path,
-                           col_types = readr::cols(unit_id = "i",
-                                       name = "c"))
+                           col_types = "ic" )
   # validate column names etc here
 
   # try catch this save

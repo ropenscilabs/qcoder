@@ -43,8 +43,8 @@ test_that("discovered codes are added to the existing codes data frame correctly
   # The function should have saved the data frame to the save_path folder
   input <- readRDS(paste0(tempdir(), "/qcoder_codes_my_qcoder_project.rds"))
 
-  expect_equal(as.character(dplyr::pull(input,"code")[8]), "new_tag")
-  expect_equal(as.character(dplyr::pull(input,"code_id")[8]), "8")
+  expect_equal(as.character(dplyr::pull(input,"code")[7]), "new_tag")
+  expect_equal(as.integer(dplyr::pull(input,"code_id")[7]), 7)
   unlink(paste0(tempdir(), "/qcoder_codes_my_qcoder_project.rds"))
 })
 
