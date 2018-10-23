@@ -240,6 +240,10 @@ if (interactive()) {
       output$download_coded <- downloadHandler(
           filename = paste("coded-data-", Sys.Date(), ".csv", sep=""),
           content = function(file) {
+              if (docs_df_path == "" | codes_df_path == "" ) {return()}
+              text_df <- readRDS(docs_df_path)
+              code_df <- readRDS(codes_df_path)
+              parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)          
               write.csv(parsed, file, row.names = FALSE)
           }
       )
