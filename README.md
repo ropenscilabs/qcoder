@@ -21,7 +21,7 @@ To test with some sample data:
 Click "Select project folder" and "my qcoder project."  
 There are two ways to add codes. To use an existing code, highlight the
 text to be coded, select the code, click "Add selected code" and then
-"Save changes." Text to be assigned a new (or exisitng) code should be
+"Save changes." Text to be assigned a new (or existing) code should be
 surrounded by (QCODER) (/QCODER) tags. The closing tag is followed
 immediately by the code enclosed in curly brackets and prefixed with a
 \# for example {\#samplecode}
@@ -138,7 +138,7 @@ sample data a minimum units file is used, but additional columns can be
 used to assign attribute data.
 
 The default file name is units.csv; if stored in a spreadsheet this can
-be creatd by using "Save As" csv.
+be created by using "Save As" csv.
 
 (Treatment of units is a work in progress and subject to change.)
 
