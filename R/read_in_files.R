@@ -154,7 +154,7 @@ create_empty_code_file <-function( data_frame_name = "qcoder_codes",
                                    file_path = "data_frames",
                                    project_name = ""){
   if (project_path == "" & project_name != ""){
-    project_path <- paste0(getwd(), project_name)
+    project_path <- paste0(getwd(), "/", project_name)
   }
   if (project_name != ""){
     file_path <- paste0(project_path, "/", file_path)
