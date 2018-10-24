@@ -58,12 +58,7 @@ if (interactive()) {
        ), # close editor tab panel
        tabPanel("Codes",
                 dataTableOutput('code_table')
-
       ), # close codes tab panel
-     # tabPanel("Add Code",
-      #         actionButton("submitNewCode", "Submit")
-
-      #), # close add code panel
       tabPanel("Coded data",
                dataTableOutput('coded')
 
@@ -226,7 +221,12 @@ if (interactive()) {
       output$code_table <- DT::renderDataTable({
           if (codes_df_path == "") {return()}
           code_df <- readRDS(codes_df_path)
-          DT::datatable(code_df,options = list(paging = FALSE))
+          DT::datatable(code_df,
+                        extensions = 'Buttons',
+                        options = list(paging = TRUE,
+                                  dom = 'Bfrtip',
+                                  buttons = c('copy', 'csv', 'excel', 'pdf',
+                                              'print')))
         })
 
       # Get the units data for display
