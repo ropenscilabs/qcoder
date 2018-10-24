@@ -133,7 +133,7 @@ if (interactive()) {
 
       project.status <- reactiveValues(saved=TRUE
                                        )
-      
+
       my_choices <- reactive({
         req(input$select_project)
         if (input$select_project[1] == ""){return()}
@@ -156,7 +156,7 @@ if (interactive()) {
               saving.alert <- "check-circle"
           } else {
               saving.alert <- "exclamation-triangle"
-          }        
+          }
           actionButton("submit", "Save changes",icon= icon(saving.alert))
       })
 
@@ -307,11 +307,13 @@ if (interactive()) {
 
     # Adding a new document
     observeEvent(c(input$select_project,input$update),{
+       if (!exists("project_path")){return()}
        doc_folder <- c(paste0(project_path, "/documents"))
        shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
     })
 
     observeEvent(input$file, {
+      if (!exists("project_path")){return()}
       doc_folder <- c(paste0(project_path, "/documents/"))
       files <- parseFilePaths(doc_folder, input$file)
       qcoder::add_new_documents(files, docs_df_path, doc_folder)
