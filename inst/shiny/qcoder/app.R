@@ -131,6 +131,8 @@ if (interactive()) {
                                    "/data_frames/qcoder_unit_document_map_",
                                    basename(project_path), ".rds")
 
+      project.status <- reactiveValues(saved=TRUE
+                                       )
 
       my_choices <- reactive({
         req(input$select_project)
@@ -149,9 +151,18 @@ if (interactive()) {
             selectInput('this_doc_path', 'Document', my_choices())
          })
 
-    output$saveButton <- renderUI({
-      actionButton("submit", "Save changes")
-    })
+      output$saveButton <- renderUI({
+          if (project.status$saved) {
+              saving.alert <- "check-circle"
+          } else {
+              saving.alert <- "exclamation-triangle"
+          }
+          actionButton("submit", "Save changes",icon= icon(saving.alert))
+      })
+
+      observeEvent(input$submit,{
+          project.status$saved=TRUE
+      })
 
     # Functions related to rendering an individual text document in an editor and
     # verbatim
@@ -204,6 +215,10 @@ if (interactive()) {
            )
          )
        })
+
+      observeEvent(input$replace,{
+          project.status$saved=FALSE
+          })
 
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
 
@@ -292,11 +307,13 @@ if (interactive()) {
 
     # Adding a new document
     observeEvent(c(input$select_project,input$update),{
+       if (!exists("project_path")){return()}
        doc_folder <- c(paste0(project_path, "/documents"))
        shinyFileChoose(input, 'file', roots = c("documents" = doc_folder))
     })
 
     observeEvent(input$file, {
+      if (!exists("project_path")){return()}
       doc_folder <- c(paste0(project_path, "/documents/"))
       files <- parseFilePaths(doc_folder, input$file)
       qcoder::add_new_documents(files, docs_df_path, doc_folder)
