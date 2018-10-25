@@ -127,7 +127,7 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
       # validate column names etc here
       #code_data$code <- as.character(code_data$code)
    } else {
-      code_data <- create_empty_code_file(project_name = project_path , codes_df_path = codes_df_path)
+      code_data <- create_empty_code_file(project_name = project_name , codes_df_path = codes_df_path)
    }
 
   # try catch this save
