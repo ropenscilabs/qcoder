@@ -126,13 +126,15 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
                                   col_types = "icc")
       # validate column names etc here
       #code_data$code <- as.character(code_data$code)
+
+      # try catch this save
+      saveRDS(code_data, file = codes_df_path)
+      invisible(TRUE)
    } else {
-      code_data <- create_empty_code_file(project_name = project_name , codes_df_path = codes_df_path)
+      create_empty_code_file(project_name = project_name , codes_df_path = codes_df_path)
    }
 
-  # try catch this save
-  saveRDS(code_data, file = codes_df_path)
-  invisible(TRUE)
+
 }
 
 #' Create an empty codes data set
@@ -152,7 +154,7 @@ create_empty_code_file <-function( data_frame_name = "qcoder_codes",
                                    codes_df_path = "",
                                    project_path = "",
                                    file_path = "data_frames",
-                                   project_name = ""){
+                                   project_name = "" ){
   if (project_path == "" & project_name != ""){
     project_path <- paste0(getwd(), project_name)
   }
