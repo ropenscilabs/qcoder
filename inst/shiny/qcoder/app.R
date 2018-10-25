@@ -57,6 +57,7 @@ if (interactive()) {
             ) # close document sub-tabset
        ), # close editor tab panel
        tabPanel("Codes",
+                tags$p("You must open the application in browser to download data."),
                 dataTableOutput('code_table')
       ), # close codes tab panel
       tabPanel("Coded data",
@@ -218,7 +219,7 @@ if (interactive()) {
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
 
       # Get the code data for display
-      output$code_table <- DT::renderDataTable({
+      output$code_table <- DT::renderDataTable(server = FALSE, {
           if (codes_df_path == "") {return()}
           code_df <- readRDS(codes_df_path)
           DT::datatable(code_df,
