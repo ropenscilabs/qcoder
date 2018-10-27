@@ -153,19 +153,42 @@ create_empty_code_file <-function( data_frame_name = "qcoder_codes",
                                    project_path = "",
                                    file_path = "data_frames",
                                    project_name = ""){
-  if (project_path == "" & project_name != ""){
+
+  if (codes_df_path != ""){
+    df_dir <- dirname(codes_df_path)
+    dir.create(df_dir, recursive = TRUE, showWarnings = FALSE)
+  } else  if (project_path == "" & project_name != ""){
     project_path <- paste0(getwd(), "/", project_name)
-  }
-  if (project_name != ""){
-    file_path <- paste0(project_path, "/", file_path)
-    codes_df_path <- paste0(file_path, "/",
-                              data_frame_name, "_", project_name, ".rds" )
+    codes_df_path <- paste0(project_path, "/", file_path, "/",
+                            data_frame_name, "_", project_name, ".rds" )
+
+      dir.create(paste0(project_path, "/", file_path),
+                 recursive = TRUE, showWarnings = FALSE)
+
+  } else if ( project_path != "" &  project_name == ""){
+    codes_df_path <- paste0(project_path, "/", file_path, "/",
+                              data_frame_name, "_",  ".rds" )
+
+      dir.create(paste0(project_path, "/", file_path), recursive = TRUE, showWarnings = FALSE)
+
+  } else if (project_path != "" & project_name != ""){
+    codes_df_path <- paste0(project_path, "/", project_name, "/", file_path, "/",
+                            data_frame_name, "_", project_name,  ".rds" )
+      dir.create(paste0(project_path, "/", project_name, "/", file_path),
+                 recursive = TRUE, showWarnings = FALSE)
+
+  } else if (project_path == "" & project_name == ""){
+      project_path <- getwd()
+      codes_df_path <- paste0(project_path, "/", file_path, "/",
+                              data_frame_name, "_",  ".rds" )
+        dir.create(paste0(project_path, "/", file_path), recursive = TRUE,
+                   showWarnings = FALSE)
   }
 
   cn <- c("code_id", "code", "code.description")
   code_data <- as.data.frame(matrix(data = NA, 0, length(cn)))
   colnames(code_data) <- cn
-  code_data$code_description <- as.character(code_data$code.description)
+  code_data$code.description <- as.character(code_data$code.description)
   code_data$code_id <- as.integer(code_data$code_id)
   code_data$code <-as.character(code_data$code)
   saveRDS(code_data, file = codes_df_path)
