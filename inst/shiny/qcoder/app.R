@@ -57,13 +57,9 @@ if (interactive()) {
             ) # close document sub-tabset
        ), # close editor tab panel
        tabPanel("Codes",
+                tags$p("You must open the application in browser to download data."),
                 dataTableOutput('code_table')
-
       ), # close codes tab panel
-     # tabPanel("Add Code",
-      #         actionButton("submitNewCode", "Submit")
-
-      #), # close add code panel
       tabPanel("Coded data",
                dataTableOutput('coded')
 
@@ -223,10 +219,15 @@ if (interactive()) {
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
 
       # Get the code data for display
-      output$code_table <- DT::renderDataTable({
+      output$code_table <- DT::renderDataTable(server = FALSE, {
           if (codes_df_path == "") {return()}
           code_df <- readRDS(codes_df_path)
-          DT::datatable(code_df,options = list(paging = FALSE))
+          DT::datatable(code_df,
+                        extensions = 'Buttons',
+                        options = list(paging = TRUE,
+                                  dom = 'Bfrtip',
+                                  buttons = c('copy', 'csv', 'excel', 'pdf',
+                                              'print')))
         })
 
       # Get the units data for display
