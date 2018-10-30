@@ -1,15 +1,18 @@
 ---
-output: 
- md_document
+output: github_document
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-# QCoder
-Lightweight package to conduct qualitative coding  
-<p><img src="images/hex/imgHex.png", width="150", align="right" /></p>
 
-## tl,dr  
+# QCoder
+
+<img src="images/hex/imgHex.png" width="150" align="right" />
+
+Lightweight package to conduct qualitative coding
+
+## tl;dr
 
 To test with some sample data:
+
 ```r
 install.packages("devtools")
 devtools::install_github("ropenscilabs/qcoder")
@@ -18,6 +21,7 @@ create_qcoder_project("my_qcoder_project", sample = TRUE)
 import_project_data(project = "my_qcoder_project")
 qcode()
 ```
+
 Click "Select project folder" and "my qcoder project."  
 There are two ways to add codes. To use an existing code, highlight the text
 to be coded, select the code, click "Add selected code" and then 
@@ -97,7 +101,7 @@ If you have documents in other formats you can use
 "Save As" to convert to txt.   If you have doc, docx, html, pdf, rtf or some other formats
 these can be processed if you install the `textreadr` package.  For many users this will simply require
 ```
-install.packages(textreadr)
+install.packages("textreadr")
 ```
 However for other users, particularly those on linux systems, additional steps are required. Please follow
 the [installation instructions for pdftools](https://github.com/ropensci/pdftools).
