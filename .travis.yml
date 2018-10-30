@@ -21,4 +21,3 @@ addons:
       - libpoppler-cpp-dev
       - poppler-data
       - valgrind
-
