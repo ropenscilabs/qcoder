@@ -9,7 +9,9 @@ env:
 before_install:
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
 r_github_packages:
-  - jimhester/covr
+  - r-lib/covr
+after_success:
+  - Rscript -e 'covr::codecov()'
 addons:
   apt:
     packages:
