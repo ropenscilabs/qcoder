@@ -69,6 +69,10 @@ if (interactive()) {
 
       ), # close units panel
      tabPanel("Summary",
+              textOutput('units_summary'),
+              textOutput('docs_summary'),
+              textOutput('codes_summary'),
+              tags$h5('Codes frequency'),
               dataTableOutput('code_freq')
 
      ),
@@ -259,6 +263,22 @@ if (interactive()) {
               rename('code'='as.factor(qcode)') %>%
               DT::datatable(options = list(paging = FALSE))
         })
+
+      output$units_summary <- renderText({
+        units_df <- readRDS(units_df_path)
+        paste("Number of units: ", nrow(units_df))
+      })
+
+      output$docs_summary <- renderText({
+        text_df <- readRDS(docs_df_path)
+        paste("Number of documents: ", nrow(text_df))
+      })
+
+      output$codes_summary <- renderText({
+        code_df <- readRDS(codes_df_path)
+        paste("Number of codes: ", nrow(code_df))
+      })
+
     }) #close observer
 
 
