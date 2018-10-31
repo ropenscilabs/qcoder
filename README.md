@@ -2,11 +2,11 @@
 QCoder
 ======
 
-Lightweight package to conduct qualitative coding  
-<p>
-<img src="images/hex/imgHex.png", width="150", align="right" />
-</p>
-tl,dr
+Lightweight package to conduct qualitative coding.
+
+<img src="images/hex/imgHex.png" width="150" />
+
+tl;dr
 -----
 
 To test with some sample data:
@@ -96,7 +96,7 @@ If you have doc, docx, html, pdf, rtf or some other formats these can be
 processed if you install the `textreadr` package. For many users this
 will simply require
 
-    install.packages(textreadr)
+    install.packages("textreadr")
 
 However for other users, particularly those on linux systems, additional
 steps are required. Please follow the [installation instructions for
