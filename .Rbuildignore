@@ -14,5 +14,5 @@
 ^motivation\.pdf
 ^\images
 ^Makefile
-^\docs
-^\vignettes\articles
+^docs$
+^vignettes\\articles$
