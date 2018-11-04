@@ -14,3 +14,6 @@
 ^motivation\.pdf
 ^\images
 ^Makefile
+^docs$
+^vignettes/articles/CONTRIBUTING.Rmd
+^vignettes/articles/motivation.Rmd
