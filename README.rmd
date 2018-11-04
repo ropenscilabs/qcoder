@@ -9,7 +9,7 @@ output: md_document
 
 Lightweight package to conduct qualitative coding.
 
-<img src="images/hex/imgHex.png" width="150" />
+<img src="../images/hex/imgHex.png" width="150" />
 
 ## tl;dr
 
