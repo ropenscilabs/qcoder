@@ -15,4 +15,5 @@
 ^\images
 ^Makefile
 ^docs$
-^vignettes\\articles$
+^vignettes/articles/CONTRIBUTING.Rmd
+^vignettes/articles/motivation.Rmd
