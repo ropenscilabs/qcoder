@@ -13,6 +13,8 @@ r_github_packages:
   - r-lib/covr
 after_success:
   - Rscript -e 'covr::codecov()'
+  - Rscript -e 'pkgdown::build_site()'
+
 addons:
   apt:
     packages:
