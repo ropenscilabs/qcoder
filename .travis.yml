@@ -1,7 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
-sudo: true
+sudo: required
 cache: packages
 warnings_are_errors: true
 env:
@@ -13,6 +13,15 @@ r_github_packages:
   - r-lib/covr
 after_success:
   - Rscript -e 'covr::codecov()'
+  - Rscript -e 'pkgdown::build_site()'
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_PAT
+  keep-history: true
+  local-dir: docs
+  on:
+    branch: master
 addons:
   apt:
     packages:

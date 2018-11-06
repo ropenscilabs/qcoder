@@ -9,7 +9,7 @@ output: md_document
 
 Lightweight package to conduct qualitative coding.
 
-<img src="images/hex/imgHex.png" width="150" />
+<img src="../images/hex/imgHex.png" width="150" />
 
 ## tl;dr
 
@@ -94,7 +94,7 @@ These will hold the documents to be coded, information about the codes, unit
 information and the r data frames that will be the core of the analysis.
 For this example the folder and file structures for the sample data will look similar to this. 
 
-![](images/folderstructure.png)
+![](./images/folderstructure.png)
 
 ### Documents
  In our example we've already placed our documents into the "documents" folder.
@@ -178,7 +178,7 @@ import_project_data(project = "my_qcoder_project")
 ```
 
 Now the data_frames folder will contain the imported files.
-![](images/data_frames_folder.png)
+![](./images/data_frames_folder.png)
 
 Now it's time to start coding. 
 
@@ -197,11 +197,11 @@ Once you have selected your project there will be a drop down menu on the
 "Add codes to text" tab to allow you to pick a specific document to code. 
 This will pull a document into the editor.
 
-![](images/coding_step1.png)
+![](./images/coding_step1.png)
 
 Select your project folder.
 
-![](images/coding_step2_folder_select.png)
+![](./images/coding_step2_folder_select.png)
 
 Once you have a project, use the drop down menu to select a particular document
 to code. This will open in an editor.  When done coding (instructions below),
@@ -209,16 +209,16 @@ click Save changes.
 
 Select your project folder.
 
-![](images/coding_step3_document_select.png)
+![](./images/coding_step3_document_select.png)
 
 Switching to the "Codes" tab a list of codes from the codes file is displayed.  
 
-![](images/codestab.png)
+![](./images/codestab.png)
 
 Our sample data already has some coding done, and the code-text data is displayed on the 
 "Coded data" tab.
 
-![](images/codeddata.png)
+![](./images/codeddata.png)
 
 ### Coding the data
 
