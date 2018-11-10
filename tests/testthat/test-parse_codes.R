@@ -67,3 +67,15 @@ test_that("get codes extracts codes from a single document correctly", {
   input <- get_codes(data)
   expect_equal(input, c("gender", "gender_id", "consequences"))
 })
+
+test_that("parsing a data frame of documents works as expected", {
+  test_df <- readRDS("data/qcoder_documents_my_qcoder_project.rds")
+  parsed_test_df <- parse_qcodes(test_df)
+  table_codes <- table(parsed_test_df$qcode)
+  expect_equal(length(parsed_test_df), 3)
+  expect_equal(nrow(parsed_test_df), 31)
+  expect_equal(names(table_codes), c("gender", "gender_id", "consequences",
+                                        "twitter", "harassment", "person_talk",
+                                       "stefanie", "license"))
+  expect_equal(as.numeric(table_codes), c(5, 4, 7, 1, 5, 4, 1, 4))
+})
