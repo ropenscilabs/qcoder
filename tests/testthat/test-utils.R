@@ -80,3 +80,12 @@ test_that("Adding a code works", {
                           stringsAsFactors = FALSE))
   unlink(paste0(tempdir(), "/codes_test.rds"))
 })
+
+test_that("Adding a duplicate code sends a warning", {
+  new_code <- "gender"
+  new_description <- "new code description"
+  codes_df_test <- readRDS("data/qcoder_codes_my_qcoder_project.rds")
+  expect_warning( add_code(codes_df_test, new_code, new_description,
+           paste0(tempdir(),"/codes_test.rds")))
+  unlink(paste0(tempdir(), "/codes_test.rds"))
+})
