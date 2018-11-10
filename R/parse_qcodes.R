@@ -30,7 +30,9 @@ parse_qcodes <- function(x, ...){
 
     #split the file on opening qcode tags
     #note: can't just use str_extract_all() with a nice clean regex, because qcodes can be nested
-    splititems <- unlist( strsplit( x$document_text[i], "(\\(QCODE\\))") )
+    splititems <- gsub("^$"," ",
+                       unlist( strsplit( x$document_text[i], "(\\(QCODE\\))") )
+                       )
 
     ### skip this document/row if no qcodes were found
     if( length(splititems) == 1 ){
