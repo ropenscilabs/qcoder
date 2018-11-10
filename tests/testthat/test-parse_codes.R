@@ -12,12 +12,12 @@ doctxt8 <- readr::read_file(paste0(data_path, "CoC_Example1_MU_nestingcheck3.txt
 
 test_that("error_check passes a correct document without nested codes.", {
   expect_null(error_check(doctxt2))
-  expect_null(error_check(doctxt7))
-  expect_null(error_check(doctxt8))
 })
 
 test_that("error_check passes a correct document with nested codes.", {
   expect_null(error_check(doctxt1))
+  expect_null(error_check(doctxt7))
+  expect_null(error_check(doctxt8))
 })
 
 test_that("error_check handles a document with no codes.",  {
