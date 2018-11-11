@@ -23,106 +23,9 @@ parse_qcodes <- function(x, ...){
                    text = character(), stringsAsFactors = FALSE)
 
   ###iterate through each document submitted
-  for (i in 1:nrow(x)) {
-
-    doc_id <- x$doc_id[i]
-    #cat(paste("parsing document: ", doc_id, "\n"))
-
-    #split the file on opening qcode tags
-    #note: can't just use str_extract_all() with a nice clean regex, because qcodes can be nested
-    splititems <- gsub("^$"," ",
-                       unlist( strsplit( x$document_text[i], "(\\(QCODE\\))") )
-                       )
-
-    ### skip this document/row if no qcodes were found
-    if( length(splititems) == 1 ){
-      warning("WARNING: No QCODE blocks found in document ","\n")
-      next()
-    }
-
-    error_check(x$document_text[i])
-
-    ### iterate through the split items
-    extra_depth = 0
-    for(i in 1:length(splititems)){
-
-      #this is needed to handle directly-nested blocks (eg with no space/text between them)
-      if (splititems[i] == ""){
-        extra_depth = extra_depth + 1
-      }
-
-      ### if we've found a qcode, process it
-      if( stringr::str_detect(splititems[i], "\\(/QCODE\\)\\{")){
-
-        #split this entry on qcode close tags
-        sp <- unlist( strsplit( splititems[i], "\\(/QCODE\\)\\{")  )
-
-
-        ### iterate through the codes in found in this block
-        for(level in length(sp):2){
-
-          txt = "" #will hold the entire text block to return for each qcode
-
-          ### join up all the text fragments of this block for this level
-
-          #first add the fragments in the outer splititems[] list, from before we saw the '(/QCODE){' tag
-          if(level > 2){
-            for(j in (i-(level-2)-extra_depth):(i-1) ){
-              txt = paste(txt, splititems[j], sep="")
-            }
-          } else if( level == 1 ) {
-            #reset the extra_depth flag
-            extra_depth = 0
-          }
-
-          #then add the fragments in this inner sp[] list
-          for(k in 1:level-1){
-            toadd <- stringr::str_match( sp[k], "^#.*\\}(.*)$" )[2]  #remove any qcode bits if there
-            if( is.na(toadd) ){ toadd <- sp[k] }  #otherwise just add the full text
-            txt = paste(txt, toadd, sep="")
-          }
-
-          ### Clean up the text block & extract its codes
-
-          # Remove nested tags from the text block to return
-          txt = stringr::str_replace_all(txt,"\\(\\/QCODE\\)\\{#.*?\\}","")
-
-          #get the qcode(s) for this text block
-          #the code block will be @ the start
-          codes <- unlist( stringr::str_extract( sp[level], "^.*?\\}" ) )
-          #split on the "#"
-          codes <- unlist( strsplit(codes,"#") )
-
-          #warn on qcode parsing error & remove blank first item is relevent
-          if( is.na(codes[1]) ){
-            warning(sep="",
-                    "WARNING: encoding error detected in document ",doc_id,";
-                    erroneous output is likely. Error was detected at:\n\t'",
-                    sp[level],
-                    "'\n")
-            codes = c(NA,NA)
-          } else if(codes[1] == ""){
-            codes <- codes[2:length(codes)] #remove blank first vector item
-          }
-
-          #add the codes & matching text block to the df
-          codes <- sapply(codes, function(x) stringr::str_replace(trimws(x), ",$|\\}$","") )
-          #clean up code ends
-          for(code in codes){
-            rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(code), text = txt)
-            df <- rbind(df,rowtoadd)
-          }
-
-          # Inefficient now because of the loop but eventually this should run on save (a single text).
-          if (length("dots") > 0 & !is.null(dots$code_data_frame) & !is.null(dots$save_path) ) {
-            qcoder::add_discovered_code(codes, dots$code_data_frame, dots$save_path)
-
-          }
-        }
-
-      }
-
-    }
+  for (j in 1:nrow(x)) {
+    doc <- x[j,]
+     df <- parse_one_document(doc, df, dots)
 
   }
 
@@ -195,4 +98,112 @@ get_codes <- function(doc_text){
   codes <- unlist(stringi::stri_split_boundaries(codes[[1]], type = "word"))
   codes <- setdiff(codes, c("{", "}", "#", "", ",", " "))
   codes
+}
+
+#' Parse one document
+#' @param doc A single row from a data frame containing document data
+#' @param df The data frame that contains the parsed data
+#' @param dots Other parameters that may be passed in.
+#' @export
+#  change df to something more meaningful
+parse_one_document <- function(doc, df, dots){
+
+  doc_id <- doc$doc_id
+  #cat(paste("parsing document: ", doc_id, "\n"))
+
+  #split the file on opening qcode tags
+  #note: can't just use str_extract_all() with a nice clean regex, because qcodes can be nested
+  splititems <- gsub("^$"," ",
+                     unlist( strsplit( doc$document_text, "(\\(QCODE\\))") )
+  )
+
+  ### skip this document/row if no qcodes were found
+  if( length(splititems) == 1 ){
+    warning("WARNING: No QCODE blocks found in document ","\n")
+    return()
+  }
+
+  error_check(doc$document_text)
+
+  ### iterate through the split items
+  extra_depth = 0
+  for(i in 1:length(splititems)){
+
+    #this is needed to handle directly-nested blocks (eg with no space/text between them)
+    if (splititems[i] == ""){
+      extra_depth = extra_depth + 1
+    }
+
+    ### if we've found a qcode, process it
+    if( stringr::str_detect(splititems[i], "\\(/QCODE\\)\\{")){
+
+      #split this entry on qcode close tags
+      sp <- unlist( strsplit( splititems[i], "\\(/QCODE\\)\\{")  )
+
+
+      ### iterate through the codes in found in this block
+      for(level in length(sp):2){
+
+        txt <- "" #will hold the entire text block to return for each qcode
+
+        ### join up all the text fragments of this block for this level
+
+        #first add the fragments in the outer splititems[] list, from before
+        # we saw the '(/QCODE){' tag
+        if(level > 2){
+          for(j in (i-(level-2)-extra_depth):(i-1) ){
+            txt <- paste0(txt, splititems[j])
+          }
+        } else if( level == 1 ) {
+          #reset the extra_depth flag
+          extra_depth <- 0
+        }
+
+        #then add the fragments in this inner sp[] list
+        toadd <- stringr::str_match( sp, "^#.*\\}(.*)$" )[2]  #remove any qcode bits if there
+        toadd[is.na(toadd)] <- sp[is.na(toadd)]
+
+        txt <- paste0(txt, toadd)
+        ### Clean up the text block & extract its codes
+
+        # Remove nested tags from the text block to return
+        txt <- stringr::str_replace_all(txt,"\\(\\/QCODE\\)\\{#.*?\\}","")
+
+        #get the qcode(s) for this text block
+        #the code block will be @ the start
+        codes <- unlist( stringr::str_extract( sp[level], "^.*?\\}" ) )
+        #split on the "#"
+        codes <- unlist( strsplit(codes,"#") )
+
+        #warn on qcode parsing error & remove blank first item is relevent
+        if( is.na(codes[1]) ){
+          warning(sep="",
+                  "WARNING: encoding error detected in document ",doc_id,";
+                  erroneous output is likely. Error was detected at:\n\t'",
+                  sp[level],
+                  "'\n")
+          codes = c(NA,NA)
+        } else if(codes[1] == ""){
+          codes <- codes[2:length(codes)] #remove blank first vector item
+        }
+
+        #add the codes & matching text block to the df
+        codes <- sapply(codes, function(x) stringr::str_replace(trimws(x), ",$|\\}$","") )
+        #clean up code ends
+
+        rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(codes), text = txt)
+        df <- rbind(df,rowtoadd)
+
+        # Inefficient now because of the loop but eventually this should run on save (a single text).
+        if (length("dots") > 0 & !is.null(dots$code_data_frame) & !is.null(dots$save_path) ) {
+          qcoder::add_discovered_code(codes, dots$code_data_frame, dots$save_path)
+
+        }
+      }
+
+    }
+
+  }
+
+  df
 }
