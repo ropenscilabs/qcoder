@@ -124,7 +124,15 @@ parse_one_document <- function(doc, df, dots){
   }
 
   error_check(doc$document_text)
+  item_closed <- stringr::str_detect(splititems, "\\(/QCODE\\)\\{")
+  splititems <- splititems[item_closed]
 
+  # Nothing to see here.
+  if (length(splititems) == 0){
+    return(df)
+  }
+  sp <- unlist( strsplit( splititems, "\\(/QCODE\\)\\{")  )
+  print(sp)
   ### iterate through the split items
   extra_depth = 0
   for(i in 1:length(splititems)){
@@ -135,7 +143,8 @@ parse_one_document <- function(doc, df, dots){
     }
 
     ### if we've found a qcode, process it
-    if( stringr::str_detect(splititems[i], "\\(/QCODE\\)\\{")){
+    # don't need now that we check earlier.
+    # if( stringr::str_detect(splititems[i], "\\(/QCODE\\)\\{")){
 
       #split this entry on qcode close tags
       sp <- unlist( strsplit( splititems[i], "\\(/QCODE\\)\\{")  )
@@ -150,8 +159,8 @@ parse_one_document <- function(doc, df, dots){
 
         #first add the fragments in the outer splititems[] list, from before
         # we saw the '(/QCODE){' tag
-        if(level > 2){
-          for(j in (i-(level-2)-extra_depth):(i-1) ){
+        if(level > 1){
+          for(j in (i-(level-1)-extra_depth):(i) ){
             txt <- paste0(txt, splititems[j])
           }
         } else if( level == 1 ) {
@@ -201,7 +210,7 @@ parse_one_document <- function(doc, df, dots){
         }
       }
 
-    }
+   # } # close found code check
 
   }
 
