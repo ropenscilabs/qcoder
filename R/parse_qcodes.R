@@ -126,12 +126,13 @@ parse_one_document <- function(doc, df, dots){
   error_check(doc$document_text)
 
   ### iterate through the split items
-  extra_depth = 0
+  extra_depth <- 0
+
   for(i in 1:length(splititems)){
 
     #this is needed to handle directly-nested blocks (eg with no space/text between them)
     if (splititems[i] == ""){
-      extra_depth = extra_depth + 1
+      extra_depth <- extra_depth + 1
     }
 
     ### if we've found a qcode, process it
@@ -139,7 +140,6 @@ parse_one_document <- function(doc, df, dots){
 
       #split this entry on qcode close tags
       sp <- unlist( strsplit( splititems[i], "\\(/QCODE\\)\\{")  )
-
 
       ### iterate through the codes in found in this block
       for(level in length(sp):2){
@@ -154,6 +154,7 @@ parse_one_document <- function(doc, df, dots){
           for(j in (i-(level-2)-extra_depth):(i-1) ){
             txt <- paste0(txt, splititems[j])
           }
+
         } else if( level == 1 ) {
           #reset the extra_depth flag
           extra_depth <- 0
@@ -175,7 +176,7 @@ parse_one_document <- function(doc, df, dots){
         #split on the "#"
         codes <- unlist( strsplit(codes,"#") )
 
-        #warn on qcode parsing error & remove blank first item is relevent
+        #warn on qcode parsing error & remove blank first item if relevent
         if( is.na(codes[1]) ){
           warning(sep="",
                   "WARNING: encoding error detected in document ",doc_id,";
