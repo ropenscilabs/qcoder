@@ -288,6 +288,9 @@ if (interactive()) {
     })
 
     update_editor <- observeEvent(input$replace, {
+      
+      validate(need(input$select_codes, "Codes must be selected"),
+               need(input$selected, "Did you select some text?"))
 
       text_old <- new_text()
       codes <- input$select_codes
