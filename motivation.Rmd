@@ -123,7 +123,8 @@ qualitative coding.
 ## User Needs
 
 We began this project at rOpenSci’s 
-[runconf18](https://github.com/ropensci/unconf18) based on [bduckles](https://github.com/bduckles) issue. We began by discussing
+[runconf18](https://github.com/ropensci/unconf18) based on
+[bduckles](https://github.com/bduckles) issue. We began by discussing
 the common challenges we and our peers face in conducting QDA and considering
 what we might learn from existing quantitative and text analysis open source
 packages. We identified a number of unique challenges qualitative researchers
@@ -206,7 +207,13 @@ human and social behavior.
 
 ## Conceptualizing a Minimum Viable Product: A vignette
 
-Questa the graduate student is working on one chapter of her dissertation research where she is trying to understand how different codes of conduct in the software community welcome underrepresented communities. She wants to understand language use and to trace how these codes of conduct are created from differing communities. She also is planning to do interviews with people who have created and used these codes of conduct to understand how their adoption influences inclusion.  
+Questa the graduate student is working on one chapter of her dissertation research 
+where she is trying to understand how different codes of conduct in the 
+software community welcome underrepresented communities. She wants to understand 
+language use and to trace how these codes of conduct are created from differing 
+communities. She also is planning to do interviews with people who have created 
+and used these codes of conduct to understand how their adoption influences 
+inclusion.  
  
 None of the grants that Questa sent out have come back with any money to do 
 this research. She’s discouraged but passionate about her work and she knows 
