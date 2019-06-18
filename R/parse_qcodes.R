@@ -1,14 +1,16 @@
 #' Parse coded text
 #'
 #' Take a text document containing coded text of the form:
-#' "stuff to ignore (QCODE) coded text we care about (/QCODE){#qcode} more stuff to ignore"
+#' "stuff to ignore (QCODE) coded text we care about (/QCODE){#qcode}
+#' more stuff to ignore"
 #' and turn it into a dataframe with one row per coded item, of the form:
 #' docid,qcode,text
 #'
 #' Replaces newline characters with "<br>" in the captured text
 #' returns an empty dataframe (no rows) if no qcodes were found.
 #'
-#' @param x A data frame containing the text to be coded; requires columns "doc_id" and "document_text"
+#' @param x A data frame containing the text to be coded;
+#' requires columns "doc_id" and "document_text"
 #' @param ...  Other parameters optionally passed in
 #' @export
 
@@ -16,7 +18,8 @@ parse_qcodes <- function(x, ...){
   dots <- list(...)
 
   #replace all newlines in the document texts
-  x$document_text <- stringr::str_replace_all(x$document_text, "[\r\n]", "<br>")
+  x$document_text <- stringr::str_replace_all(x$document_text,
+                                              "[\r\n]", "<br>")
 
   #initialise the empty data frame to fill & return
   df <- data.frame(doc = integer(), qcode = factor(),
@@ -42,14 +45,13 @@ parse_qcodes <- function(x, ...){
 error_check <- function(document) {
     ### basic tag error checking
     #check whether there are an equal number of (QCODE) and (/QCODE) tags
-    open  = unlist( stringr::str_extract_all( document,"(\\(QCODE\\))"))
-    close = unlist( stringr::str_extract_all( document,"(\\(/QCODE\\))"))
+    open  <- unlist( stringr::str_extract_all( document,"(\\(/QCODE\\))"))
     if(length(open) != length(close)){
       warning("WARNING: number of (QCODE) and (/QCODE) tags do not match
               in document ; erroneous output is likely.\n")
     }
     #check whether there is a (/QCODE) tag missing its {#code}
-    close = unlist( stringr::str_extract_all( document,
+    close <- unlist( stringr::str_extract_all( document,
                                               "(\\(/QCODE\\)[^\\}]*?\\})"))
     for(tag in close){
       if( !stringr::str_detect(tag, "\\(/QCODE\\)\\{#.*?\\}") ){
@@ -66,10 +68,12 @@ error_check <- function(document) {
 #'
 #' @param codes_list A list of codes (usually from a coded document)
 #' @param code_data_frame Existing data frame of QCODE codes
-#' @param codes_df_path The path where the updated code data frame should be saved
+#' @param codes_df_path The path where the updated code data frame should
+#' be saved
 #'
 #' @export
-add_discovered_code <- function(codes_list = "", code_data_frame = NULL , codes_df_path = "" ){
+add_discovered_code <- function(codes_list = "", code_data_frame = NULL ,
+                                codes_df_path = "" ){
     code_data_frame <- as.data.frame(code_data_frame)
     old_codes <- as.character(code_data_frame[,"code"])
     new_codes <- unique(codes_list)
@@ -90,7 +94,8 @@ add_discovered_code <- function(codes_list = "", code_data_frame = NULL , codes_
 }
 
 #' Extract codes from text
-#' Take coded text and extract the codes, assuming they are correctly formatted.
+#' Take coded text and extract the codes, assuming they are
+#' correctly formatted.
 #' @param doc_text  The text data for a single document
 #' @export
 get_codes <- function(doc_text){
@@ -112,7 +117,8 @@ parse_one_document <- function(doc, df, dots){
   #cat(paste("parsing document: ", doc_id, "\n"))
 
   #split the file on opening qcode tags
-  #note: can't just use str_extract_all() with a nice clean regex, because qcodes can be nested
+  #note: can't just use str_extract_all() with a nice clean regex,
+  # because qcodes can be nested
   splititems <- gsub("^$"," ",
                      unlist( strsplit( doc$document_text, "(\\(QCODE\\))") )
   )
@@ -138,14 +144,11 @@ parse_one_document <- function(doc, df, dots){
 
   for(i in 1:length(splititems)){
 
-    #this is needed to handle directly-nested blocks (eg with no space/text between them)
+    # This is needed to handle directly-nested blocks
+    # (eg with no space/text between them)
     if (splititems[i] == ""){
       extra_depth <- extra_depth + 1
     }
-
-    ### if we've found a qcode, process it
-    # don't need now that we check earlier.
-    # if( stringr::str_detect(splititems[i], "\\(/QCODE\\)\\{")){
 
       #split this entry on qcode close tags
       sp <- unlist( strsplit( splititems[i], "\\(/QCODE\\)\\{")  )
@@ -169,8 +172,9 @@ parse_one_document <- function(doc, df, dots){
           extra_depth <- 0
         }
 
-        #then add the fragments in this inner sp[] list
-        toadd <- stringr::str_match( sp, "^#.*\\}(.*)$" )[2]  #remove any qcode bits if there
+        # Then add the fragments in this inner sp[] list
+        # Remove any qcode bits if there
+        toadd <- stringr::str_match( sp, "^#.*\\}(.*)$" )[2]
         toadd[is.na(toadd)] <- sp[is.na(toadd)]
 
         txt <- paste0(txt, toadd)
@@ -192,27 +196,32 @@ parse_one_document <- function(doc, df, dots){
                   erroneous output is likely. Error was detected at:\n\t'",
                   sp[level],
                   "'\n")
-          codes = c(NA,NA)
+          codes <- c(NA, NA)
         } else if(codes[1] == ""){
-          codes <- codes[2:length(codes)] #remove blank first vector item
+          #remove blank first vector item
+          codes <- codes[2:length(codes)]
         }
 
         #add the codes & matching text block to the df
-        codes <- sapply(codes, function(x) stringr::str_replace(trimws(x), ",$|\\}$","") )
+        codes <- sapply(codes,
+                        function(x) stringr::str_replace(trimws(x),
+                                                         ",$|\\}$","") )
         #clean up code ends
 
-        rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(codes), text = txt)
+        rowtoadd <- data.frame(doc = doc_id, qcode = as.factor(codes),
+                               text = txt)
         df <- rbind(df,rowtoadd)
 
-        # Inefficient now because of the loop but eventually this should run on save (a single text).
-        if (length("dots") > 0 & !is.null(dots$code_data_frame) & !is.null(dots$save_path) ) {
-          qcoder::add_discovered_code(codes, dots$code_data_frame, dots$save_path)
+        # Inefficient now because of the loop but eventually this should
+        # run on save (a single text).
+        if (length("dots") > 0 &
+            !is.null(dots$code_data_frame) &
+            !is.null(dots$save_path) ) {
+          qcoder::add_discovered_code(codes, dots$code_data_frame,
+                                      dots$save_path)
 
         }
       }
-
-   # } # close found code check
-
   }
 
   df
