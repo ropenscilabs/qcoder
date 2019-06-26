@@ -27,7 +27,7 @@ read_raw_data <- function(folder_path = "/documents/",
                                 data_frame_name, "_", project_name, ".rds" )
     }
 
-    if (file.exists(folder_path)){
+    if (length(dir(folder_path)) != 0){
       file_list <- dir(folder_path)
       doc_text  <- character()
       # This is because not all users will be able to install textreadr.
