@@ -18,3 +18,9 @@ add_new_documents(files, docs_df_path = "", file_path = "")
 Add new documents
 Adds new document or documents to an existing documents data frame.
 }
+\examples{
+create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+
+unlink("./my_qcoder_project", recursive=TRUE)
+
+}

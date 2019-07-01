@@ -59,6 +59,11 @@ read_raw_data <- function(folder_path = "/documents/",
 #' @param files  file tibble produced by ShinyFiles
 #' @param file_path  Full path to the data set of documents including trailing slash
 #' @param docs_df_path  Existing data frame of text documents
+#' @examples
+#' create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+#'
+#' unlink("./my_qcoder_project", recursive=TRUE)
+#'
 #' @export
 add_new_documents <- function(files, docs_df_path = "", file_path = ""){
         text_df <- readRDS(docs_df_path)
@@ -103,11 +108,13 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
 #' @param codes_df_path Full path to the codes data frame.
 #'
 #' @examples
-#'  \dontrun{
-#' fp <-"inst/example_codes/"
+#'
+#' create_qcoder_project(project_name = "my_qcoder_project")
+#' fp <-"my_qcoder_project/codes/"
 #' dfn <- "test_codes"
-#' read_code_data(fp, dfn)
-#' }
+#' read_code_data(fp, dfn, project_name = "my_qcoder_project")
+#' unlink("./my_qcoder_project", recursive=TRUE)
+#'
 #' @export
 read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
                            data_frame_name = "qcoder_codes", project_name, project_path = ""){
@@ -140,7 +147,7 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
 #' Create an empty codes data set
 #'
 #' Used to create a codes data frame with no data but that can
-#' have data added.
+#' have data added. File is placed in the data_frames folder.
 #'
 #' @param data_frame_name Name of the data frame to be created
 #' @param project_name Name of the project that the codes are associated with
@@ -148,7 +155,10 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
 #'                  defaults to "data_frames".
 #' @param codes_df_path The full path to the codes data frame
 #' @param project_path  The full path to the project folder
-#'
+#' @examples
+#' create_qcoder_project(project_name = "my_qcoder_project")
+#' create_empty_code_file()
+#' unlink("./my_qcoder_project", recursive=TRUE)
 #' @export
 create_empty_code_file <-function( data_frame_name = "qcoder_codes",
                                    codes_df_path = "",
@@ -207,11 +217,12 @@ create_empty_code_file <-function( data_frame_name = "qcoder_codes",
 #' @param units_df_path Full path to the units data frame.
 #'
 #' @examples
-#'  \dontrun{
-#' fp <-"units/units.csv"
+#'create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+#' fp <-"units.csv"
 #' dfn <- "my_units"
-#' read_unit_data(fp, dfn)
-#' }
+#' read_unit_data(fp, dfn, project_name = "my_qcoder_project")
+#' unlink("./my_qcoder_project", recursive=TRUE)
+#'
 #' @export
 read_unit_data <- function(file_path = "units.csv",
                            data_frame_name = "qcoder_units",
@@ -246,11 +257,12 @@ read_unit_data <- function(file_path = "units.csv",
 #' @param units_docs_path Full path to the documents data frame.
 #'
 #' @examples
-#'  \dontrun{
-#' fp <-"units/units.csv"
-#' dfn <- "my_units"
-#' read_unit_data(fp, dfn)
-#' }
+#' create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+#' project_name = "my_qcoder_project"
+#' fp <-"unit_document_map.csv"
+#' dfn <- "qcoder_unit_document_map"
+#' read_unit_document_map_data(fp, dfn, project_name = "my_qcoder_project")
+#' unlink("./my_qcoder_project", recursive=TRUE)
 #' @export
 read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
                            data_frame_name = "qcoder_unit_document_map",
@@ -284,7 +296,9 @@ read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
 #' @param file_path Path to store data frame on.
 #' @param data_frame_name Name of the data frame that will contain the map
 #' @param project_name Name of the project, if it exists
-#'
+#' @examples
+#' create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+#' unlink("./my_qcoder_project", recursive=TRUE)
 #' @export
 create_unit_doc_file <- function(file_path = "data_frames",
                                  data_frame_name = "unit_document_map",
@@ -305,6 +319,10 @@ create_unit_doc_file <- function(file_path = "data_frames",
 #'
 #' @param project_name The project name. This should represent the folder
 #'                     holding the project.
+#' @examples
+#' create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+#' import_project_data("my_qcoder_project")
+#' unlink("./my_qcoder_project", recursive=TRUE)
 #' @export
 import_project_data<- function(project_name){
   read_raw_data(project_name = project_name)
