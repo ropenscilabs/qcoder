@@ -110,14 +110,21 @@ if (interactive()) {
     }
     observeEvent(c(input$select_project, input$file, input$update),{
       req(input$select_project)
-      if (input$select_project[1] == ""){return()}
+      if (input$select_project[1] == "" ){
+             return()
+        }
       output$project_directory <- renderPrint({parseDirPath(user_folder,
                                                       input$select_project)
                                               })
 
       if (as.character(input$select_project[1]) == "1" |
-          input$select_project[1] == "" ) {return()}
+          input$select_project[1] == "" ) {
+               return()
+           }
         project_path <<- parseDirPath(user_folder, input$select_project)
+
+        if (length(project_path) == 0 ){return()}
+        if (project_path == "" ){return()}
         docs_df_path <<- paste0(project_path,
                                 "/data_frames/qcoder_documents_",
                                 basename(project_path), ".rds")
@@ -288,7 +295,7 @@ if (interactive()) {
     })
 
     update_editor <- observeEvent(input$replace, {
-      
+
       validate(need(input$select_codes, "Codes must be selected"),
                need(input$selected, "Did you select some text?"))
 
