@@ -17,3 +17,7 @@ create_unit_doc_file(file_path = "data_frames",
 \description{
 Define a many to many unit to document map
 }
+\examples{
+create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+unlink("./my_qcoder_project", recursive=TRUE)
+}

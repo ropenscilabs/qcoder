@@ -19,3 +19,6 @@ add_discovered_code(codes_list = "", code_data_frame = NULL,
 Update codes data frame
 Add discovered codes to the codes data frame
 }
+\examples{
+
+}
