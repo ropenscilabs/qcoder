@@ -182,7 +182,8 @@ if (interactive()) {
       })
 
     comps <- list()
-    if (codes_df_path == "" | is.null(codes_df_path)) {return()}
+    #if (codes_df_path == "" | is.null(codes_df_path)) {return()}
+    if (docs_df_path == "" | docs_df_path != "/data_frames/qcoder_documents_.rds") {return()}
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- code_df["code"]
     comps[["tags"]] <- c("QCODE",  "{#")
