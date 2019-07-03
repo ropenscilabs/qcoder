@@ -83,6 +83,9 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
 
         } else {
           for (i in 1:length(file_list)){
+                       if (length(file_list) == 0){
+                         return()
+                       }
                        doc_text[i] <- textreadr::read_document(paste0(file_path,
                                                  file_list[i]))
           }
@@ -109,10 +112,10 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
 #'
 #' @examples
 #'
-#' create_qcoder_project(project_name = "my_qcoder_project")
+#' create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
 #' fp <-"my_qcoder_project/codes/"
 #' dfn <- "test_codes"
-#' read_code_data(fp, dfn, project_name = "my_qcoder_project")
+#' read_code_data(fp, dfn, project_name = "_my_qcoder_project")
 #' unlink("./my_qcoder_project", recursive=TRUE)
 #'
 #' @export
@@ -156,9 +159,9 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
 #' @param codes_df_path The full path to the codes data frame
 #' @param project_path  The full path to the project folder
 #' @examples
-#' create_qcoder_project(project_name = "my_qcoder_project")
-#' create_empty_code_file()
-#' unlink("./my_qcoder_project", recursive=TRUE)
+#' create_qcoder_project(project_name = "_my_qcoder_project")
+#' create_empty_code_file("_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 create_empty_code_file <-function( data_frame_name = "qcoder_codes",
                                    codes_df_path = "",
@@ -217,11 +220,11 @@ create_empty_code_file <-function( data_frame_name = "qcoder_codes",
 #' @param units_df_path Full path to the units data frame.
 #'
 #' @examples
-#'create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+#'create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
 #' fp <-"units.csv"
 #' dfn <- "my_units"
-#' read_unit_data(fp, dfn, project_name = "my_qcoder_project")
-#' unlink("./my_qcoder_project", recursive=TRUE)
+#' read_unit_data(fp, dfn, project_name = "_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #'
 #' @export
 read_unit_data <- function(file_path = "units.csv",
@@ -257,12 +260,12 @@ read_unit_data <- function(file_path = "units.csv",
 #' @param units_docs_path Full path to the documents data frame.
 #'
 #' @examples
-#' create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
-#' project_name = "my_qcoder_project"
+#' create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
+#' project_name = "_my_qcoder_project"
 #' fp <-"unit_document_map.csv"
 #' dfn <- "qcoder_unit_document_map"
-#' read_unit_document_map_data(fp, dfn, project_name = "my_qcoder_project")
-#' unlink("./my_qcoder_project", recursive=TRUE)
+#' read_unit_document_map_data(fp, dfn, project_name = "_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
                            data_frame_name = "qcoder_unit_document_map",
@@ -297,19 +300,20 @@ read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
 #' @param data_frame_name Name of the data frame that will contain the map
 #' @param project_name Name of the project, if it exists
 #' @examples
-#' create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
-#' unlink("./my_qcoder_project", recursive=TRUE)
+#' create_qcoder_project(project_name = "_my_qcoder_project")
+#' create_empty_unit_doc_file(project_name = "_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
-create_unit_doc_file <- function(file_path = "data_frames",
+create_empty_unit_doc_file <- function(file_path = "data_frames",
                                  data_frame_name = "unit_document_map",
                                  project_name){
   ud <- c("doc_path", "unit_id")
-  code_data <- as.data.frame(matrix(data = NA, 0, length(ud)))
+  unit_document_map <- as.data.frame(matrix(data = NA, 0, length(ud)))
   colnames(unit_document_map) <- ud
   unit_document_map$doc_path <- as.character(unit_document_map$doc_path)
 
   unit_document_map$unit_id <- as.integer(unit_document_map$unit_id)
-  saveRDS(unit_document_map, file = paste0(file_path,".rds" ))
+  saveRDS(unit_document_map, file = paste0(project_name, "/", file_path, "/", data_frame_name,".rds" ))
   invisible(TRUE)
 }
 

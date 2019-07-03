@@ -25,10 +25,10 @@ Use this is you have a spreadsheet of codes already created.
 }
 \examples{
 
-create_qcoder_project(project_name = "my_qcoder_project")
+create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
 fp <-"my_qcoder_project/codes/"
 dfn <- "test_codes"
-read_code_data(fp, dfn, project_name = "my_qcoder_project")
+read_code_data(fp, dfn, project_name = "_my_qcoder_project")
 unlink("./my_qcoder_project", recursive=TRUE)
 
 }

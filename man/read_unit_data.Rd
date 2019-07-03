@@ -25,10 +25,10 @@ Create a data frame of units from csv file
 Use this is you have a spreadsheet of units already created.
 }
 \examples{
-create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
 fp <-"units.csv"
 dfn <- "my_units"
-read_unit_data(fp, dfn, project_name = "my_qcoder_project")
-unlink("./my_qcoder_project", recursive=TRUE)
+read_unit_data(fp, dfn, project_name = "_my_qcoder_project")
+unlink("./_my_qcoder_project", recursive=TRUE)
 
 }
