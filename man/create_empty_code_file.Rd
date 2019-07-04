@@ -25,7 +25,7 @@ Used to create a codes data frame with no data but that can
 have data added. File is placed in the data_frames folder.
 }
 \examples{
-create_qcoder_project(project_name = "my_qcoder_project")
-create_empty_code_file()
-unlink("./my_qcoder_project", recursive=TRUE)
+create_qcoder_project(project_name = "_my_qcoder_project")
+create_empty_code_file("_my_qcoder_project")
+unlink("./_my_qcoder_project", recursive=TRUE)
 }
