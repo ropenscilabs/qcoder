@@ -7,8 +7,7 @@
 parse_qcodes(x, ...)
 }
 \arguments{
-\item{x}{A data frame containing the text to be coded; requires
-columns "doc_id" and "document_text"}
+\item{x}{A data frame containing the text to be coded; requires columns "doc_id" and "document_text"}
 
 \item{...}{Other parameters optionally passed in}
 }
