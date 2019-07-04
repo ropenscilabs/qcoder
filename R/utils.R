@@ -54,7 +54,7 @@ read_data <- function() {
 #' @export
 qcode <- function() {
   package_location <- system.file(package = "qcoder")
-  shiny::runApp(paste0(package_location, "/shiny/qcoder", "quiet"))
+  shiny::runApp(paste0(package_location, "/shiny/qcoder"), quiet = TRUE)
 }
 
 #' This launches the coder custom Shiny app
@@ -66,7 +66,7 @@ qcode <- function() {
 #' @export
 qcode_custom <- function() {
   package_location <- system.file(package = "qcoder")
-  shiny::runApp(paste0(package_location, "/shiny/qcoder-custom"))
+  shiny::runApp(paste0(package_location, "/shiny/qcoder-custom"), quiet = TRUE)
 }
 
 #' Update document
