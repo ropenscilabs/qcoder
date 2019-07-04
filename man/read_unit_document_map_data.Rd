@@ -25,9 +25,10 @@ Create a data frame of unit to document links from csv file
 Use this is you have a spreadsheet already created.
 }
 \examples{
- \dontrun{
-fp <-"units/units.csv"
-dfn <- "my_units"
-read_unit_data(fp, dfn)
-}
+create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
+project_name = "_my_qcoder_project"
+fp <-"unit_document_map.csv"
+dfn <- "qcoder_unit_document_map"
+read_unit_document_map_data(fp, dfn, project_name = "_my_qcoder_project")
+unlink("./_my_qcoder_project", recursive=TRUE)
 }

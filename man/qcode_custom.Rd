@@ -10,7 +10,7 @@ qcode_custom()
 This launches the coder custom Shiny app
 }
 \examples{
-\dontrun{
+if (interactive()) {
   qcode_custom()
 }
 }

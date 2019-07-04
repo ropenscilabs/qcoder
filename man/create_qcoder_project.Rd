@@ -17,4 +17,5 @@ Create a standard set of folders for a QCoder project
 }
 \examples{
 create_qcoder_project(project_name = "my_qcoder_project")
+unlink("./my_qcoder_project", recursive=TRUE)
 }

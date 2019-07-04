@@ -3,7 +3,9 @@
 #' @param project_name  A string project name to be located in the
 #'                      current working directory or a path to a project folder.
 #' @param sample Logical that indicates that the sample data should be copied to the project.
-#' @examples create_qcoder_project(project_name = "my_qcoder_project")
+#' @examples
+#' create_qcoder_project(project_name = "my_qcoder_project")
+#' unlink("./my_qcoder_project", recursive=TRUE)
 #' @export
 create_qcoder_project<- function(project_name, sample = FALSE){
   dir.create(project_name)
@@ -46,25 +48,25 @@ read_data <- function() {
 #' This launches the coder Shiny app
 #'
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
 #'  qcode()
-#' }
+#'}
 #' @export
 qcode <- function() {
   package_location <- system.file(package = "qcoder")
-  shiny::runApp(paste0(package_location, "/shiny/qcoder"))
+  shiny::runApp(paste0(package_location, "/shiny/qcoder"), quiet = TRUE)
 }
 
 #' This launches the coder custom Shiny app
 #'
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
 #'   qcode_custom()
 #' }
 #' @export
 qcode_custom <- function() {
   package_location <- system.file(package = "qcoder")
-  shiny::runApp(paste0(package_location, "/shiny/qcoder-custom"))
+  shiny::runApp(paste0(package_location, "/shiny/qcoder-custom"), quiet = TRUE)
 }
 
 #' Update document
@@ -76,6 +78,7 @@ qcode_custom <- function() {
 #' @param docs_df_path  Location of the documents rds file.
 #' @param this_doc_path  Name of record to be updated, as recorded in "doc_path"
 #'         field of data frame.
+#' @examples
 #'
 #' @export
 do_update_document <- function(updated, docs_df_path, this_doc_path){
@@ -103,7 +106,7 @@ do_update_document <- function(updated, docs_df_path, this_doc_path){
 #' @param docs_df_path full path to document dataset
 #' @param this_doc_path value of doc_path for the document
 #' @param units_docs_path  full path of the data frame of unit to docs links
-#'
+#' @examples
 #' @export
 update_links <- function(checked = "", docs_df_path = "", this_doc_path = "", units_docs_path = ""){
   text_df <- readRDS(docs_df_path)
@@ -121,6 +124,7 @@ update_links <- function(checked = "", docs_df_path = "", this_doc_path = "", un
 #' @param units_df Existing units data frame
 #' @param new_unit  text name of a new unit (single name only)
 #' @param units_df_path  full path to the units data frame
+#' @examples
 #' @export
 
 add_unit <- function(units_df, new_unit, units_df_path){
@@ -141,6 +145,7 @@ add_unit <- function(units_df, new_unit, units_df_path){
 #' @param new_code  text name of a new code (single name only)
 #' @param new_code_desc  text description of the code
 #' @param codes_df_path  full path to the codes data frame
+#' @examples
 #' @export
 
 add_code <- function(codes_df, new_code, new_code_desc, codes_df_path){
@@ -161,6 +166,8 @@ add_code <- function(codes_df, new_code, new_code_desc, codes_df_path){
 #' Format text as HTML
 #' Minimal conversion of a text to html
 #' @param text text to be converted
+#' @examples
+#' txt2html("The quick brown (QCODE)fox(/QCODE){#animal} jumped over ")
 #' @export
 txt2html <- function(text){
   text <- paste0("<p>", text, "</p>")

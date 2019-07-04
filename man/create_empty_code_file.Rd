@@ -22,5 +22,10 @@ defaults to "data_frames".}
 }
 \description{
 Used to create a codes data frame with no data but that can
-have data added.
+have data added. File is placed in the data_frames folder.
+}
+\examples{
+create_qcoder_project(project_name = "_my_qcoder_project")
+create_empty_code_file("_my_qcoder_project")
+unlink("./_my_qcoder_project", recursive=TRUE)
 }

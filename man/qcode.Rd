@@ -10,7 +10,7 @@ qcode()
 This launches the coder Shiny app
 }
 \examples{
-\dontrun{
+if (interactive()) {
  qcode()
 }
 }
