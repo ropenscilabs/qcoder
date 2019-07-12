@@ -92,7 +92,8 @@ test_that("Adding a duplicate code sends a warning", {
 
 test_that("Validating a default project structure works", {
   create_qcoder_project(project_name = "_my_qcoder_project")
-  expect_equal(TRUE, validate_project("_my_qcoder_project"))
+  result <- validate_project("_my_qcoder_project")
+  expect_equal(is.null(result), TRUE)
   unlink("./_my_qcoder_project", recursive=TRUE)
   expect_error(validate_project("_my_qcoder_project"))
 })
