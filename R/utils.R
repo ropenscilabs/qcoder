@@ -194,15 +194,11 @@ validate_project <- function(path_to_test){
 #'
 #' @param path_to_test Path to possible project folder
 #' @examples
-#' create_qcoder_project(project_name = "_my_qcoder_project")
-#' validate_project_files("_my_qcoder_project")
-#' unlink("./_my_qcoder_project", recursive=TRUE)
-#' @return NULL for valid project, Error otherwise.
-#' @examples
 #' create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
 #' import_project_data("_my_qcoder_project")
 #' validate_project_files("_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
+#' @return NULL for valid project, Error otherwise.
 #' @export
 validate_project_files <- function(path_to_test){
   shiny::validate(shiny::need(file.exists(
