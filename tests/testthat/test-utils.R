@@ -89,3 +89,12 @@ test_that("Adding a duplicate code sends a warning", {
            paste0(tempdir(),"/codes_test.rds")))
   unlink(paste0(tempdir(), "/codes_test.rds"))
 })
+
+test_that("Validating a default project structure works", {
+  create_qcoder_project(project_name = "_my_qcoder_project")
+  expect_equal(TRUE, validate_project("_my_qcoder_project"))
+  unlink("./_my_qcoder_project", recursive=TRUE)
+  expect_error(validate_project("_my_qcoder_project"))
+})
+
+

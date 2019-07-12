@@ -161,6 +161,28 @@ add_code <- function(codes_df, new_code, new_code_desc, codes_df_path){
   invisible(TRUE)
 }
 
+#' Check for a valid qcoder project
+#'
+#' @param path_to_test Path to possible project folder
+#' @examples
+#' create_qcoder_project(project_name = "_my_qcoder_project")
+#' validate_project("_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
+#' @return TRUE for valid project, FALSE otherwise.
+#' @export
+validate_project <- function(path_to_test){
+  assertthat::assert_that(assertthat::is.dir(path_to_test),
+                          msg = "Not a directory")
+  assertthat::assert_that(assertthat::is.writeable(path_to_test),
+                          msg = "Path is not writable")
+  required_folders <-c("codes", "data_frames", "documents", "units")
+  assertthat::assert_that(all(paste0(path_to_test, "/",
+                          required_folders) %in%
+                                     list.dirs("_my_qcoder_project")),
+                          msg = "Required folders are missing")
+  assertthat::assert_that(assertthat::is.writeable(paste0(path_to_test, "/data_frames")),
+                          msg = "The data_frames path is not writable")
+}
 
 
 #' Format text as HTML
