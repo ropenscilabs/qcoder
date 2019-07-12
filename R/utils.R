@@ -174,14 +174,14 @@ validate_project <- function(path_to_test){
   assertthat::assert_that(assertthat::is.dir(path_to_test),
                           msg = "Not a directory")
   assertthat::assert_that(assertthat::is.writeable(path_to_test),
-                          msg = "Path is not writable")
+                          msg = "Path is not writeable")
   required_folders <-c("codes", "data_frames", "documents", "units")
   assertthat::assert_that(all(paste0(path_to_test, "/",
                           required_folders) %in%
-                                     list.dirs("_my_qcoder_project")),
+                                     list.dirs(path_to_test)),
                           msg = "Required folders are missing")
   assertthat::assert_that(assertthat::is.writeable(paste0(path_to_test, "/data_frames")),
-                          msg = "The data_frames path is not writable")
+                          msg = "The data_frames path is not writeable")
 }
 
 
