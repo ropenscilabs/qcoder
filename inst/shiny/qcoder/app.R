@@ -157,7 +157,7 @@ if (interactive()) {
           qcoder::validate_project(project_path)
           req(input$select_project)
           if (input$select_project[1] == ""){return()}
-
+          qcoder::validate_project_files(project_path)
           if (docs_df_path == "") {return()}
             selectInput('this_doc_path', 'Document', my_choices())
          })
@@ -195,6 +195,8 @@ if (interactive()) {
     comps <- list()
     if (codes_df_path == "" | is.null(codes_df_path)) {return()}
     qcoder::validate_project(project_path)
+
+    qcoder::validate_project_files(project_path)
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- code_df["code"]
     comps[["tags"]] <- c("QCODE",  "{#")

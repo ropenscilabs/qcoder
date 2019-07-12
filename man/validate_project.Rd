@@ -10,7 +10,7 @@ validate_project(path_to_test)
 \item{path_to_test}{Path to possible project folder}
 }
 \value{
-TRUE for valid project, FALSE otherwise.
+NULL for valid project, Error otherwise.
 }
 \description{
 Check for a valid qcoder project
