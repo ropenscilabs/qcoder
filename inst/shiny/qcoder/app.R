@@ -182,8 +182,7 @@ if (interactive()) {
       })
 
     comps <- list()
-    #if (codes_df_path == "" | is.null(codes_df_path)) {return()}
-    if (docs_df_path == "" | docs_df_path != "/data_frames/qcoder_documents_.rds") {return()}
+    if (codes_df_path == "" | is.null(codes_df_path)) {return()}
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- code_df["code"]
     comps[["tags"]] <- c("QCODE",  "{#")
@@ -241,17 +240,20 @@ if (interactive()) {
       output$units_table <- DT::renderDataTable({
         if (units_df_path == "") {return()}
         units_df <- readRDS(units_df_path)
-        DT::datatable(units_df,options = list(paging = FALSE))
+        DT::datatable(units_df,options = list(paging = FALSE, dom = "Bfrtip",
+                                              buttons = c('copy', 'csv', 'excel', 'pdf',
+                                                          'print')))
       })
 
         # Get the parsed values with codes.
-        output$coded <- DT::renderDataTable({
+        output$coded <- DT::renderDataTable(server = FALSE, {
           if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
-          DT::datatable(parsed,options = list(paging = FALSE))
+          DT::datatable(parsed,options = list(paging = FALSE, dom = "Bfrtip",
+                                              buttons = ""))
         })
 
       output$code_freq <- DT::renderDataTable({
