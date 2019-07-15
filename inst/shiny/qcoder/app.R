@@ -31,6 +31,10 @@ if (interactive()) {
                      buttonType = "default", class = NULL),
       actionButton("update", "Reload project for data updating",
                            icon = icon("refresh")),
+      
+      shinySaveButton(id = "input", label = "Download", title = "Select your download location",
+                      filename = "", filetype = c('pdf', 'txt', 'html', 'doc')),  #Yuiken Edit
+      
       tags$br(),
       tags$br(),
       # Start tabset
@@ -182,7 +186,7 @@ if (interactive()) {
       })
 
     comps <- list()
-    #if (codes_df_path == "" | is.null(codes_df_path)) {return()}
+    #if (codes_df_path == "" | is.null(codes_df_path)) {return()} #Yuiken edit
     if (docs_df_path == "" | docs_df_path != "/data_frames/qcoder_documents_.rds") {return()}
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- code_df["code"]
