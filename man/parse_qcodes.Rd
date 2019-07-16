@@ -7,8 +7,7 @@
 parse_qcodes(x, ...)
 }
 \arguments{
-\item{x}{A data frame containing the text to be coded; requires
-columns "doc_id" and "document_text"}
+\item{x}{A data frame containing the text to be coded; requires columns "doc_id" and "document_text"}
 
 \item{...}{Other parameters optionally passed in}
 }
@@ -21,4 +20,7 @@ docid,qcode,text
 \details{
 Replaces newline characters with "<br>" in the captured text
 returns an empty dataframe (no rows) if no qcodes were found.
+}
+\examples{
+unlink("./_my_qcoder_project", recursive=TRUE)
 }

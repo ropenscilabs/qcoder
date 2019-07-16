@@ -89,3 +89,22 @@ test_that("Adding a duplicate code sends a warning", {
            paste0(tempdir(),"/codes_test.rds")))
   unlink(paste0(tempdir(), "/codes_test.rds"))
 })
+
+test_that("Validating a default project folder structure works", {
+  create_qcoder_project(project_name = "_my_qcoder_project")
+  result <- validate_project("_my_qcoder_project")
+  expect_equal(is.null(result), TRUE)
+  unlink("./_my_qcoder_project", recursive=TRUE)
+  expect_error(validate_project("_my_qcoder_project"))
+})
+
+test_that("Validating a default project data frame list works", {
+  create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
+  # Data was not imported so no rds files exist
+  expect_error(validate_project_files("_my_qcoder_project"))
+  import_project_data("_my_qcoder_project")
+  result <- validate_project_files("_my_qcoder_project")
+  unlink("./_my_qcoder_project", recursive=TRUE)
+})
+
+
