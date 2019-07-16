@@ -79,7 +79,7 @@ qcode_custom <- function() {
 #' @param this_doc_path  Name of record to be updated, as recorded in "doc_path"
 #'         field of data frame.
 #' @examples
-#'
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 do_update_document <- function(updated, docs_df_path, this_doc_path){
 
@@ -107,6 +107,7 @@ do_update_document <- function(updated, docs_df_path, this_doc_path){
 #' @param this_doc_path value of doc_path for the document
 #' @param units_docs_path  full path of the data frame of unit to docs links
 #' @examples
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 update_links <- function(checked = "", docs_df_path = "", this_doc_path = "", units_docs_path = ""){
   text_df <- readRDS(docs_df_path)
@@ -125,6 +126,7 @@ update_links <- function(checked = "", docs_df_path = "", this_doc_path = "", un
 #' @param new_unit  text name of a new unit (single name only)
 #' @param units_df_path  full path to the units data frame
 #' @examples
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 
 add_unit <- function(units_df, new_unit, units_df_path){
@@ -146,6 +148,7 @@ add_unit <- function(units_df, new_unit, units_df_path){
 #' @param new_code_desc  text description of the code
 #' @param codes_df_path  full path to the codes data frame
 #' @examples
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 
 add_code <- function(codes_df, new_code, new_code_desc, codes_df_path){
