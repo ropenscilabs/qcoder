@@ -31,10 +31,6 @@ if (interactive()) {
                      buttonType = "default", class = NULL),
       actionButton("update", "Reload project for data updating",
                            icon = icon("refresh")),
-      
-#      shinySaveButton(id = "input", label = "Download", title = "Select your download location",
-#                      filename = "", filetype = c('pdf', 'txt', 'html', 'doc')), #Didn't need to do this
-      
       tags$br(),
       tags$br(),
       # Start tabset
@@ -186,8 +182,7 @@ if (interactive()) {
       })
 
     comps <- list()
-    if (codes_df_path == "" | is.null(codes_df_path)) {return()} #(Original code)
-    #if (docs_df_path == "" | docs_df_path != "/data_frames/qcoder_documents_.rds") {return()} #This caused the text editor to not appear
+    if (codes_df_path == "" | is.null(codes_df_path)) {return()}
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- code_df["code"]
     comps[["tags"]] <- c("QCODE",  "{#")
@@ -245,23 +240,17 @@ if (interactive()) {
       output$units_table <- DT::renderDataTable({
         if (units_df_path == "") {return()}
         units_df <- readRDS(units_df_path)
-        DT::datatable(units_df,
-                      extensions = 'Buttons',
-                      options = list(paging = FALSE,
-                                     dom = 'Bfrtip',
-                                     buttons = c('copy', 'csv', 'excel', 'pdf',
-                                                 'print')))
+        DT::datatable(units_df,options = list(paging = FALSE))
       })
 
         # Get the parsed values with codes.
-        output$coded <- DT::renderDataTable(server = FALSE, {
+        output$coded <- DT::renderDataTable({
           if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
-          DT::datatable(parsed,options = list(paging = FALSE, dom = 'Bfrtip',
-                                              buttons = "")) 
+          DT::datatable(parsed,options = list(paging = FALSE))
         })
 
       output$code_freq <- DT::renderDataTable({
