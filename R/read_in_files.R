@@ -141,9 +141,8 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
       saveRDS(code_data, file = codes_df_path)
       invisible(TRUE)
    } else {
-      create_empty_code_file(project_name = project_name , codes_df_path = codes_df_path)
+      create_empty_code_file(project_name = project_name, codes_df_path = codes_df_path)
    }
-
 
 }
 
@@ -295,7 +294,7 @@ read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
   invisible(TRUE)
 }
 
-#' Define a many to many unit to document map
+#' Define an empty many to many unit to document map
 #' @param file_path Path to store data frame on.
 #' @param data_frame_name Name of the data frame that will contain the map
 #' @param project_name Name of the project, if it exists

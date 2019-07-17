@@ -10,7 +10,8 @@
 #'
 #' @param x A data frame containing the text to be coded; requires columns "doc_id" and "document_text"
 #' @param ...  Other parameters optionally passed in
-#' @example
+#' @examples
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 
 parse_qcodes <- function(x, ...){
@@ -92,7 +93,8 @@ add_discovered_code <- function(codes_list = "", code_data_frame = NULL , codes_
 #' Extract codes from text
 #' Take coded text and extract the codes, assuming they are correctly formatted.
 #' @param doc_text  The text data for a single document
-#' @example
+#' @examples
+#' unlink("./my_qcoder_project", recursive=TRUE)
 #' @export
 get_codes <- function(doc_text){
   codes <- stringr::str_extract_all(pattern = "\\{#.*?\\}", doc_text)
@@ -105,7 +107,8 @@ get_codes <- function(doc_text){
 #' @param df The data frame that will contain the parsed data
 #' @param qcoder_documents The full documents data frame
 #' @param dots Other parameters that may be passed in.
-#' @example
+#' @examples
+#' unlink("./my_qcoder_project", recursive=TRUE)
 #' @export
 #  change df to something more meaningful
 parse_one_document <- function(doc, df, qcoder_documents, dots = NULL){
