@@ -240,8 +240,9 @@ if (interactive()) {
       output$units_table <- DT::renderDataTable({
         if (units_df_path == "") {return()}
         units_df <- readRDS(units_df_path)
-        DT::datatable(units_df,options = list(paging = FALSE, dom = "Bfrtip",
-                                              buttons = c('copy', 'csv', 'excel', 'pdf',
+        DT::datatable(units_df,
+                      options = list(paging = FALSE, dom = "Bfrtip",
+                                buttons = c('copy', 'csv', 'excel', 'pdf',
                                                           'print')))
       })
 
@@ -253,7 +254,8 @@ if (interactive()) {
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
           DT::datatable(parsed,options = list(paging = FALSE, dom = "Bfrtip",
-                                              buttons = ""))
+                                              buttons = c('copy', 'csv', 'excel', 'pdf',
+                                                                    'print')))
         })
 
       output$code_freq <- DT::renderDataTable({
@@ -291,7 +293,7 @@ if (interactive()) {
     })
 
     update_editor <- observeEvent(input$replace, {
-      
+
       validate(need(input$select_codes, "Codes must be selected"),
                need(input$selected, "Did you select some text?"))
 
