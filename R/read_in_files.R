@@ -10,10 +10,10 @@
 #'  \dontrun{
 #' fp <-"/documents/"
 #' dfn <- "testdata"
-#' read_raw_data(fp, dfn, "")
+#' read_documents_data(fp, dfn, "")
 #' }
 #' @export
-read_raw_data <- function(folder_path = "/documents/",
+read_documents_data <- function(folder_path = "/documents/",
                           data_frame_name = "qcoder_documents",
                           project_name = NULL,
                           docs_df_path = "",
@@ -328,7 +328,7 @@ create_empty_unit_doc_file <- function(file_path = "data_frames",
 #' unlink("./my_qcoder_project", recursive=TRUE)
 #' @export
 import_project_data<- function(project_name){
-  read_raw_data(project_name = project_name)
+  read_documents_data(project_name = project_name)
   read_code_data(project_name = project_name)
   read_unit_data(project_name = project_name)
   read_unit_document_map_data(project_name = project_name)
