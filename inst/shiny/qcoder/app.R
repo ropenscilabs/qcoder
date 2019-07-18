@@ -35,6 +35,7 @@ if (interactive()) {
       tags$br(),
       # Start tabset
       navlistPanel(
+        id = "navlist",
            # Tab title
            tabPanel("Add codes to text data",
           #  conditionalPanel(condition = "input$project_directory == TRUE",
@@ -89,8 +90,6 @@ if (interactive()) {
              uiOutput("add_new_code"),
              textInput("new_code", "Code"),
              textInput("new_code_desc", "Description")
-
-
      ) # close add data tab
     ) # close tab set
   ) # close main panel
@@ -101,7 +100,19 @@ if (interactive()) {
 
   # Define server logic
   server <- function(input, output, session) {
+    #Project selected Conditionals
+    #Show only if the project is selected
+    #If no project selected, hide tabs
+    conditionalPanel(
+      #condition = "input.select_project[1] == 'NULL'",
+      #condition = "length(project_path == '')",
+      hideTab("navlist", 
+              #c("Add codes to text data", "Codes", "Coded data", "Units", "Summary", "Add data"))
+              "Add data")
 
+    )
+    
+    
 
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
