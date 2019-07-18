@@ -1,3 +1,33 @@
+#' Build the paths for empty files
+#'
+#' @param data_frame_name Name of the data frame that will contain the data
+#' @param data_path path to the raw data
+#' @param df_path path to the created data frame file
+#' @param file_path Path to store data frame on.
+#' @param project_name Name of the project
+build_empty_paths <- function(data_frame_name = "",
+                        data_path = "",
+                        df_path = "data_frames",
+                        project_path = "",
+                        project_name) {
+  if(project_path == ""){
+    project_path <- paste0(getwd(), "/", project_name)
+  }
+  if (dirname(df_path) != "."){
+    df_dir <- dirname(df_path)
+    dir.create(df_dir, recursive = TRUE, showWarnings = FALSE)
+  } else {
+    df_path <- file.path(project_path, df_path,
+                      paste0(data_frame_name, "_", project_name, ".rds" ))
+    dir.create(file.path(project_path, df_path),
+               recursive = TRUE, showWarnings = FALSE)
+  }
+  if (data_path == ""){
+    data_path <- file.path(project_path, data_frame_name)
+  }
+  list(project_path, df_path, data_path)
+}
+
 
 #'  Create a data frame of documents
 #' @param folder_path path to a folder contain text files to be analyzed.
@@ -151,52 +181,35 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
 #' Used to create a codes data frame with no data but that can
 #' have data added. File is placed in the data_frames folder.
 #'
-#' @param data_frame_name Name of the data frame to be created
-#' @param project_name Name of the project that the codes are associated with
-#' @param file_path Path to the file location to be used (under project root).
-#'                  defaults to "data_frames".
-#' @param codes_df_path The full path to the codes data frame
-#' @param project_path  The full path to the project folder
+#' @param data_frame_name Name of the data frame that will contain the data
+#' @param df_path path to the created data frame
+#' @param file_path Path to store data frame on.
+#' @param project_name Name of the project
 #' @examples
 #' create_qcoder_project(project_name = "_my_qcoder_project")
 #' create_empty_code_file("_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 create_empty_code_file <-function( data_frame_name = "qcoder_codes",
-                                   codes_df_path = "",
+                                   df_path = "data_frames",
                                    project_path = "",
-                                   file_path = "data_frames",
-                                   project_name = ""){
+                                   project_name){
 
-  if (codes_df_path != ""){
-    df_dir <- dirname(codes_df_path)
+  if (df_path != ""){
+    df_dir <- dirname(df_path)
     dir.create(df_dir, recursive = TRUE, showWarnings = FALSE)
-  } else  if (project_path == "" & project_name != ""){
+  } else  if (project_path == ""){
     project_path <- paste0(getwd(), "/", project_name)
-    codes_df_path <- paste0(project_path, "/", file_path, "/",
+    df_path <- paste0(project_path, "/", df_path, "/",
                             data_frame_name, "_", project_name, ".rds" )
 
-      dir.create(paste0(project_path, "/", file_path),
+      dir.create(paste0(project_path, "/", df_path),
                  recursive = TRUE, showWarnings = FALSE)
-
-  } else if ( project_path != "" &  project_name == ""){
-    codes_df_path <- paste0(project_path, "/", file_path, "/",
-                              data_frame_name, "_",  ".rds" )
-
-      dir.create(paste0(project_path, "/", file_path), recursive = TRUE, showWarnings = FALSE)
-
-  } else if (project_path != "" & project_name != ""){
-    codes_df_path <- paste0(project_path, "/", project_name, "/", file_path, "/",
+  } else if (project_path != "" ){
+      df_path <- paste0(project_path, "/", project_name, "/", df_path, "/",
                             data_frame_name, "_", project_name,  ".rds" )
       dir.create(paste0(project_path, "/", project_name, "/", file_path),
                  recursive = TRUE, showWarnings = FALSE)
-
-  } else if (project_path == "" & project_name == ""){
-      project_path <- getwd()
-      codes_df_path <- paste0(project_path, "/", file_path, "/",
-                              data_frame_name, "_",  ".rds" )
-        dir.create(paste0(project_path, "/", file_path), recursive = TRUE,
-                   showWarnings = FALSE)
   }
 
   cn <- c("code_id", "code", "code.description")
@@ -295,17 +308,20 @@ read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
 }
 
 #' Define an empty many to many unit to document map
+#' @param data_frame_name Name of the data frame that will contain the data
+#' @param df_path path to the created data frame
 #' @param file_path Path to store data frame on.
-#' @param data_frame_name Name of the data frame that will contain the map
-#' @param project_name Name of the project, if it exists
+#' @param project_name Name of the project
 #' @examples
 #' create_qcoder_project(project_name = "_my_qcoder_project")
 #' create_empty_unit_doc_file(project_name = "_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
-create_empty_unit_doc_file <- function(file_path = "data_frames",
-                                 data_frame_name = "unit_document_map",
-                                 project_name){
+create_empty_unit_doc_file <- function(data_frame_name = "unit_document_map",
+                                 df_path = "data_frames",
+                                 project_path = "",
+                                 project_name
+                                 ){
   ud <- c("doc_path", "unit_id")
   unit_document_map <- as.data.frame(matrix(data = NA, 0, length(ud)))
   colnames(unit_document_map) <- ud
