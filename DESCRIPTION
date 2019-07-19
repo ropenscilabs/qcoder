@@ -8,8 +8,10 @@ Authors@R: c(
   person("Jenny", "Draper", email = "learithe@gmail.com", role = c("aut")),
   person("Ted", "Laderas", email = "roshioshi@gmail.com", role = c("aut")),
   person("Fred", "VanWindekens", email = "f.vanwindekens@gmail.com", role=c("ctb")),
-  person("Yuri", "Dias", email ="yurimathe.yp@gmail.com", role = c("ctb")))
-Description: A free, lightweight, open source option for analyzing text-based qualitative data.
+  person("Yuri", "Dias", email ="yurimathe.yp@gmail.com", role = c("ctb")),
+  person("Sheriff", "Colley", email ="rikunaruto0198@gmail.com", role = c("ctb")))
+Description: A free, lightweight, open source option for analyzing text-based
+  qualitative data.
   Enables analysis of interview transcripts, observation notes, memos, 
   and other sources. Supports the work of social scientists, historians, 
   humanists, and other researchers who use qualitative methods. Addresses 
