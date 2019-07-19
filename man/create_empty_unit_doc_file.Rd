@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_in_files.R
 \name{create_empty_unit_doc_file}
 \alias{create_empty_unit_doc_file}
-\title{Define a many to many unit to document map}
+\title{Define an empty many to many unit to document map}
 \usage{
 create_empty_unit_doc_file(file_path = "data_frames",
   data_frame_name = "unit_document_map", project_name)
@@ -15,7 +15,7 @@ create_empty_unit_doc_file(file_path = "data_frames",
 \item{project_name}{Name of the project, if it exists}
 }
 \description{
-Define a many to many unit to document map
+Define an empty many to many unit to document map
 }
 \examples{
 create_qcoder_project(project_name = "_my_qcoder_project")
