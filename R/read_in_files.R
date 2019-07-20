@@ -1,31 +1,27 @@
 #' Build the paths for empty files
 #'
-#' @param data_frame_name Name of the data frame that will contain the data
-#' @param data_path path to the raw data
-#' @param df_path path to the created data frame file
-#' @param file_path Path to store data frame on.
 #' @param project_name Name of the project
-build_empty_paths <- function(data_frame_name = "",
-                        data_path = "",
-                        df_path = "data_frames",
-                        project_path = "",
-                        project_name) {
+#' @param data_frame_name Name of the data frame that will contain the data
+#' @param df_path path segment(s) to the created data frame file
+#'                 from the project path
+#' @param project_path Path to the project (not including project_name).
+build_empty_paths <- function(project_name,
+                              data_frame_name = "",
+                              df_path = "data_frames",
+                              project_path = ""
+                        ) {
   if(project_path == ""){
     project_path <- paste0(getwd(), "/", project_name)
-  }
-  if (dirname(df_path) != "."){
-    df_dir <- dirname(df_path)
-    dir.create(df_dir, recursive = TRUE, showWarnings = FALSE)
   } else {
+    project_path <- paste0(project_path, "/", project_name)
+  }
+
+    dir.create(file.path(project_path,df_path),
+               recursive = TRUE, showWarnings = FALSE)
     df_path <- file.path(project_path, df_path,
                       paste0(data_frame_name, "_", project_name, ".rds" ))
-    dir.create(file.path(project_path, df_path),
-               recursive = TRUE, showWarnings = FALSE)
-  }
-  if (data_path == ""){
-    data_path <- file.path(project_path, data_frame_name)
-  }
-  list(project_path, df_path, data_path)
+
+ df_path
 }
 
 
@@ -132,48 +128,47 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
 }
 
 #'  Create a file of codes from csv file
-#'  Use this is you have a spreadsheet of codes already created.
+#'  Use this if you have a spreadsheet of codes already created.
 #'
-#' @param file_path Path to a file containing  code data in csv.
+#' @param data_path Path to a file containing  code data in csv.
 #' @param data_frame_name The name of the RDS file that the data frame will be stored in.
 #' @param project_name Name of the project, which matches folder name
 #' @param project_path Full path to the project folder
-#' @param codes_df_path Full path to the codes data frame.
+#' @param df_path Full path to the codes data frame.
 #'
 #' @examples
 #'
 #' create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
-#' fp <-"my_qcoder_project/codes/"
-#' dfn <- "test_codes"
-#' read_code_data(fp, dfn, project_name = "_my_qcoder_project")
-#' unlink("./my_qcoder_project", recursive=TRUE)
+#' read_code_data(project_name = "_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #'
 #' @export
-read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
-                           data_frame_name = "qcoder_codes", project_name, project_path = ""){
+read_code_data <- function(project_name,
+                           data_path = "codes/codes.csv",
+                           df_path = "data_frames",
+                           data_frame_name = "qcoder_codes",
+                           project_path = ""){
     if (project_path == ""){
-        project_path <- paste0(getwd(), "/", project_name)
+        project_path <- getwd()
     }
+      data_path <- file.path(project_path, project_name, data_path)
+      codes_df_path <- file.path(project_path, project_name, df_path,
+                                paste0(data_frame_name, "_", project_name, ".rds" ))
 
-    if (!is.null(project_name)){
-      file_path <- paste0(project_path, "/", file_path)
-      codes_df_path <- paste0(project_path, "/data_frames/",
-                                data_frame_name, "_", project_name, ".rds" )
-    }
 
-  if (file.exists(file_path)){
-      code_data <- readr::read_csv(file = file_path,
+  if (file.exists(data_path)){
+      code_data <- readr::read_csv(file = data_path,
                                   col_types = "icc")
       # validate column names etc here
       #code_data$code <- as.character(code_data$code)
 
       # try catch this save
       saveRDS(code_data, file = codes_df_path)
-      invisible(TRUE)
-   } else {
-      create_empty_code_file(project_name = project_name, codes_df_path = codes_df_path)
-   }
 
+   } else {
+      create_empty_code_file(project_name = project_name, project_path =  project_path)
+   }
+      invisible(TRUE)
 }
 
 #' Create an empty codes data set
@@ -181,78 +176,68 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
 #' Used to create a codes data frame with no data but that can
 #' have data added. File is placed in the data_frames folder.
 #'
-#' @param data_frame_name Name of the data frame that will contain the data
-#' @param df_path path to the created data frame
-#' @param file_path Path to store data frame on.
 #' @param project_name Name of the project
+#' @param data_frame_name Name of the data frame that will contain the data
+#' @param df_path path segment(s) to the created data frame
+#' @param project_path Path to the project (not including project name).
 #' @examples
 #' create_qcoder_project(project_name = "_my_qcoder_project")
 #' create_empty_code_file("_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
-create_empty_code_file <-function( data_frame_name = "qcoder_codes",
+create_empty_code_file <-function( project_name,
+                                   data_frame_name = "qcoder_codes",
                                    df_path = "data_frames",
-                                   project_path = "",
-                                   project_name){
-
-  if (df_path != ""){
-    df_dir <- dirname(df_path)
-    dir.create(df_dir, recursive = TRUE, showWarnings = FALSE)
-  } else  if (project_path == ""){
-    project_path <- paste0(getwd(), "/", project_name)
-    df_path <- paste0(project_path, "/", df_path, "/",
-                            data_frame_name, "_", project_name, ".rds" )
-
-      dir.create(paste0(project_path, "/", df_path),
-                 recursive = TRUE, showWarnings = FALSE)
-  } else if (project_path != "" ){
-      df_path <- paste0(project_path, "/", project_name, "/", df_path, "/",
-                            data_frame_name, "_", project_name,  ".rds" )
-      dir.create(paste0(project_path, "/", project_name, "/", file_path),
-                 recursive = TRUE, showWarnings = FALSE)
-  }
-
+                                   project_path = ""
+                                   ){
+  path <- build_empty_paths(data_frame_name=data_frame_name,
+                              df_path = df_path,
+                              project_path = project_path,
+                              project_name = project_name)
   cn <- c("code_id", "code", "code.description")
   code_data <- as.data.frame(matrix(data = NA, 0, length(cn)))
   colnames(code_data) <- cn
   code_data$code.description <- as.character(code_data$code.description)
   code_data$code_id <- as.integer(code_data$code_id)
   code_data$code <-as.character(code_data$code)
-  saveRDS(code_data, file = codes_df_path)
 
+  saveRDS(code_data, file = path)
 }
 
 #'  Create a data frame of units from csv file
 #'  Use this is you have a spreadsheet of units already created.
 #'
-#' @param file_path path to a file containing  unit data in csv.
+#' @param data_path path to a file containing  unit data in csv.
 #' @param data_frame_name The name of the RDS file that the data frame will be stored in.
 #' @param project_name  Name of project if available
 #' @param project_path Full path to the project folder.
-#' @param units_df_path Full path to the units data frame.
+#' @param df_path Full path to the units data frame.
 #'
 #' @examples
 #'create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
-#' fp <-"units.csv"
-#' dfn <- "my_units"
-#' read_unit_data(fp, dfn, project_name = "_my_qcoder_project")
+#' read_unit_data(project_name = "_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #'
 #' @export
-read_unit_data <- function(file_path = "units.csv",
+read_unit_data <- function(data_path = "/units/units.csv",
                            data_frame_name = "qcoder_units",
                            project_name,
                            project_path = "",
-                           units_df_path = ""){
+                           df_path = "data_frames"){
   if (project_path == ""){
-    project_path <- paste0(getwd(), "/", project_name)
+    project_path <- getwd()
   }
 
-  if (!is.null(project_name) & units_df_path == ""){
-    file_path <- paste0(project_path, "/units/", file_path)
-    units_df_path <- paste0(project_path, "/data_frames/",
-                              data_frame_name, "_", project_name, ".rds" )
+  file_path <- file.path(project_path, project_name, data_path)
+  print(file_path)
+  if ( df_path == ""){
+    df_path <- file.path(project_path, project_name, "data_frames")
+  } else {
+    df_path <- file.path(project_path,project_name, df_path)
   }
+
+  units_df_path <- file.path(df_path,
+                          paste0(data_frame_name, "_", project_name, ".rds" ))
   units <- readr::read_csv(file = file_path,
                            col_types = "ic" )
   # validate column names etc here
@@ -262,73 +247,99 @@ read_unit_data <- function(file_path = "units.csv",
   invisible(TRUE)
 }
 
+#' Define an empty many units data frame
+#' @param project_name Name of the project
+#' @param data_frame_name Name of the data frame that will contain the data
+#' @param df_path Path segment(s) to the created data frame
+#' @param project_path Path to the project (not including project name.
+#' @examples
+#' create_qcoder_project(project_name = "_my_qcoder_project")
+#' create_empty_units_file(project_name = "_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
+#' @export
+create_empty_units_file <- function(project_name,
+                                       data_frame_name = "qcoder_unit",
+                                       df_path = "data_frames",
+                                       project_path = ""
+){
+  path <- build_empty_paths(data_frame_name=data_frame_name,
+                            df_path = df_path,
+                            project_path = project_path,
+                            project_name = project_name)
+  ud <- c("unit_id","name")
+  units <- as.data.frame(matrix(data = NA, 0, length(ud)))
+  colnames(units) <- ud
+  units$name <- as.character(units$name)
+  units$unit_id <- as.integer(units$unit_id)
+  saveRDS(units, file = path)
+  invisible(TRUE)
+}
+
 #'  Create a data frame of unit to document links from csv file
 #'  Use this is you have a spreadsheet already created.
 #'
-#' @param file_path path to a file containing  unit document map data in csv.
+#' @param data_path path to a file containing  unit document map data in csv.
 #' @param data_frame_name The name of the RDS file that the data frame will be stored in.
 #' @param project_name  Name of project if available
 #' @param project_path Full path to the project folder
-#' @param units_docs_path Full path to the documents data frame.
+#' @param df_path Full path to the documents data frame.
 #'
 #' @examples
 #' create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
 #' project_name = "_my_qcoder_project"
-#' fp <-"unit_document_map.csv"
-#' dfn <- "qcoder_unit_document_map"
-#' read_unit_document_map_data(fp, dfn, project_name = "_my_qcoder_project")
+#' read_unit_document_map_data( project_name = "_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
-read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
+read_unit_document_map_data <- function(data_path = "units/unit_document_map.csv",
                            data_frame_name = "qcoder_unit_document_map",
                            project_name,
                            project_path = "",
-                           units_docs_path = ""){
+                           df_path = "data_frames"){
   if (project_path == ""){
-    project_path <- paste0(getwd(), "/", project_name)
-  }
-  if (!is.null(project_name)){
-    file_path <- paste0(project_path, "/units/", file_path)
-    data_frame_path <- paste0("/data_frames/",
-                              paste0(data_frame_name, "_", project_name ))
+    project_path <- getwd()
   }
 
-  qcoder_unit_document_map <- readr::read_csv(file = file_path,
+    data_path <- file.path(project_path, project_name, data_path)
+    data_frame_path <- file.path(project_path, project_name, df_path,
+                              paste0(data_frame_name, "_", project_name, ".rds" ))
+
+
+  qcoder_unit_document_map <- readr::read_csv(file = data_path,
                                               col_types = readr::cols(doc_path = "c",
                                                                 unit_id = "i"))
   # validate column names etc here
 
-  if (units_docs_path == ""){
-    units_docs_path <- paste0(project_path, data_frame_path, ".rds" )
-  }
-
   # try catch this save
-  saveRDS(qcoder_unit_document_map, file = units_docs_path)
+  saveRDS(qcoder_unit_document_map, file = data_frame_path)
   invisible(TRUE)
 }
 
 #' Define an empty many to many unit to document map
-#' @param data_frame_name Name of the data frame that will contain the data
-#' @param df_path path to the created data frame
-#' @param file_path Path to store data frame on.
 #' @param project_name Name of the project
+#' @param data_frame_name Name of the data frame that will contain the data
+#' @param df_path Path segment(s) to the created data frame
+#' @param project_path Path to the project (not including project name.
 #' @examples
 #' create_qcoder_project(project_name = "_my_qcoder_project")
 #' create_empty_unit_doc_file(project_name = "_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
-create_empty_unit_doc_file <- function(data_frame_name = "unit_document_map",
+create_empty_unit_doc_file <- function(project_name,
+                                 data_frame_name = "qcoder_units_document_map",
                                  df_path = "data_frames",
-                                 project_path = "",
-                                 project_name
+                                 project_path = ""
                                  ){
+  path <- build_empty_paths(data_frame_name=data_frame_name,
+                            df_path = df_path,
+                            project_path = project_path,
+                            project_name = project_name)
   ud <- c("doc_path", "unit_id")
   unit_document_map <- as.data.frame(matrix(data = NA, 0, length(ud)))
   colnames(unit_document_map) <- ud
   unit_document_map$doc_path <- as.character(unit_document_map$doc_path)
 
   unit_document_map$unit_id <- as.integer(unit_document_map$unit_id)
-  saveRDS(unit_document_map, file = paste0(project_name, "/", file_path, "/", data_frame_name,".rds" ))
+  saveRDS(unit_document_map, file = path)
   invisible(TRUE)
 }
 
@@ -339,9 +350,9 @@ create_empty_unit_doc_file <- function(data_frame_name = "unit_document_map",
 #' @param project_name The project name. This should represent the folder
 #'                     holding the project.
 #' @examples
-#' create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
-#' import_project_data("my_qcoder_project")
-#' unlink("./my_qcoder_project", recursive=TRUE)
+#' create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
+#' import_project_data("_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 import_project_data<- function(project_name){
   read_raw_data(project_name = project_name)

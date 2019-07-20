@@ -5,12 +5,12 @@
 \title{Create a data frame of unit to document links from csv file
 Use this is you have a spreadsheet already created.}
 \usage{
-read_unit_document_map_data(file_path = "unit_document_map.csv",
+read_unit_document_map_data(data_path = "units/unit_document_map.csv",
   data_frame_name = "qcoder_unit_document_map", project_name,
-  project_path = "", units_docs_path = "")
+  project_path = "", df_path = "data_frames")
 }
 \arguments{
-\item{file_path}{path to a file containing  unit document map data in csv.}
+\item{data_path}{path to a file containing  unit document map data in csv.}
 
 \item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
 
@@ -18,7 +18,7 @@ read_unit_document_map_data(file_path = "unit_document_map.csv",
 
 \item{project_path}{Full path to the project folder}
 
-\item{units_docs_path}{Full path to the documents data frame.}
+\item{df_path}{Full path to the documents data frame.}
 }
 \description{
 Create a data frame of unit to document links from csv file
@@ -27,8 +27,6 @@ Use this is you have a spreadsheet already created.
 \examples{
 create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
 project_name = "_my_qcoder_project"
-fp <-"unit_document_map.csv"
-dfn <- "qcoder_unit_document_map"
-read_unit_document_map_data(fp, dfn, project_name = "_my_qcoder_project")
+read_unit_document_map_data( project_name = "_my_qcoder_project")
 unlink("./_my_qcoder_project", recursive=TRUE)
 }

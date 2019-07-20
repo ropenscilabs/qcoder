@@ -107,6 +107,7 @@ do_update_document <- function(updated, docs_df_path, this_doc_path){
 #' @param this_doc_path value of doc_path for the document
 #' @param units_docs_path  full path of the data frame of unit to docs links
 #' @examples
+#'
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 update_links <- function(checked = "", docs_df_path = "", this_doc_path = "", units_docs_path = ""){
