@@ -80,6 +80,39 @@ read_raw_data <- function(folder_path = "/documents/",
   invisible(TRUE)
 }
 
+#' Create an empty documents data set
+#'
+#' Used to create a codes data frame with no data but that can
+#' have data added. File is placed in the data_frames folder.
+#'
+#' @param project_name Name of the project
+#' @param data_frame_name Name of the data frame that will contain the data
+#' @param df_path path segment(s) to the created data frame
+#' @param project_path Path to the project (not including project name).
+#' @examples
+#' create_qcoder_project(project_name = "_my_qcoder_project")
+#' create_empty_docs_file("_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
+#' @export
+create_empty_docs_file <-function( project_name,
+                                   data_frame_name = "qcoder_documents",
+                                   df_path = "data_frames",
+                                   project_path = ""
+){
+  path <- build_empty_paths(data_frame_name=data_frame_name,
+                            df_path = df_path,
+                            project_path = project_path,
+                            project_name = project_name)
+  cn <- c("doc_id", "document_text", "doc_path")
+  doc_data <- as.data.frame(matrix(data = NA, 0, length(cn)))
+  colnames(doc_data) <- cn
+  doc_data$document_text <- as.character(doc_data$document_text)
+  doc_data$doc_id <- as.integer(doc_data$doc_id)
+  doc_data$doc_path <-as.character(doc_data$doc_path)
+
+  saveRDS(doc_data, file = path)
+}
+
 #' Add new documents
 #' Adds new document or documents to an existing documents data frame.
 #' @param files  file tibble produced by ShinyFiles
