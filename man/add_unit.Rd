@@ -18,3 +18,6 @@ add_unit(units_df, new_unit, units_df_path)
 Add unit
 Append a new unit record to the existing data frame
 }
+\examples{
+unlink("./_my_qcoder_project", recursive=TRUE)
+}
