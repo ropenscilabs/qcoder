@@ -4,18 +4,18 @@
 \alias{read_raw_data}
 \title{Create a data frame of documents}
 \usage{
-read_raw_data(folder_path = "/documents/",
-  data_frame_name = "qcoder_documents", project_name = NULL,
-  docs_df_path = "", project_path = "")
+read_raw_data(project_name, data_path = "documents/",
+  df_path = "data_frames", data_frame_name = "qcoder_documents",
+  project_path = "")
 }
 \arguments{
-\item{folder_path}{path to a folder contain text files to be analyzed.}
-
-\item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
-
 \item{project_name}{Name of the Qcoder project}
 
-\item{docs_df_path}{Full path to the docs data frame.}
+\item{data_path}{path to a folder contain text files to be analyzed.}
+
+\item{df_path}{Full path to the docs data frame.}
+
+\item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
 
 \item{project_path}{Full path to the project folder.}
 }

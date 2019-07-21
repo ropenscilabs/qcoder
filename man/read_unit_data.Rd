@@ -5,7 +5,7 @@
 \title{Create a data frame of units from csv file
 Use this is you have a spreadsheet of units already created.}
 \usage{
-read_unit_data(data_path = "/units/units.csv",
+read_unit_data(data_path = "units/units.csv",
   data_frame_name = "qcoder_units", project_name, project_path = "",
   df_path = "data_frames")
 }
