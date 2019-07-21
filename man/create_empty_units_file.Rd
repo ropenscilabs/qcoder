@@ -2,25 +2,20 @@
 % Please edit documentation in R/read_in_files.R
 \name{create_empty_units_file}
 \alias{create_empty_units_file}
-\title{Define an empty many units data frame}
+\title{Define an empty  units data frame}
 \usage{
-create_empty_units_file(project_name, data_frame_name = "qcoder_unit",
-  df_path = "data_frames", project_path = "")
+create_empty_units_file(path)
 }
 \arguments{
-\item{project_name}{Name of the project}
-
-\item{data_frame_name}{Name of the data frame that will contain the data}
-
-\item{df_path}{Path segment(s) to the created data frame}
-
-\item{project_path}{Path to the project (not including project name.}
+\item{path}{Full path to data frame to be created.}
 }
 \description{
-Define an empty many units data frame
+Define an empty  units data frame
 }
 \examples{
 create_qcoder_project(project_name = "_my_qcoder_project")
-create_empty_units_file(project_name = "_my_qcoder_project")
+path <- file.path(getwd(),
+  "_my_qcoder_project/data_frames/qcoder_units__my_qcoder_project")
+create_empty_docs_file(path)
 unlink("./_my_qcoder_project", recursive=TRUE)
 }

@@ -4,17 +4,10 @@
 \alias{create_empty_docs_file}
 \title{Create an empty documents data set}
 \usage{
-create_empty_docs_file(project_name, df_path = "data_frames",
-  data_frame_name = "qcoder_documents", project_path = "")
+create_empty_docs_file(path)
 }
 \arguments{
-\item{project_name}{Name of the project}
-
-\item{df_path}{path segment(s) to the created data frame}
-
-\item{data_frame_name}{Name of the data frame that will contain the data}
-
-\item{project_path}{Path to the project (not including project name).}
+\item{path}{Full path to data frame to be created.}
 }
 \description{
 Used to create a codes data frame with no data but that can
@@ -22,6 +15,8 @@ have data added. File is placed in the data_frames folder.
 }
 \examples{
 create_qcoder_project(project_name = "_my_qcoder_project")
-create_empty_docs_file("_my_qcoder_project")
+path <- file.path(getwd(),
+  "_my_qcoder_project/data_frames/qcoder_docs__my_qcoder_project")
+create_empty_docs_file(path)
 unlink("./_my_qcoder_project", recursive=TRUE)
 }

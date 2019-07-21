@@ -23,50 +23,54 @@ test_that("A new file with the same name as an existing file generates a warning
   unlink(save_path)
 })
 
-test_that("Creating an empty code file works with only a df path and project name.", {
-  create_empty_code_file(project_name = "_qc_project",
-         df_path = "data_frames2")
+test_that("Creating an empty code file works.", {
+  create_qcoder_project(project_name = "_qc_project")
+  create_empty_code_file(file.path(getwd(),
+             "_qc_project/data_frames/qcoder_codes__qc_project.rds"))
   expect_true(file.exists(file.path(getwd(),
-                          "_qc_project/data_frames2/qcoder_codes__qc_project.rds")))
+           "_qc_project/data_frames/qcoder_codes__qc_project.rds")))
   test_data <- readRDS(file.path(getwd(),
-                          "_qc_project/data_frames2/qcoder_codes__qc_project.rds"))
+            "_qc_project/data_frames/qcoder_codes__qc_project.rds"))
   expect_equal(names(test_data), c("code_id", "code", "code.description"))
-  unlink(paste0(getwd(), "_qc_project/data_frames2/qcoder_codes__qc_project.rds"))
+  unlink(file.path(getwd(), "_qc_project"), recursive = TRUE)
 })
 
-test_that("Creating an empty code file works with only a project path
-          and project name.", {
-  dir.create(paste0(getwd(), "/my_qcoder_path"))
-  create_empty_code_file(project_name = "_qc_project",
-                          project_path =
-                          paste0(getwd(), "/my_qcoder_path")
-                          )
-  expect_true(file.exists(paste0(getwd(),
-              "/my_qcoder_path/_qc_project/data_frames/qcoder_codes__qc_project.rds")))
-  test_data <- readRDS(paste0(getwd(),
-                              "/my_qcoder_path/_qc_project/data_frames/qcoder_codes__qc_project.rds"))
-  expect_equal(names(test_data), c("code_id", "code", "code.description"))
-  unlink(paste0(getwd(), "/my_qcoder_path"), recursive = TRUE)
+test_that("Creating an empty units file works.", {
+
+  create_qcoder_project(project_name = "_qc_project")
+  create_empty_units_file(file.path(getwd(),
+                                   "_qc_project/data_frames/qcoder_units__qc_project.rds"))
+  expect_true(file.exists(file.path(getwd(),
+                                    "_qc_project/data_frames/qcoder_units__qc_project.rds")))
+  test_data <- readRDS(file.path(getwd(),
+                                 "_qc_project/data_frames/qcoder_units__qc_project.rds"))
+  expect_equal(names(test_data), c("unit_id", "name"))
+  unlink(file.path(getwd(), "_qc_project"), recursive = TRUE)
 })
 
-test_that("Creating an empty code file works with no project path.", {
-  create_empty_code_file(project_name = "_qc_project")
-  expect_true(file.exists(file.path(getwd(), "_qc_project/data_frames/qcoder_codes__qc_project.rds")))
-  test_data <- readRDS(file.path(getwd(), "_qc_project/data_frames/qcoder_codes__qc_project.rds"))
-  expect_equal(names(test_data), c("code_id", "code", "code.description"))
-  # Be careful running this
-  unlink(paste0(getwd(), "_qc_project"), recursive = TRUE)
+test_that("Creating an empty documents file works.", {
+
+  create_qcoder_project(project_name = "_qc_project")
+  create_empty_docs_file(file.path(getwd(),
+              "_qc_project/data_frames/qcoder_documents__qc_project.rds"))
+  expect_true(file.exists(file.path(getwd(),
+              "_qc_project/data_frames/qcoder_documents__qc_project.rds")))
+  test_data <- readRDS(file.path(getwd(),
+               "_qc_project/data_frames/qcoder_documents__qc_project.rds"))
+  expect_equal(names(test_data), c("doc_id", "document_text", "doc_path"))
+  unlink(file.path(getwd(), "_qc_project"), recursive = TRUE)
 })
 
-test_that("Creating an empty code file works with both a project path
-          and a project name.", {
-  create_empty_code_file(project_path =
-                           paste0(tempdir(), "/my_qcoder_project"),
-                           project_name = "other_project_name")
-  expect_true(file.exists(paste0(tempdir(),
-  "/my_qcoder_project/other_project_name/data_frames/qcoder_codes_other_project_name.rds")))
-  test_data <- readRDS(paste0(tempdir(),
-                 "/my_qcoder_project/other_project_name/data_frames/qcoder_codes_other_project_name.rds"))
-  expect_equal(names(test_data), c("code_id", "code", "code.description"))
-  unlink(paste0(tempdir(), "/my_qcoder_project"), recursive = TRUE)
+test_that("Creating an empty unit document map file works.", {
+
+  create_qcoder_project(project_name = "_qc_project")
+  create_empty_unit_doc_file(file.path(getwd(),
+           "_qc_project/data_frames/qcoder_units_document_map__qc_project.rds"))
+  expect_true(file.exists(file.path(getwd(),
+            "_qc_project/data_frames/qcoder_units_document_map__qc_project.rds")))
+  test_data <- readRDS(file.path(getwd(),
+            "_qc_project/data_frames/qcoder_units_document_map__qc_project.rds"))
+  print(names(test_data))
+  expect_equal(names(test_data), c("doc_path", "unit_id"))
+  unlink(file.path(getwd(), "_qc_project"), recursive = TRUE)
 })
