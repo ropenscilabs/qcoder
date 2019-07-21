@@ -15,7 +15,8 @@ read_documents_data(project_name, data_path = "documents/",
 
 \item{df_path}{Full path to the docs data frame.}
 
-\item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
+\item{data_frame_name}{The name of the RDS file that the data frame
+will be stored in.}
 
 \item{project_path}{Full path to the project folder.}
 }
@@ -24,8 +25,6 @@ Create a data frame of documents
 }
 \examples{
  \dontrun{
-fp <-"/documents/"
-dfn <- "testdata"
-read_documents_data(fp, dfn, "")
+read_documents_data("_my_qcoder_project")
 }
 }

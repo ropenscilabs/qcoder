@@ -46,15 +46,14 @@ build_paths <- function(project_name,
 #'  Create a data frame of documents
 #' @param project_name Name of the Qcoder project
 #' @param data_path path to a folder contain text files to be analyzed.
-#' @param data_frame_name The name of the RDS file that the data frame will be stored in.
+#' @param data_frame_name The name of the RDS file that the data frame
+#' will be stored in.
 #' @param df_path Full path to the docs data frame.
 #' @param project_path Full path to the project folder.
 #'
 #' @examples
 #'  \dontrun{
-#' fp <-"/documents/"
-#' dfn <- "testdata"
-#' read_documents_data(fp, dfn, "")
+#' read_documents_data("_my_qcoder_project")
 #' }
 #' @export
 read_documents_data <- function(project_name,
@@ -322,8 +321,7 @@ read_unit_document_map_data <- function(project_name,
 
       saveRDS(qcoder_unit_document_map, file = paths[["data_frame_path"]])
     } else {
-      create_empty_unit_doc_file(project_name = project_name,
-                                 project_path = project_path)
+      create_empty_unit_doc_file(paths[["data_frame_path"]])
     }
   invisible(TRUE)
 }
@@ -359,7 +357,7 @@ create_empty_unit_doc_file <- function(path ){
 #' import_project_data("_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
-import_project_data<- function(project_name){
+import_project_data <- function(project_name){
   read_documents_data(project_name = project_name)
   read_code_data(project_name = project_name)
   read_unit_data(project_name = project_name)
