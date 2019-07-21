@@ -54,12 +54,13 @@ build_paths <- function(project_name,
 #'  \dontrun{
 #' fp <-"/documents/"
 #' dfn <- "testdata"
-#' read_raw_data(fp, dfn, "")
+#' read_documents_data(fp, dfn, "")
 #' }
 #' @export
 read_raw_data <- function(project_name,
                           data_path = "documents/",
                           df_path = "data_frames",
+                          folder_path = "documents/",
                           data_frame_name = "qcoder_documents",
                           project_path = ""){
     paths <- build_paths(project_name = project_name, data_path = data_path,
@@ -360,7 +361,7 @@ create_empty_unit_doc_file <- function(path ){
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 import_project_data<- function(project_name){
-  read_raw_data(project_name = project_name)
+  read_documents_data(project_name = project_name)
   read_code_data(project_name = project_name)
   read_unit_data(project_name = project_name)
   read_unit_document_map_data(project_name = project_name)
