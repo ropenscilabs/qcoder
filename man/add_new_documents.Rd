@@ -12,7 +12,8 @@ add_new_documents(files, docs_df_path = "", file_path = "")
 
 \item{docs_df_path}{Existing data frame of text documents}
 
-\item{file_path}{Full path to the data set of documents including trailing slash}
+\item{file_path}{Full path to the data set of documents including
+trailing slash}
 }
 \description{
 Add new documents
