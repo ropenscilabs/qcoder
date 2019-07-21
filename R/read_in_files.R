@@ -69,15 +69,16 @@ read_raw_data <- function(project_name,
                                   combine = TRUE)
         }
       }
-    } else {
-      return(sprintf("Filepath %s does not exist", folder_path))
-    }
 
-  data_set <- data.frame( doc_id = seq_along(1:length(file_list)),
+        data_set <- data.frame( doc_id = seq_along(1:length(file_list)),
                           document_text = doc_text,
                           doc_path = file_list,
                           stringsAsFactors = FALSE)
-  saveRDS(data_set, file = docs_df_path)
+        saveRDS(data_set, file = docs_df_path)
+    } else {
+      create_empty_docs_file(project_name = project_name,
+                             project_path = project_path)
+  }
   invisible(TRUE)
 }
 
@@ -117,7 +118,8 @@ create_empty_docs_file <-function( project_name,
 #' Add new documents
 #' Adds new document or documents to an existing documents data frame.
 #' @param files  file tibble produced by ShinyFiles
-#' @param file_path  Full path to the data set of documents including trailing slash
+#' @param file_path  Full path to the data set of documents including
+#' trailing slash
 #' @param docs_df_path  Existing data frame of text documents
 #' @examples
 #' create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
@@ -138,20 +140,19 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
           for (i in 1:length(file_list)){
             doc_text[i] <- readr::read_file(paste0(file_path,
                                                            file_list[i]))
-
           }
-
         } else {
           for (i in 1:length(file_list)){
                        if (length(file_list) == 0){
                          return()
                        }
-                       doc_text[i] <- textreadr::read_document(paste0(file_path,
-                                                 file_list[i]))
+                       doc_text[i] <- textreadr::read_document(
+                                    paste0(file_path, file_list[i]))
           }
         }
         ids <- integer(length(file_list))
-        new_rows <- data.frame(doc_id = ids, document_text = doc_text, doc_path = file_list)
+        new_rows <- data.frame(doc_id = ids, document_text = doc_text,
+                               doc_path = file_list)
         text_df <- rbind( text_df, new_rows)
         row_n <- row.names(text_df)
         text_df$doc_id <- ifelse(text_df$doc_id == 0, row_n,
@@ -165,17 +166,16 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
 #'  Use this if you have a spreadsheet of codes already created.
 #'
 #' @param data_path Path to a file containing  code data in csv.
-#' @param data_frame_name The name of the RDS file that the data frame will be stored in.
+#' @param data_frame_name The name of the RDS file that the data frame
+#'                         will be stored in.
 #' @param project_name Name of the project, which matches folder name
 #' @param project_path Full path to the project folder
 #' @param df_path Full path to the codes data frame.
 #'
 #' @examples
-#'
 #' create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
 #' read_code_data(project_name = "_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
-#'
 #' @export
 read_code_data <- function(project_name,
                            data_path = "codes/codes.csv",
@@ -187,7 +187,8 @@ read_code_data <- function(project_name,
     }
       data_path <- file.path(project_path, project_name, data_path)
       codes_df_path <- file.path(project_path, project_name, df_path,
-                                paste0(data_frame_name, "_", project_name, ".rds" ))
+                                paste0(data_frame_name, "_",
+                                       project_name, ".rds" ))
 
 
   if (file.exists(data_path)){
@@ -200,9 +201,11 @@ read_code_data <- function(project_name,
       saveRDS(code_data, file = codes_df_path)
 
    } else {
-      create_empty_code_file(project_name = project_name, project_path =  project_path)
+      create_empty_code_file(project_name = project_name,
+                             project_path =  project_path)
    }
-      invisible(TRUE)
+
+   invisible(TRUE)
 }
 
 #' Create an empty codes data set
@@ -242,13 +245,14 @@ create_empty_code_file <-function( project_name,
 #'  Use this is you have a spreadsheet of units already created.
 #'
 #' @param data_path path to a file containing  unit data in csv.
-#' @param data_frame_name The name of the RDS file that the data frame will be stored in.
+#' @param data_frame_name The name of the RDS file that the data frame
+#' will be stored in.
 #' @param project_name  Name of project if available
 #' @param project_path Full path to the project folder.
 #' @param df_path Full path to the units data frame.
 #'
 #' @examples
-#'create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
+#' create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
 #' read_unit_data(project_name = "_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #'
@@ -269,14 +273,19 @@ read_unit_data <- function(data_path = "units/units.csv",
   }
   df_path <- file.path(project_path, project_name, df_path)
 
-  units_df_path <- file.path(df_path,
+  if (file.exists(file_path)){
+        units_df_path <- file.path(df_path,
                           paste0(data_frame_name, "_", project_name, ".rds" ))
-  units <- readr::read_csv(file = file_path,
+        units <- readr::read_csv(file = file_path,
                            col_types = "ic" )
   # validate column names etc here
 
   # try catch this save
-  saveRDS(units, file = units_df_path)
+      saveRDS(units, file = units_df_path)
+  } else {
+    create_empty_units_file(project_name = project_name,
+                            project_path =  project_path)
+  }
   invisible(TRUE)
 }
 
@@ -311,9 +320,10 @@ create_empty_units_file <- function(project_name,
 #'  Create a data frame of unit to document links from csv file
 #'  Use this is you have a spreadsheet already created.
 #'
+#' @param project_name  Name of project
 #' @param data_path path to a file containing  unit document map data in csv.
-#' @param data_frame_name The name of the RDS file that the data frame will be stored in.
-#' @param project_name  Name of project if available
+#' @param data_frame_name The name of the RDS file that the data frame
+#' will be stored in.
 #' @param project_path Full path to the project folder
 #' @param df_path Full path to the documents data frame.
 #'
@@ -323,9 +333,9 @@ create_empty_units_file <- function(project_name,
 #' read_unit_document_map_data( project_name = "_my_qcoder_project")
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
-read_unit_document_map_data <- function(data_path = "units/unit_document_map.csv",
+read_unit_document_map_data <- function(project_name,
+                           data_path = "units/unit_document_map.csv",
                            data_frame_name = "qcoder_unit_document_map",
-                           project_name,
                            project_path = "",
                            df_path = "data_frames"){
   if (project_path == ""){
@@ -334,16 +344,20 @@ read_unit_document_map_data <- function(data_path = "units/unit_document_map.csv
 
     data_path <- file.path(project_path, project_name, data_path)
     data_frame_path <- file.path(project_path, project_name, df_path,
-                              paste0(data_frame_name, "_", project_name, ".rds" ))
+                              paste0(data_frame_name, "_",
+                                     project_name, ".rds" ))
+    if (file.exists(data_path)){
 
-
-  qcoder_unit_document_map <- readr::read_csv(file = data_path,
-                                              col_types = readr::cols(doc_path = "c",
+        qcoder_unit_document_map <- readr::read_csv(file = data_path,
+                                      col_types = readr::cols(doc_path = "c",
                                                                 unit_id = "i"))
-  # validate column names etc here
+        # validate column names etc here
 
-  # try catch this save
-  saveRDS(qcoder_unit_document_map, file = data_frame_path)
+      saveRDS(qcoder_unit_document_map, file = data_frame_path)
+    } else {
+      create_empty_unit_doc_file(project_name = project_name,
+                                 project_path = project_path)
+    }
   invisible(TRUE)
 }
 

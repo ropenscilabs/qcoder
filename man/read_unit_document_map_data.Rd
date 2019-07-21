@@ -5,16 +5,18 @@
 \title{Create a data frame of unit to document links from csv file
 Use this is you have a spreadsheet already created.}
 \usage{
-read_unit_document_map_data(data_path = "units/unit_document_map.csv",
-  data_frame_name = "qcoder_unit_document_map", project_name,
-  project_path = "", df_path = "data_frames")
+read_unit_document_map_data(project_name,
+  data_path = "units/unit_document_map.csv",
+  data_frame_name = "qcoder_unit_document_map", project_path = "",
+  df_path = "data_frames")
 }
 \arguments{
+\item{project_name}{Name of project}
+
 \item{data_path}{path to a file containing  unit document map data in csv.}
 
-\item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
-
-\item{project_name}{Name of project if available}
+\item{data_frame_name}{The name of the RDS file that the data frame
+will be stored in.}
 
 \item{project_path}{Full path to the project folder}
 

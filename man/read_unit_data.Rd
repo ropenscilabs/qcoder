@@ -12,7 +12,8 @@ read_unit_data(data_path = "units/units.csv",
 \arguments{
 \item{data_path}{path to a file containing  unit data in csv.}
 
-\item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
+\item{data_frame_name}{The name of the RDS file that the data frame
+will be stored in.}
 
 \item{project_name}{Name of project if available}
 
