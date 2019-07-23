@@ -85,6 +85,15 @@ read_documents_data <- function(project_name,
                           doc_path = file_list,
                           stringsAsFactors = FALSE)
         #print(paths[["data_frame_path"]])
+        
+        # validate column names etc here
+        actualNames <- names(data_set)
+        expectedNames <- c("doc_id", "document_text", "doc_path") #GOOD
+        if (length(expectedNames %in% actualNames) != length(data_set)){
+          warning("Required variables for documents_data are not present")
+        }
+        
+        
         saveRDS(data_set, file = paths[["data_frame_path"]])
     } else {
       create_empty_docs_file(paths[["data_frame_path"]])
@@ -196,7 +205,7 @@ read_code_data <- function(project_name,
       expectedNames <- c("code_id", "code", "code.description")  #GOOD
       
       if (length(expectedNames %in% actualNames) != length(code_data)){
-        warning("Required variables are not present")
+        warning("Required variables for read_code_data are not present")
       }
       
       #code_data$code <- as.character(code_data$code)
@@ -268,9 +277,9 @@ read_unit_data <- function(data_path = "units/units.csv",
   
   # validate column names etc here
   actualNames <- names(units)
-  expectedNames <- c("doc_path", "unit_id")    #GOOD
-  if (length(expectedNames %in% actualNames) != length(code_data)){
-    warning("Required variables are not present")
+  expectedNames <- c("unit_id","name")    #GOOD
+  if (length(expectedNames %in% actualNames) != length(units)){
+    warning("Required variables for read_unit_data are not present")
   }
   
 
@@ -332,10 +341,10 @@ read_unit_document_map_data <- function(project_name,
                                                                 unit_id = "i"))
           # validate column names etc here
           actualNames <- names(qcoder_unit_document_map)
-          expectedNames <- 
+          expectedNames <- c("doc_path", "unit_id")
   
           if (length(expectedNames %in% actualNames) != length(qcoder_unit_document_map)){
-            warning("Required variables are not present")
+            warning("Required variables for read_unit_document_map_data are not present")
           }
 
              
