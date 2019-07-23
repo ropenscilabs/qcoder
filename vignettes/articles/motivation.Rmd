@@ -1,6 +1,8 @@
 ---
 title: "Motivation"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -23,16 +25,16 @@ QDA is an iterative process. Researchers will often change, lump together, split
 
 To date, researchers who conduct QDA largely rely upon proprietary software such as those listed below. Free and open source options are limited, not easy to integrate with R and   (credit to [bduckles](https://github.com/bduckles) for the descriptions): 
 
-* [NVivo – QSR International](http://www.qsrinternational.com/product)
+* [NVivo - QSR International](http://www.qsrinternational.com/product)
 Desktop based software with both Windows and Mac support. Functionality includes video and images as data and auto-coding processes. Tech support and training is available and a relatively large user base. 
 
 * [Atlas.TI](http://atlasti.com/) Desktop based software for Mac and Windows, also has mobile apps for android and iOS. Similar functionality as NVivo including using video and visuals as data. Has training and support. 
 
 * [MAXQDA](http://www.maxqda.com/) Desktop based software that works for both Mac and Windows. Training and several tiers of licenses available.
 
-* [QDA Miner – Provalis Research](https://provalisresearch.com/products/qualitative-data-analysis-software/) A Windows application to analyze qualitative text, can be used with some visuals as well. They also have a “lite” package which is free. 
+* [QDA Miner - Provalis Research](https://provalisresearch.com/products/qualitative-data-analysis-software/) A Windows application to analyze qualitative text, can be used with some visuals as well. They also have a "lite" package which is free. 
 
-* [HyperResearch – Researchware](http://www.researchware.com/products/hyperresearch.html) Desktop based software that works on both Mac and Windows. 
+* [HyperResearch - Researchware](http://www.researchware.com/products/hyperresearch.html) Desktop based software that works on both Mac and Windows. 
 
 * [Dedoose](http://www.dedoose.com/) Web based software, usable on any platform. Data stored in the web instead of on your device. Includes text, photos, audio, video and spreadsheet information. 
 
@@ -40,7 +42,7 @@ Desktop based software with both Windows and Mac support. Functionality includes
 
 * [RQDA](http://rqda.r-forge.r-project.org/) A QDA package for R that is free and open source. Bugs in the program make it challenging to use. Last updated in 2012. 
 
-* [Coding Analysis Toolkit – CAT](http://cat.texifter.com/) A free, web based, open source service that was created by University of Pittsburgh. Can be used on any platform. Not supported. 
+* [Coding Analysis Toolkit - CAT](http://cat.texifter.com/) A free, web based, open source service that was created by University of Pittsburgh. Can be used on any platform. Not supported. 
 
 * [Weft QDA](http://www.pressure.to/qda/) A free and open source Windows program that has no support. The website says that bugs in the program can result in the loss of data. 
 
@@ -52,12 +54,12 @@ Open source languages such as R offer the opportunity to involve qualitative res
 
 ## User Needs
 
-We began this project at rOpenSci’s [runconf18](https://github.com/ropensci/unconf18) based on [bduckles](https://github.com/bduckles) issue. We began by discussing the common challenges we and our peers face in conducting QDA and considering what we might learn from existing quantitative and text analysis open source packages. We identified a number of unique challenges qualitative researchers encounter when analyzing data. 
+We began this project at rOpenSci's [runconf18](https://github.com/ropensci/unconf18) based on [bduckles](https://github.com/bduckles) issue. We began by discussing the common challenges we and our peers face in conducting QDA and considering what we might learn from existing quantitative and text analysis open source packages. We identified a number of unique challenges qualitative researchers encounter when analyzing data. 
 
 * *GUI for broader adoption.* Quantitative researchers are often familiar with conducting analyses from the command line. Qualitative researchers, on the other hand, often rely upon Graphical User Interfaces (GUI) to perform analysis tasks. A proposed, in-development solution is integrating Shiny apps to permit a personalized GUI for QCoder. 
 
-* *Collaboration.* Several aspects of collaboration in qualitative research present challenges for development and use of QDA software. The first challenge relates to version control and tracking changes. Whereas contributors to the open source software community, and perhaps the software development community more generally, have developed processes for sharing code, data, and other work products, qualitative researchers often rely on email, DropBox/box, and other sharing technologies that lack appropriate version control features. One proposed solution is to implement a system of record-keeping that maintains all files akin to Atlas.TI’s bundling and unbundling process, but that permits simultaneous work and comparison/merging of changes. We might also consider urging users to learn git and facilitate skill development by offering tutorials. 
-  The second collaboration challenge relates to the need to establish inter-rater or inter-coder reliability. Existing methods of assessing inter-rater reliability for QDA include Cronbach’s Alpha and Krippendorff's Alpha, among others. Such evaluations, though, do not account for complexities such as decisions not to code a segment of text. In other words, by deciding not to apply a code to a snippet of text might be considered an equivalent level of agreement as a decision to apply the same code to the same snippet of text. QCoder aims to make inter-rater reliability assessments easier and more effective than traditional approaches by allowing direct comparisons of differences in the codebooks it generates. 
+* *Collaboration.* Several aspects of collaboration in qualitative research present challenges for development and use of QDA software. The first challenge relates to version control and tracking changes. Whereas contributors to the open source software community, and perhaps the software development community more generally, have developed processes for sharing code, data, and other work products, qualitative researchers often rely on email, DropBox/box, and other sharing technologies that lack appropriate version control features. One proposed solution is to implement a system of record-keeping that maintains all files akin to Atlas.TI's bundling and unbundling process, but that permits simultaneous work and comparison/merging of changes. We might also consider urging users to learn git and facilitate skill development by offering tutorials. 
+  The second collaboration challenge relates to the need to establish inter-rater or inter-coder reliability. Existing methods of assessing inter-rater reliability for QDA include Cronbach's Alpha and Krippendorff's Alpha, among others. Such evaluations, though, do not account for complexities such as decisions not to code a segment of text. In other words, by deciding not to apply a code to a snippet of text might be considered an equivalent level of agreement as a decision to apply the same code to the same snippet of text. QCoder aims to make inter-rater reliability assessments easier and more effective than traditional approaches by allowing direct comparisons of differences in the codebooks it generates. 
 
 * *Privacy concerns.* Qualitative data often includes personally-identifying information. Quantitative approaches to deidentification are not always applicable to qualitative datasets because text-based data includes rich descriptions that may elevate the risk of re-identification. Furthermore, qualitative data tends to be unstructured in ways that make systematic approaches to de-identification difficult to implement. QDA software, then, needs to account for these complexities.
 
@@ -71,11 +73,12 @@ We began this project at rOpenSci’s [runconf18](https://github.com/ropensci/un
 
 Questa the graduate student is working on one chapter of her dissertation research where she is trying to understand how different codes of conduct in the software community welcome underrepresented communities. She wants to understand language use and to trace how these codes of conduct are created from differing communities. She also is planning to do interviews with people who have created and used these codes of conduct to understand how their adoption influences inclusion.  
  
-None of the grants that Questa sent out have come back with any money to do this research. She’s discouraged but passionate about her work and she knows she needs to finish this chapter of her dissertation so she can graduate already. She’s done some work with a nonprofit and they support her work. She’s pretty sure she has a postdoc with them when she finishes her degree. While they should be able to hire her and do support her research, it’s unlikely they’d have enough funds for her to get a license for one of the QDA packages. She has been able to try out some of the larger QDA packages and they work ok with her student license, but her computer is on its last legs and the program keeps crashing her computer. 
+None of the grants that Questa sent out have come back with any money to do this research. She's discouraged but passionate about her work and she knows she needs to finish this chapter of her dissertation so she can graduate already. She's done some work with a nonprofit and they support her work. She's pretty sure she has a postdoc with them when she finishes her degree. While they should be able to hire her and do
+support her research, it's unlikely they'd have enough funds for her to get a license for one of the QDA packages. She has been able to try out some of the larger QDA packages and they work ok with her student license, but her computer is on its last legs and the program keeps crashing her computer. 
 
-She’s planning to start up her interviews and overall she thinks she’ll have maybe around 50-75 text files that include 1) codes of conduct 2) interview transcripts 3) field research at a conference. 
+She's planning to start up her interviews and overall she thinks she'll have maybe around 50-75 text files that include 1) codes of conduct 2) interview transcripts 3) field research at a conference. 
 
-She’s not sure how many codes she’d need, but she’s guessing that the first round of the coding would be a lot of different codes - maybe 150 - 200 codes to start. Then she’d likely change them and boil it down into groups of codes and categories of those codes. So ideally the program would make it easy for her to edit, change and move around the codes. She also needs to write up a simple codebook as she does the coding. 
+She's not sure how many codes she'd need, but she's guessing that the first round of the coding would be a lot of different codes -- maybe 150 -- 200 codes to start. Then she'd likely change them and boil it down into groups of codes and categories of those codes. So ideally the program would make it easy for her to edit, change and move around the codes. She also needs to write up a simple codebook as she does the coding. 
 
 
 ## References
@@ -88,4 +91,4 @@ Miles, M. B., & Huberman, A. M. (1994). Qualitative data analysis: An expanded s
 
 Miles, M. B., Huberman, A. M., & Saldana, J. (2013). Qualitative data analysis. Thousand Oaks, CA: Sage.
 
-Saldaña, J. (2015). The coding manual for qualitative researchers. Thousand Oaks, CA: Sage.
+Saldana, J. (2015). The coding manual for qualitative researchers. Thousand Oaks, CA: Sage.

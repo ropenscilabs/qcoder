@@ -14,3 +14,6 @@ txt2html(text)
 Format text as HTML
 Minimal conversion of a text to html
 }
+\examples{
+txt2html("The quick brown (QCODE)fox(/QCODE){#animal} jumped over ")
+}

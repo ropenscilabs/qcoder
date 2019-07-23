@@ -14,3 +14,6 @@ get_codes(doc_text)
 Extract codes from text
 Take coded text and extract the codes, assuming they are correctly formatted.
 }
+\examples{
+unlink("./my_qcoder_project", recursive=TRUE)
+}
