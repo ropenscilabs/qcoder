@@ -104,14 +104,14 @@ if (interactive()) {
     #Show only if the project is selected
     #If no project selected, hide tabs
     conditionalPanel(
-      #condition = "input.select_project[1] == 'NULL'",
-      #condition = "length(project_path == '')",
-      hideTab("navlist", 
-              #c("Add codes to text data", "Codes", "Coded data", "Units", "Summary", "Add data"))
-              "Add data")
-
+      condition = "project_path == character(0)",
+      hideTab("navlist", "Add codes to text data"),
+      hideTab("navlist", "Codes"),
+      hideTab("navlist", "Coded data"),
+      hideTab("navlist", "Units"),
+      hideTab("navlist", "Summary"),
+      hideTab("navlist", "Add data")
     )
-    
     
 
     # Select the project directory
