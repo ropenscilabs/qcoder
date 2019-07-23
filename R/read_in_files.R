@@ -135,6 +135,13 @@ read_code_data <- function(file_path = "codes/codes.csv", codes_df_path = "",
       code_data <- readr::read_csv(file = file_path,
                                   col_types = "icc")
       # validate column names etc here
+      actualNames <- names(code_data)
+      expectedNames <- c("code_id", "code", "code.description")  #GOOD
+      
+      if (length(expectedNames %in% actualNames) != length(code_data)){
+        warning("Required variables are not present")
+      }
+      
       #code_data$code <- as.character(code_data$code)
 
       # try catch this save
@@ -242,7 +249,14 @@ read_unit_data <- function(file_path = "units.csv",
   }
   units <- readr::read_csv(file = file_path,
                            col_types = "ic" )
+  
   # validate column names etc here
+  actualNames <- names(units)
+  expectedNames <- c("doc_path", "unit_id")    #GOOD
+  if (length(expectedNames %in% actualNames) != length(code_data)){
+    warning("Required variables are not present")
+  }
+  
 
   # try catch this save
   saveRDS(units, file = units_df_path)
@@ -284,6 +298,12 @@ read_unit_document_map_data <- function(file_path = "unit_document_map.csv",
                                               col_types = readr::cols(doc_path = "c",
                                                                 unit_id = "i"))
   # validate column names etc here
+  actualNames <- names(qcoder_unit_document_map)
+  expectedNames <- 
+  
+  if (length(expectedNames %in% actualNames) != length(qcoder_unit_document_map)){
+    warning("Required variables are not present")
+  }
 
   if (units_docs_path == ""){
     units_docs_path <- paste0(project_path, data_frame_path, ".rds" )
