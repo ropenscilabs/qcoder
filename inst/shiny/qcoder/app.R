@@ -105,7 +105,7 @@ if (interactive()) {
     #If no project selected, hide tabs
     conditionalPanel(
       condition = project_path == character(0),
-      print(condition = project_path == character(0)),
+      print(project_path == character(0)),
       hideTab("navlist", "Add codes to text data"),
       hideTab("navlist", "Codes"),
       hideTab("navlist", "Coded data"),
@@ -113,6 +113,10 @@ if (interactive()) {
       hideTab("navlist", "Summary"),
       hideTab("navlist", "Add data")
     )
+    
+    #ISSUE:
+    #print(project_path) Shows that the my_qcoder_project is already connected
+    #Should not have project path before user declares it on the app
     
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
