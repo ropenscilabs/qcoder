@@ -234,9 +234,9 @@ if (interactive()) {
                         options = list(paging = TRUE,
                                   dom = 'Bfrtip',
                                   buttons = list(list(extend='copy'),
-                                                 list(extend='csv', filename = "qc_units"),
-                                                 list(extend='excel', filename = "qc_units"),
-                                                 list(extend='pdf', filename = "qc_units"),
+                                                 list(extend='csv', filename = "QCoder_Codes_CSV"),
+                                                 list(extend='excel', filename = "QCoder_Codes_Excel"),
+                                                 list(extend='pdf', filename = "QCoder_Codes_PDF"),
                                                  list(extend='print'))))
         })
 
@@ -247,8 +247,11 @@ if (interactive()) {
         if (units_df_path == "") {return()}
         units_df <- readRDS(units_df_path)
         DT::datatable(units_df,options = list(paging = FALSE, dom = "Bfrtip",
-                                              buttons = c('copy', 'csv', 'excel', 'pdf',
-                                                          'print')))
+                                              buttons = list(list(extend='copy'),
+                                                             list(extend='csv', filename = "QCoder_Units_CSV"),
+                                                             list(extend='excel', filename = "QCoder_Units_Excel"),
+                                                             list(extend='pdf', filename = "QCoder_Units_PDF"),
+                                                             list(extend='print'))))
       })
 
         # Get the parsed values with codes.
@@ -259,7 +262,11 @@ if (interactive()) {
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
           DT::datatable(parsed,options = list(paging = FALSE, dom = "Bfrtip",
-                                              buttons = ""))
+                                              buttons = list(list(extend='copy'),
+                                                             list(extend='csv', filename = "QCoder_CD_CSV"),
+                                                             list(extend='excel', filename = "QCoder_CD_Excel"),
+                                                             list(extend='pdf', filename = "QCoder_CD_PDF"),
+                                                             list(extend='print'))))
         })
 
       output$code_freq <- DT::renderDataTable({
