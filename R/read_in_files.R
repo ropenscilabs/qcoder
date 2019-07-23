@@ -89,7 +89,7 @@ read_documents_data <- function(project_name,
         # validate column names etc here
         actualNames <- names(data_set)
         expectedNames <- c("doc_id", "document_text", "doc_path") #GOOD
-        if (length(expectedNames %in% actualNames) != length(data_set)){
+        if (sum(expectedNames %in% actualNames) != length(data_set)){
           warning("Required variables for documents_data are not present")
         }
         
@@ -204,7 +204,7 @@ read_code_data <- function(project_name,
       actualNames <- names(code_data)
       expectedNames <- c("code_id", "code", "code.description")  #GOOD
       
-      if (length(expectedNames %in% actualNames) != length(code_data)){
+      if (sum(expectedNames %in% actualNames) != length(code_data)){
         warning("Required variables for read_code_data are not present")
       }
       
@@ -278,7 +278,7 @@ read_unit_data <- function(data_path = "units/units.csv",
   # validate column names etc here
   actualNames <- names(units)
   expectedNames <- c("unit_id","name")    #GOOD
-  if (length(expectedNames %in% actualNames) != length(units)){
+  if (sum(expectedNames %in% actualNames) != length(units)){
     warning("Required variables for read_unit_data are not present")
   }
   
@@ -343,7 +343,7 @@ read_unit_document_map_data <- function(project_name,
           actualNames <- names(qcoder_unit_document_map)
           expectedNames <- c("doc_path", "unit_id")
   
-          if (length(expectedNames %in% actualNames) != length(qcoder_unit_document_map)){
+          if (sum(expectedNames %in% actualNames) != length(qcoder_unit_document_map)){
             warning("Required variables for read_unit_document_map_data are not present")
           }
 
