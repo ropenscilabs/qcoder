@@ -104,7 +104,8 @@ if (interactive()) {
     #Show only if the project is selected
     #If no project selected, hide tabs
     conditionalPanel(
-      condition = "project_path == character(0)",
+      condition = project_path == character(0),
+      print(condition = project_path == character(0)),
       hideTab("navlist", "Add codes to text data"),
       hideTab("navlist", "Codes"),
       hideTab("navlist", "Coded data"),
@@ -113,7 +114,6 @@ if (interactive()) {
       hideTab("navlist", "Add data")
     )
     
-
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
     if (user_folder != ""){
