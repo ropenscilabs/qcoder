@@ -76,6 +76,9 @@ if (interactive()) {
               dataTableOutput('code_freq')
 
      ),
+     tabPanel("Time and Date", 
+              Sys.time()                      #Created a panel so I don't mess up anything
+     ),
      tabPanel("Add data",
              tags$h2("Add new document"),
              shinyFilesButton('file', label="Select File", title="Select your new files from
@@ -230,8 +233,11 @@ if (interactive()) {
                         extensions = 'Buttons',
                         options = list(paging = TRUE,
                                   dom = 'Bfrtip',
-                                  buttons = c('copy', 'csv', 'excel', 'pdf',
-                                              'print')))
+                                  buttons = list(list(extend='copy'),
+                                                 list(extend='csv', filename = "qc_units"),
+                                                 list(extend='excel', filename = "qc_units"),
+                                                 list(extend='pdf', filename = "qc_units"),
+                                                 list(extend='print'))))
         })
 
       # Get the units data for display
