@@ -31,6 +31,11 @@ if (interactive()) {
                      buttonType = "default", class = NULL),
       actionButton("update", "Reload project for data updating",
                            icon = icon("refresh")),
+      
+      actionButton("zip", label = "Zip Directory",
+                     buttonType = "default, class = NULL"),
+    #I added the above zip button - Yuiken
+    
       tags$br(),
       tags$br(),
       # Start tabset
@@ -79,6 +84,9 @@ if (interactive()) {
      tabPanel("Time and Date", 
               Sys.time()                      #Created a panel so I don't mess up anything
      ),
+     tabPanel("Export"
+     ),
+     
      tabPanel("Add data",
              tags$h2("Add new document"),
              shinyFilesButton('file', label="Select File", title="Select your new files from
@@ -231,13 +239,12 @@ if (interactive()) {
           code_df <- readRDS(codes_df_path)
           DT::datatable(code_df,
                         extensions = 'Buttons',
-                        options = list(paging = TRUE,
-                                  dom = 'Bfrtip',
+                        options = list(paging = TRUE, dom = 'Bfrtip',
                                   buttons = list(list(extend='copy'),
-                                                 list(extend='csv', filename = "QCoder_Codes_CSV"),
-                                                 list(extend='excel', filename = "QCoder_Codes_Excel"),
-                                                 list(extend='pdf', filename = "QCoder_Codes_PDF"),
-                                                 list(extend='print'))))
+                                                 list(extend='csv', filename = "QCoder_Codes"),
+                                                 list(extend='excel', filename = "QCoder_Codes"),
+                                                 list(extend='pdf', filename = "QCoder_Codes"),
+                                                 list(extend="print"))))
         })
 
       # Get the units data for display
@@ -248,10 +255,10 @@ if (interactive()) {
         units_df <- readRDS(units_df_path)
         DT::datatable(units_df,options = list(paging = FALSE, dom = "Bfrtip",
                                               buttons = list(list(extend='copy'),
-                                                             list(extend='csv', filename = "QCoder_Units_CSV"),
-                                                             list(extend='excel', filename = "QCoder_Units_Excel"),
-                                                             list(extend='pdf', filename = "QCoder_Units_PDF"),
-                                                             list(extend='print'))))
+                                                             list(extend='csv', filename = "QCoder_Units"),
+                                                             list(extend='excel', filename = "QCoder_Units"),
+                                                             list(extend='pdf', filename = "QCoder_Units"),
+                                                             list(extend="print"))))
       })
 
         # Get the parsed values with codes.
@@ -263,10 +270,10 @@ if (interactive()) {
 
           DT::datatable(parsed,options = list(paging = FALSE, dom = "Bfrtip",
                                               buttons = list(list(extend='copy'),
-                                                             list(extend='csv', filename = "QCoder_CD_CSV"),
-                                                             list(extend='excel', filename = "QCoder_CD_Excel"),
-                                                             list(extend='pdf', filename = "QCoder_CD_PDF"),
-                                                             list(extend='print'))))
+                                                             list(extend='csv', filename = "QCoder_CD"),
+                                                             list(extend='excel', filename = "QCoder_CD"),
+                                                             list(extend='pdf', filename = "QCoder_CD"),
+                                                             list(extend="print"))))
         })
 
       output$code_freq <- DT::renderDataTable({
@@ -406,6 +413,7 @@ if (interactive()) {
       qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
                        codes_df_path)
     })
+#    observe(zip <- zip(zipfile = "QCoderZip.zip", files = dir())) #This only gets the app.R. Not the whole project. I need to get the whole project directory.
   } # close server
 
 # Run the application
