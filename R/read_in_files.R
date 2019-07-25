@@ -64,19 +64,20 @@ read_documents_data <- function(project_name,
     paths <- build_paths(project_name = project_name, data_path = data_path,
                            df_path = df_path, project_path = project_path,
                            data_frame_name = data_frame_name)
-    print(paths)
     if (length(dir(paths$data)) != 0){
       file_list <- dir(paths$data)
       doc_text  <- character()
       # This is because not all users will be able to install textreadr.
       if (!requireNamespace("textreadr", quietly = TRUE)){
         for (i in 1:length(file_list)){
+          print(i)
           doc_text[i] <- readr::read_file(paste0(paths$data, file_list[i]))
+          print(doc_text[i])
         }
       } else {
-        for (i in 1:length(file_list)){
+        for (i in 1:length(dir(paths$data))){
            doc_text[i] <- textreadr::read_document(
-                                  paste0( paths$data, file_list[i]),
+                                 file.path(paths$data, file_list[i]),
                                   combine = TRUE)
         }
       }
@@ -85,9 +86,6 @@ read_documents_data <- function(project_name,
                           document_text = doc_text,
                           doc_path = file_list,
                           stringsAsFactors = FALSE)
-        #print(paths[["data_frame_path"]])
-        
-        print(paste0(length(data_set), "length data_set"))
         
         # validate column names etc here
         actualNames <- names(data_set)
