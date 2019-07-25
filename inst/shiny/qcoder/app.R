@@ -104,8 +104,8 @@ if (interactive()) {
     #Show only if the project is selected
     #If no project selected, hide tabs
     conditionalPanel(
-      condition = project_path == character(0),
-      print(project_path == character(0)),
+      condition = project_path == "character(0)",
+      print(project_path == "character(0)"),
       hideTab("navlist", "Add codes to text data"),
       hideTab("navlist", "Codes"),
       hideTab("navlist", "Coded data"),
@@ -113,10 +113,6 @@ if (interactive()) {
       hideTab("navlist", "Summary"),
       hideTab("navlist", "Add data")
     )
-    
-    #ISSUE:
-    #print(project_path) Shows that the my_qcoder_project is already connected
-    #Should not have project path before user declares it on the app
     
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
@@ -127,22 +123,19 @@ if (interactive()) {
       req(input$select_project)
       if (input$select_project[1] == "" ){
              return()
-      }
+        }
       output$project_directory <- renderPrint({parseDirPath(user_folder,
                                                       input$select_project)
                                               })
+
       if (as.character(input$select_project[1]) == "1" |
           input$select_project[1] == "" ) {
                return()
            }
         project_path <<- parseDirPath(user_folder, input$select_project)
-        if (length(project_path) == 0 ){
-            return()
-          }
-        if (project_path == "" ){
-            return()
-          }
 
+        if (length(project_path) == 0 ){return()}
+        if (project_path == "" ){return()}
         docs_df_path <<- paste0(project_path,
                                 "/data_frames/qcoder_documents_",
                                 basename(project_path), ".rds")
@@ -156,8 +149,19 @@ if (interactive()) {
                                    "/data_frames/qcoder_unit_document_map_",
                                    basename(project_path), ".rds")
 
-      project.status <- reactiveValues(saved=TRUE
-                                       )
+      project.status <- reactiveValues(saved=TRUE)
+      
+      #Show tabs once project is selected
+      conditionalPanel(
+        condition = "!is.null(input$select_project)",
+        #print(project_path == logical(0)),
+        showTab("navlist", "Add codes to text data"),
+        showTab("navlist", "Codes"),
+        showTab("navlist", "Coded data"),
+        showTab("navlist", "Units"),
+        showTab("navlist", "Summary"),
+        showTab("navlist", "Add data")
+      )
 
       my_choices <- reactive({
         req(input$select_project)
@@ -169,10 +173,9 @@ if (interactive()) {
       })
 
       output$choices <- renderUI({
-          qcoder::validate_project(project_path)
           req(input$select_project)
           if (input$select_project[1] == ""){return()}
-          qcoder::validate_project_files(project_path)
+
           if (docs_df_path == "") {return()}
             selectInput('this_doc_path', 'Document', my_choices())
          })
@@ -209,9 +212,6 @@ if (interactive()) {
 
     comps <- list()
     if (codes_df_path == "" | is.null(codes_df_path)) {return()}
-    qcoder::validate_project(project_path)
-
-    qcoder::validate_project_files(project_path)
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- code_df["code"]
     comps[["tags"]] <- c("QCODE",  "{#")
@@ -269,22 +269,17 @@ if (interactive()) {
       output$units_table <- DT::renderDataTable({
         if (units_df_path == "") {return()}
         units_df <- readRDS(units_df_path)
-        DT::datatable(units_df,
-                      options = list(paging = FALSE, dom = "Bfrtip",
-                                buttons = c('copy', 'csv', 'excel', 'pdf',
-                                                          'print')))
+        DT::datatable(units_df,options = list(paging = FALSE))
       })
 
         # Get the parsed values with codes.
-        output$coded <- DT::renderDataTable(server = FALSE, {
+        output$coded <- DT::renderDataTable({
           if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
-          DT::datatable(parsed,options = list(paging = FALSE, dom = "Bfrtip",
-                                              buttons = c('copy', 'csv', 'excel', 'pdf',
-                                                                    'print')))
+          DT::datatable(parsed,options = list(paging = FALSE))
         })
 
       output$code_freq <- DT::renderDataTable({
