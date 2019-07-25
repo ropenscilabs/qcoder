@@ -107,4 +107,12 @@ test_that("Validating a default project data frame list works", {
   unlink("./_my_qcoder_project", recursive=TRUE)
 })
 
-
+#Make a test for the zip function
+test_that("Testing that zip function works", {
+  create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+  zip::zipr(zipfile = "QCoderProject.zip", files = getwd(), recurse = TRUE)
+  expect_equal(file.exists("QCoderProject.zip"), TRUE)
+  file.remove("QCoderProject.zip")
+  unlink("./my_qcoder_roject", recursive = FALSE)
+}
+          )
