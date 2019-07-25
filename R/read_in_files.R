@@ -64,6 +64,7 @@ read_documents_data <- function(project_name,
     paths <- build_paths(project_name = project_name, data_path = data_path,
                            df_path = df_path, project_path = project_path,
                            data_frame_name = data_frame_name)
+    print(paths)
     if (length(dir(paths$data)) != 0){
       file_list <- dir(paths$data)
       doc_text  <- character()
@@ -85,6 +86,8 @@ read_documents_data <- function(project_name,
                           doc_path = file_list,
                           stringsAsFactors = FALSE)
         #print(paths[["data_frame_path"]])
+        
+        print(paste0(length(data_set), "length data_set"))
         
         # validate column names etc here
         actualNames <- names(data_set)
@@ -334,9 +337,9 @@ read_unit_document_map_data <- function(project_name,
     paths <- build_paths(project_name = project_name, data_path = data_path,
                                df_path = df_path, project_path = project_path,
                                data_frame_name = data_frame_name)
+    print(paths)
     if (file.exists(paths[["data"]])){
-
-          qcoder_unit_document_map <- readr::read_csv(file = file_path,
+          qcoder_unit_document_map <- readr::read_csv(file = paths[["data"]],
                                               col_types = readr::cols(doc_path = "c",
                                                                 unit_id = "i"))
           # validate column names etc here
