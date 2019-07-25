@@ -70,12 +70,14 @@ read_documents_data <- function(project_name,
       # This is because not all users will be able to install textreadr.
       if (!requireNamespace("textreadr", quietly = TRUE)){
         for (i in 1:length(file_list)){
+          print(i)
           doc_text[i] <- readr::read_file(paste0(paths$data, file_list[i]))
+          print(doc_text[i])
         }
       } else {
-        for (i in 1:length(file_list)){
+        for (i in 1:length(dir(paths$data))){
            doc_text[i] <- textreadr::read_document(
-                                  paste0( paths$data, file_list[i]),
+                                 file.path(paths$data, file_list[i]),
                                   combine = TRUE)
         }
       }
@@ -84,7 +86,15 @@ read_documents_data <- function(project_name,
                           document_text = doc_text,
                           doc_path = file_list,
                           stringsAsFactors = FALSE)
-        #print(paths[["data_frame_path"]])
+        
+        # validate column names etc here
+        actualNames <- names(data_set)
+        expectedNames <- c("doc_id", "document_text", "doc_path") #GOOD
+        if (sum(expectedNames %in% actualNames) != length(data_set)){
+          warning("Required variables for documents_data are not present")
+        }
+        
+        
         saveRDS(data_set, file = paths[["data_frame_path"]])
     } else {
       create_empty_docs_file(paths[["data_frame_path"]])
@@ -192,6 +202,13 @@ read_code_data <- function(project_name,
       code_data <- readr::read_csv(file = paths[["data"]],
                                   col_types = "icc")
       # validate column names etc here
+      actualNames <- names(code_data)
+      expectedNames <- c("code_id", "code", "code.description")  #GOOD
+      
+      if (sum(expectedNames %in% actualNames) != length(code_data)){
+        warning("Required variables for read_code_data are not present")
+      }
+      
       #code_data$code <- as.character(code_data$code)
 
       # try catch this save
@@ -258,7 +275,14 @@ read_unit_data <- function(data_path = "units/units.csv",
         #                   paste0(data_frame_name, "_", project_name, ".rds" ))
         units <- readr::read_csv(file = paths[["data"]],
                            col_types = "ic" )
+  
   # validate column names etc here
+  actualNames <- names(units)
+  expectedNames <- c("unit_id","name")    #GOOD
+  if (sum(expectedNames %in% actualNames) != length(units)){
+    warning("Required variables for read_unit_data are not present")
+  }
+  
 
   # try catch this save
       saveRDS(units, file = paths[["data_frame_path"]])
@@ -311,18 +335,25 @@ read_unit_document_map_data <- function(project_name,
     paths <- build_paths(project_name = project_name, data_path = data_path,
                                df_path = df_path, project_path = project_path,
                                data_frame_name = data_frame_name)
-
-        if (file.exists(paths[["data"]])){
-
-             qcoder_unit_document_map <- readr::read_csv(file = paths[["data"]],
-                                      col_types = readr::cols(doc_path = "c",
+    print(paths)
+    if (file.exists(paths[["data"]])){
+          qcoder_unit_document_map <- readr::read_csv(file = paths[["data"]],
+                                              col_types = readr::cols(doc_path = "c",
                                                                 unit_id = "i"))
-        # validate column names etc here
+          # validate column names etc here
+          actualNames <- names(qcoder_unit_document_map)
+          expectedNames <- c("doc_path", "unit_id")
+  
+          if (sum(expectedNames %in% actualNames) != length(qcoder_unit_document_map)){
+            warning("Required variables for read_unit_document_map_data are not present")
+          }
 
-      saveRDS(qcoder_unit_document_map, file = paths[["data_frame_path"]])
-    } else {
-      create_empty_unit_doc_file(paths[["data_frame_path"]])
-    }
+             
+
+          saveRDS(qcoder_unit_document_map, file = paths[["data_frame_path"]])
+        } else {
+          create_empty_unit_doc_file(paths[["data_frame_path"]])
+        }
   invisible(TRUE)
 }
 
