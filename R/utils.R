@@ -12,55 +12,55 @@ create_qcoder_project<- function(project_name, sample = FALSE){
   dir.create(project_name)
   }
   else if(dir.exists(project_name)){
-    message("dir: project_name already exists")
+    message(paste0("dir:", project_name, "already exists"))
   }
   if(!dir.exists(file.path(project_name, "documents"))){
   dir.create(file.path(project_name, "documents"))
   }
   else if(dir.exists(file.path(project_name, "documents"))){
-    message("dir: project_name, documents already exists")
+    message(paste0("dir:", project_name, "documents already exists"))
   }
   if(!dir.exists(file.path(project_name, "codes"))){
   dir.create(file.path(project_name, "codes"))
   }
   else if(dir.exists(file.path(project_name, "codes"))){
-    message("dir: project_name, codes already exists")
+    message(paste0("dir:", project_name, "codes already exists"))
   }
   if(!dir.exists(file.path(project_name, "data_frames"))){
   dir.create(file.path(project_name, "data_frames"))
   }
   else if(dir.exists(file.path(project_name, "data_frames"))){
-    message("dir: project_name, data_frames already exists")
+    message(paste0("dir:", project_name, "data_frames already exists"))
   }
   if(!dir.exists(file.path(project_name, "units"))){
   dir.create(file.path(project_name, "units"))
   }
   else if(dir.exists(file.path(project_name, "units"))){
-    message("dir: project_name, units already exists")
+    message(paste0("dir:", project_name, "units already exists"))
   }
   if(!dir.exists(file.path(project_name,"images"))){
   dir.create(file.path(project_name, "images"))
   }
   else if(dir.exists(file.path(project_name, "images"))){
-    message("dir: project_name, images already exists")
+    message(paste0("dir:", project_name, "images already exists"))
   }
   if(!dir.exists(file.path(project_name, "media"))){
   dir.create(file.path(project_name, "media"))
   }
   else if(dir.exists(file.path(project_name, "media"))){
-    message("dir: project_name, media already exists")
+    message(paste0("dir:", project_name, "media already exists"))
   }
   if(!dir.exists(file.path(project_name, "memos" ))){
   dir.create(file.path(project_name, "memos"))
   }
   else if(dir.exists(file.path(project_name, "memos"))){
-    message("dir: project_name, memos already exists")
+    message(paste0("dir:", project_name, "memos already exists"))
   }
   if(!dir.exists(file.path(project_name, "misc"))){
   dir.create(file.path(project_name, "misc"))
   }
   else if (dir.exists(file.path(project_name, "misc"))){
-    message("dir: project_name, misc already exists")
+    message(paste0("dir:", project_name, "misc already exists"))
   }
   if (sample){
     examples <- list.files(system.file("Example_Data_Markedup",  package = "qcoder"))
