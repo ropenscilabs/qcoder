@@ -110,14 +110,24 @@ if (interactive()) {
     }
     observeEvent(c(input$select_project, input$file, input$update),{
       req(input$select_project)
-      if (input$select_project[1] == ""){return()}
+      if (input$select_project[1] == "" ){
+             return()
+      }
       output$project_directory <- renderPrint({parseDirPath(user_folder,
                                                       input$select_project)
                                               })
-
       if (as.character(input$select_project[1]) == "1" |
-          input$select_project[1] == "" ) {return()}
+          input$select_project[1] == "" ) {
+               return()
+           }
         project_path <<- parseDirPath(user_folder, input$select_project)
+        if (length(project_path) == 0 ){
+            return()
+          }
+        if (project_path == "" ){
+            return()
+          }
+
         docs_df_path <<- paste0(project_path,
                                 "/data_frames/qcoder_documents_",
                                 basename(project_path), ".rds")
@@ -144,9 +154,10 @@ if (interactive()) {
       })
 
       output$choices <- renderUI({
+          qcoder::validate_project(project_path)
           req(input$select_project)
           if (input$select_project[1] == ""){return()}
-
+          qcoder::validate_project_files(project_path)
           if (docs_df_path == "") {return()}
             selectInput('this_doc_path', 'Document', my_choices())
          })
@@ -183,6 +194,9 @@ if (interactive()) {
 
     comps <- list()
     if (codes_df_path == "" | is.null(codes_df_path)) {return()}
+    qcoder::validate_project(project_path)
+
+    qcoder::validate_project_files(project_path)
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- code_df["code"]
     comps[["tags"]] <- c("QCODE",  "{#")
@@ -240,17 +254,22 @@ if (interactive()) {
       output$units_table <- DT::renderDataTable({
         if (units_df_path == "") {return()}
         units_df <- readRDS(units_df_path)
-        DT::datatable(units_df,options = list(paging = FALSE))
+        DT::datatable(units_df,
+                      options = list(paging = FALSE, dom = "Bfrtip",
+                                buttons = c('copy', 'csv', 'excel', 'pdf',
+                                                          'print')))
       })
 
         # Get the parsed values with codes.
-        output$coded <- DT::renderDataTable({
+        output$coded <- DT::renderDataTable(server = FALSE, {
           if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
-          DT::datatable(parsed,options = list(paging = FALSE))
+          DT::datatable(parsed,options = list(paging = FALSE, dom = "Bfrtip",
+                                              buttons = c('copy', 'csv', 'excel', 'pdf',
+                                                                    'print')))
         })
 
       output$code_freq <- DT::renderDataTable({
@@ -288,7 +307,7 @@ if (interactive()) {
     })
 
     update_editor <- observeEvent(input$replace, {
-      
+
       validate(need(input$select_codes, "Codes must be selected"),
                need(input$selected, "Did you select some text?"))
 

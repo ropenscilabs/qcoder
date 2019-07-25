@@ -5,28 +5,29 @@
 \title{Create a data frame of units from csv file
 Use this is you have a spreadsheet of units already created.}
 \usage{
-read_unit_data(file_path = "units.csv", data_frame_name = "qcoder_units",
-  project_name, project_path = "", units_df_path = "")
+read_unit_data(data_path = "units/units.csv",
+  data_frame_name = "qcoder_units", project_name, project_path = "",
+  df_path = "data_frames")
 }
 \arguments{
-\item{file_path}{path to a file containing  unit data in csv.}
+\item{data_path}{path to a file containing  unit data in csv.}
 
-\item{data_frame_name}{The name of the RDS file that the data frame will be stored in.}
+\item{data_frame_name}{The name of the RDS file that the data frame
+will be stored in.}
 
 \item{project_name}{Name of project if available}
 
 \item{project_path}{Full path to the project folder.}
 
-\item{units_df_path}{Full path to the units data frame.}
+\item{df_path}{Full path to the units data frame.}
 }
 \description{
 Create a data frame of units from csv file
 Use this is you have a spreadsheet of units already created.
 }
 \examples{
- \dontrun{
-fp <-"units/units.csv"
-dfn <- "my_units"
-read_unit_data(fp, dfn)
-}
+create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
+read_unit_data(project_name = "_my_qcoder_project")
+unlink("./_my_qcoder_project", recursive=TRUE)
+
 }

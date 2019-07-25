@@ -21,3 +21,6 @@ docid,qcode,text
 Replaces newline characters with "<br>" in the captured text
 returns an empty dataframe (no rows) if no qcodes were found.
 }
+\examples{
+unlink("./_my_qcoder_project", recursive=TRUE)
+}

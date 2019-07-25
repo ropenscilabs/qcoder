@@ -14,3 +14,6 @@ error_check(document)
 Check for coding errors
 Checks the current document for coding errors.
 }
+\examples{
+
+}

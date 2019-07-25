@@ -12,9 +12,16 @@ add_new_documents(files, docs_df_path = "", file_path = "")
 
 \item{docs_df_path}{Existing data frame of text documents}
 
-\item{file_path}{Full path to the data set of documents including trailing slash}
+\item{file_path}{Full path to the data set of documents including
+trailing slash}
 }
 \description{
 Add new documents
 Adds new document or documents to an existing documents data frame.
+}
+\examples{
+create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
+
+unlink("./my_qcoder_project", recursive=TRUE)
+
 }

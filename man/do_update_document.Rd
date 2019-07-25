@@ -23,3 +23,6 @@ Updates the text field of the documents data frame, typically after
 pressing Save button in the Shiny App.  May
 also be used in the console.
 }
+\examples{
+unlink("./_my_qcoder_project", recursive=TRUE)
+}

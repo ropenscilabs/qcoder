@@ -10,11 +10,13 @@ create_qcoder_project(project_name, sample = FALSE)
 \item{project_name}{A string project name to be located in the
 current working directory or a path to a project folder.}
 
-\item{sample}{Logical that indicates that the sample data should be copied to the project.}
+\item{sample}{Logical that indicates that the sample data should be copied to
+the project.}
 }
 \description{
 Create a standard set of folders for a QCoder project
 }
 \examples{
 create_qcoder_project(project_name = "my_qcoder_project")
+unlink("./my_qcoder_project", recursive=TRUE)
 }
