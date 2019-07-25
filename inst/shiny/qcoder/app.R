@@ -31,7 +31,7 @@ if (interactive()) {
                      buttonType = "default", class = NULL),
       actionButton("update", "Reload project for data updating",
                            icon = icon("refresh")),
-      
+
       tags$br(),
       tags$br(),
       # Start tabset
@@ -83,7 +83,7 @@ if (interactive()) {
       tags$p("Zip is located in the same folder as this app.")
      ),
               #I added the zip button to a new panel - Yuiken
-     
+
      tabPanel("Add data",
              tags$h2("Add new document"),
              shinyFilesButton('file', label="Select File", title="Select your new files from
@@ -427,8 +427,9 @@ if (interactive()) {
       qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
                        codes_df_path)
     })
-    observeEvent(input$zipfile, 
-                 zipr(zipfile = "QCoderProject.zip", files = project_path, recurse = TRUE))
+    observeEvent(input$zipfile,
+        zip::zipr(zipfile = "QCoderProject.zip", files = project_path,
+                  recurse = TRUE))
   } # close server
 
 # Run the application
