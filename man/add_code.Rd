@@ -20,3 +20,6 @@ add_code(codes_df, new_code, new_code_desc, codes_df_path)
 Add code
 Append a new unit record to the existing data frame
 }
+\examples{
+unlink("./_my_qcoder_project", recursive=TRUE)
+}
