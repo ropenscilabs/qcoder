@@ -161,6 +161,18 @@ if (interactive()) {
                                    basename(project_path), ".rds")
 
       project.status <- reactiveValues(saved=TRUE)
+      
+      #Show tabs once project is selected
+      conditionalPanel(
+        condition = "!is.null(input$select_project)",
+        #print(project_path == logical(0)),
+        showTab("navlist", "Add codes to text data"),
+        showTab("navlist", "Codes"),
+        showTab("navlist", "Coded data"),
+        showTab("navlist", "Units"),
+        showTab("navlist", "Summary"),
+        showTab("navlist", "Add data")
+      )
 
       my_choices <- reactive({
         req(input$select_project)
