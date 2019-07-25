@@ -32,10 +32,6 @@ if (interactive()) {
       actionButton("update", "Reload project for data updating",
                            icon = icon("refresh")),
       
-      actionButton("zip", label = "Zip Directory",
-                     buttonType = "default, class = NULL"),
-    #I added the above zip button - Yuiken
-    
       tags$br(),
       tags$br(),
       # Start tabset
@@ -82,10 +78,16 @@ if (interactive()) {
 
      ),
      tabPanel("Time and Date", 
-              Sys.time()                      #Created a panel so I don't mess up anything
+              Sys.time(),                      #Created a panel so I don't mess up anything
+              tags$p("This is temporary")
      ),
-     tabPanel("Export"
+     tabPanel("Zip Files",
+              actionButton("zipfile", label = "Zip Project",
+                           buttonType = "default, class = NULL"),
+      tags$p("Zip is located in the same folder as this app.")
+ #             zipr(zipfile = "QCoderProject.zip", files = project_path, recurse = TRUE) #Originally used zip but now I used zipr and it worked. Observe is at bottom of the file.
      ),
+              #I added the zip button to a new panel - Yuiken
      
      tabPanel("Add data",
              tags$h2("Add new document"),
@@ -413,7 +415,8 @@ if (interactive()) {
       qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
                        codes_df_path)
     })
-#    observe(zip <- zip(zipfile = "QCoderZip.zip", files = dir())) #This only gets the app.R. Not the whole project. I need to get the whole project directory.
+    observeEvent(input$zipfile, 
+                 zipr(zipfile = "QCoderProject.zip", files = project_path, recurse = TRUE))
   } # close server
 
 # Run the application
