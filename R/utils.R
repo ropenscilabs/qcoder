@@ -2,7 +2,8 @@
 #'
 #' @param project_name  A string project name to be located in the
 #'                      current working directory or a path to a project folder.
-#' @param sample Logical that indicates that the sample data should be copied to the project.
+#' @param sample Logical that indicates that the sample data should be copied to
+#'     the project.
 #' @examples
 #' create_qcoder_project(project_name = "my_qcoder_project")
 #' unlink("./my_qcoder_project", recursive=TRUE)
@@ -19,7 +20,8 @@ create_qcoder_project<- function(project_name, sample = FALSE){
   dir.create(paste0(project_name, "/misc"))
   if (sample){
     examples <- list.files(system.file("Example_Data_Markedup",  package = "qcoder"))
-    examples <- paste0(system.file("Example_Data_Markedup",  package = "qcoder"), "/", examples)
+    examples <- paste0(system.file("Example_Data_Markedup",
+                                   package = "qcoder"), "/", examples)
     file.copy(from = examples,
               paste0(project_name, "/documents"), recursive = TRUE )
     file.copy(system.file("example_codes/codes.csv",  package = "qcoder"),
@@ -79,7 +81,7 @@ qcode_custom <- function() {
 #' @param this_doc_path  Name of record to be updated, as recorded in "doc_path"
 #'         field of data frame.
 #' @examples
-#'
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 do_update_document <- function(updated, docs_df_path, this_doc_path){
 
@@ -107,8 +109,11 @@ do_update_document <- function(updated, docs_df_path, this_doc_path){
 #' @param this_doc_path value of doc_path for the document
 #' @param units_docs_path  full path of the data frame of unit to docs links
 #' @examples
+#'
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
-update_links <- function(checked = "", docs_df_path = "", this_doc_path = "", units_docs_path = ""){
+update_links <- function(checked = "", docs_df_path = "", this_doc_path = "",
+                         units_docs_path = ""){
   text_df <- readRDS(docs_df_path)
   new_rows <- data.frame(doc_path = this_doc_path, unit_id = checked)
   # We could be removing or adding so we need to delete all the old links
@@ -125,6 +130,7 @@ update_links <- function(checked = "", docs_df_path = "", this_doc_path = "", un
 #' @param new_unit  text name of a new unit (single name only)
 #' @param units_df_path  full path to the units data frame
 #' @examples
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 
 add_unit <- function(units_df, new_unit, units_df_path){
@@ -146,6 +152,7 @@ add_unit <- function(units_df, new_unit, units_df_path){
 #' @param new_code_desc  text description of the code
 #' @param codes_df_path  full path to the codes data frame
 #' @examples
+#' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 
 add_code <- function(codes_df, new_code, new_code_desc, codes_df_path){
@@ -161,6 +168,71 @@ add_code <- function(codes_df, new_code, new_code_desc, codes_df_path){
   invisible(TRUE)
 }
 
+#' Check for a valid qcoder project
+#'
+#' @param path_to_test Path to possible project folder
+#' @examples
+#' create_qcoder_project(project_name = "_my_qcoder_project")
+#' validate_project("_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
+#' @return NULL for valid project, Error otherwise.
+#' @export
+validate_project <- function(path_to_test){
+  shiny::validate(shiny::need(assertthat::is.dir(path_to_test),
+                          message = "Invalid project path: Not a directory",
+                          label = "project dir"))
+  shiny::validate(shiny::need(assertthat::is.writeable(path_to_test),
+                          message = "Invalid project path: Path is not writeable",
+                          label = "not writeable"))
+  required_folders <-c("codes", "data_frames", "documents", "units")
+  shiny::validate(shiny::need(all(paste0(path_to_test, "/",
+                          required_folders) %in%
+                                     list.dirs(path_to_test)),
+                          message = "Invalid project path: Required folders are missing",
+                          label = "folders missing"))
+  # shiny::validate(shiny::need(assertthat::is.writeable(
+  #                         paste0(path_to_test, "/data_frames")),
+  #                         message = "Invalid project path: The data_frames path is not writeable"),
+  #                         label = "data frames not writeable" )
+
+}
+
+#' Check for required imported data frames.
+#'
+#' @param path_to_test Path to possible project folder
+#' @examples
+#' create_qcoder_project(project_name = "_my_qcoder_project", sample = TRUE)
+#' import_project_data("_my_qcoder_project")
+#' validate_project_files("_my_qcoder_project")
+#' unlink("./_my_qcoder_project", recursive=TRUE)
+#' @return NULL for valid project, Error otherwise.
+#' @export
+validate_project_files <- function(path_to_test){
+  shiny::validate(shiny::need(file.exists(
+    paste0(path_to_test, "/data_frames/qcoder_documents_",
+           basename(path_to_test), ".rds")),
+    message =
+      "No documents data frame: Import data before starting qcoder.",
+    label = "no documents df"))
+  shiny::validate(shiny::need(file.exists(
+    paste0(path_to_test, "/data_frames/qcoder_codes_",
+           basename(path_to_test), ".rds")),
+    message =
+      "No codes data frame: Import data before starting qcoder.",
+    label = "no codes df"))
+  shiny::validate(shiny::need(file.exists(
+    paste0(path_to_test, "/data_frames/qcoder_units_",
+           basename(path_to_test), ".rds")),
+    message =
+      "No units data frame: Import data before starting qcoder.",
+    label = "no units df"))
+  shiny::validate(shiny::need(file.exists(
+    paste0(path_to_test, "/data_frames/qcoder_unit_document_map_",
+           basename(path_to_test), ".rds")),
+    message =
+      "No unit document map data frame: Import data before starting qcoder.",
+    label = "no unit_document_map df"))
+}
 
 
 #' Format text as HTML
