@@ -117,6 +117,10 @@ if (interactive()) {
       hideTab("navlist", "Summary"),
       hideTab("navlist", "Add data")
     )
+    
+    #Issues:
+    #Does not show tabs once condition met
+    #Suggest looking into the reactivity of this functionality ASAP
 
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
