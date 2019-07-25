@@ -77,15 +77,10 @@ if (interactive()) {
               dataTableOutput('code_freq')
 
      ),
-     tabPanel("Time and Date", 
-              Sys.time(),                      #Created a panel so I don't mess up anything
-              tags$p("This is temporary")
-     ),
      tabPanel("Zip Files",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
       tags$p("Zip is located in the same folder as this app.")
- #             zipr(zipfile = "QCoderProject.zip", files = project_path, recurse = TRUE) #Originally used zip but now I used zipr and it worked. Observe is at bottom of the file.
      ),
               #I added the zip button to a new panel - Yuiken
      
