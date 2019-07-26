@@ -36,6 +36,8 @@ if (interactive()) {
       tags$br(),
       # Start tabset
       navlistPanel(
+      # Nav list panel id
+      id = "navlist",
            # Tab title
            tabPanel("Add codes to text data",
           #  conditionalPanel(condition = "input$project_directory == TRUE",
@@ -110,7 +112,18 @@ if (interactive()) {
   # Define server logic
   server <- function(input, output, session) {
 
-
+    #Project selected Conditionals
+    #Show only if the project is selected
+    #If no project selected, hide tabs
+    conditionalPanel(
+      condition = "is.null(input$select_project)",
+      hideTab("navlist", "Add codes to text data"),
+      hideTab("navlist", "Codes"),
+      hideTab("navlist", "Coded data"),
+      hideTab("navlist", "Units"),
+      hideTab("navlist", "Summary"),
+      hideTab("navlist", "Add data")
+    )
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
     if (user_folder != ""){
@@ -149,8 +162,19 @@ if (interactive()) {
                                    "/data_frames/qcoder_unit_document_map_",
                                    basename(project_path), ".rds")
 
-      project.status <- reactiveValues(saved=TRUE
-                                       )
+      project.status <- reactiveValues(saved=TRUE)
+
+      #Show tabs once project is selected
+      conditionalPanel(
+        condition = "!is.null(input$select_project)",
+        #print(project_path == logical(0)),
+        showTab("navlist", "Add codes to text data"),
+        showTab("navlist", "Codes"),
+        showTab("navlist", "Coded data"),
+        showTab("navlist", "Units"),
+        showTab("navlist", "Summary"),
+        showTab("navlist", "Add data")
+      )
 
       my_choices <- reactive({
         req(input$select_project)
