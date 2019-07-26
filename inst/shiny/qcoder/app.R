@@ -428,7 +428,8 @@ if (interactive()) {
                        codes_df_path)
     })
     observeEvent(input$zipfile,
-        zip::zipr(zipfile = "QCoderProject.zip", files = project_path,
+        zip::zip(zipfile = paste0("QCoderProject-", basename(project_path), "-",
+                                  Sys.Date(),".zip"), files = project_path,
                   recurse = TRUE))
   } # close server
 
