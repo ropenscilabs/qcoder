@@ -103,13 +103,12 @@ if (interactive()) {
 
   # Define server logic
   server <- function(input, output, session) {
-    
+
     #Project selected Conditionals
     #Show only if the project is selected
     #If no project selected, hide tabs
     conditionalPanel(
-      condition = project_path == "character(0)",
-      print(project_path == "character(0)"),
+      condition = "is.null(input$select_project)",
       hideTab("navlist", "Add codes to text data"),
       hideTab("navlist", "Codes"),
       hideTab("navlist", "Coded data"),
@@ -117,11 +116,6 @@ if (interactive()) {
       hideTab("navlist", "Summary"),
       hideTab("navlist", "Add data")
     )
-    
-    #Issues:
-    #Does not show tabs once condition met
-    #Suggest looking into the reactivity of this functionality ASAP
-
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
     if (user_folder != ""){
@@ -161,7 +155,7 @@ if (interactive()) {
                                    basename(project_path), ".rds")
 
       project.status <- reactiveValues(saved=TRUE)
-      
+
       #Show tabs once project is selected
       conditionalPanel(
         condition = "!is.null(input$select_project)",
