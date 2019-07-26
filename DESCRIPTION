@@ -35,7 +35,8 @@ Imports:
     shinyjs,
     shinythemes,
     stringi,
-    stringr
+    stringr,
+    zip
 Suggests:
     knitr,
     rmarkdown,
