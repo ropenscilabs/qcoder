@@ -79,7 +79,7 @@ if (interactive()) {
               dataTableOutput('code_freq')
 
      ),
-     tabPanel("Export Files",
+     tabPanel("Export files",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
       tags$p("Zip is located in the same folder as this app.")
@@ -122,7 +122,8 @@ if (interactive()) {
       hideTab("navlist", "Coded data"),
       hideTab("navlist", "Units"),
       hideTab("navlist", "Summary"),
-      hideTab("navlist", "Add data")
+      hideTab("navlist", "Add data"),
+      hideTab("navlist", "Export files")
     )
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
@@ -173,7 +174,8 @@ if (interactive()) {
         showTab("navlist", "Coded data"),
         showTab("navlist", "Units"),
         showTab("navlist", "Summary"),
-        showTab("navlist", "Add data")
+        showTab("navlist", "Add data"),
+        showTab("navlist", "Export files")
       )
 
       my_choices <- reactive({
