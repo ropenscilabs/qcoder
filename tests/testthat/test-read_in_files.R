@@ -70,7 +70,6 @@ test_that("Creating an empty unit document map file works.", {
             "_qc_project/data_frames/qcoder_units_document_map__qc_project.rds")))
   test_data <- readRDS(file.path(getwd(),
             "_qc_project/data_frames/qcoder_units_document_map__qc_project.rds"))
-  print(names(test_data))
   expect_equal(names(test_data), c("doc_path", "unit_id"))
   unlink(file.path(getwd(), "_qc_project"), recursive = TRUE)
 })
