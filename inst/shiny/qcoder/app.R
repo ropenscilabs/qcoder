@@ -77,7 +77,7 @@ if (interactive()) {
               dataTableOutput('code_freq')
 
      ),
-     tabPanel("Zip Files",
+     tabPanel("Export Files",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
       tags$p("Zip is located in the same folder as this app.")
