@@ -112,9 +112,9 @@ test_that("Testing that zip function works", {
   create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
  zip::zip(zipfile = paste0("QCoderProject-my_qcoder_project-",
                             Sys.Date(),".zip"), files = "my_qcoder_project", recurse = TRUE)
-   expect_equal(file.exists(paste0(getwd(), "/QCoderProject-my_qcoder_project-" ,
+   expect_equal(file.exists(paste0( "./QCoderProject-my_qcoder_project-" ,
                                    Sys.Date(),".zip")), TRUE)
-  file.remove(paste0(getwd(),"/QCoderProject-my_qcoder_project-" ,
+  file.remove(paste0("./QCoderProject-my_qcoder_project-" ,
                      Sys.Date(),".zip"))
   unlink("./my_qcoder_project", recursive = TRUE)
 }
