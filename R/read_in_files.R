@@ -67,27 +67,17 @@ read_documents_data <- function(project_name,
     if (length(dir(paths$data)) != 0){
       file_list <- dir(paths$data)
       doc_text  <- character()
-      # This is because not all users will be able to install textreadr.
-      if (!requireNamespace("textreadr", quietly = TRUE)){
-        for (i in 1:length(file_list)){
-          doc_text[i] <- readr::read_file(paste0(paths$data, file_list[i]))
-        }
-      } else {
-        for (i in 1:length(dir(paths$data))){
-           doc_text[i] <- textreadr::read_document(
-                                 file.path(paths$data, file_list[i]),
-                                  combine = TRUE)
-        }
-      }
+      doc_text <- read_files(file_list, doc_text, paths$data,
+                             requireNamespace("textreadr", quietly = TRUE))
 
-        data_set <- data.frame( doc_id = seq_along(1:length(file_list)),
+      data_set <- data.frame( doc_id = seq_along(1:length(file_list)),
                           document_text = doc_text,
                           doc_path = file_list,
                           stringsAsFactors = FALSE)
 
-        # validate column names etc here
+        # validate column names here
         actualNames <- names(data_set)
-        expectedNames <- c("doc_id", "document_text", "doc_path") #GOOD
+        expectedNames <- c("doc_id", "document_text", "doc_path")
         if (sum(expectedNames %in% actualNames) != length(data_set)){
           warning("Required variables for documents_data are not present")
         }
@@ -98,6 +88,22 @@ read_documents_data <- function(project_name,
       create_empty_docs_file(paths[["data_frame_path"]])
   }
   invisible(TRUE)
+}
+
+read_files <- function(file_list, doc_text, path_data, textreadr_available){
+  # This is because not all users will be able to install textreadr.
+  if (!textreadr_available){
+    for (i in 1:length(file_list)){
+      doc_text[i] <- readr::read_file(file.path(path_data, file_list[i]))
+    }
+  } else {
+    for (i in 1:length(file_list)){
+      doc_text[i] <- textreadr::read_document(
+        file.path(path_data, file_list[i]),
+        combine = TRUE)
+    }
+  }
+  doc_text
 }
 
 #' Create an empty documents data set
@@ -130,7 +136,7 @@ create_empty_docs_file <-function(path){
 #' @param files  file tibble produced by ShinyFiles
 #' @param file_path  Full path to the data set of documents including
 #' trailing slash
-#' @param docs_df_path  Existing data frame of text documents
+#' @param docs_df_path  Path to existing data frame of text documents
 #' @examples
 #' create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
 #'
@@ -139,30 +145,19 @@ create_empty_docs_file <-function(path){
 #' @export
 add_new_documents <- function(files, docs_df_path = "", file_path = ""){
         text_df <- readRDS(docs_df_path)
-        file_list <- files[["name"]]
+        file_list <- as.character(files[["name"]])
         old_docs <- text_df[["doc_path"]]
         if (length(intersect(file_list, old_docs)) != 0){
           warning("One or more files are already imported")
           return()
         }
         doc_text  <- character()
-        if (!requireNamespace("textreadr", quietly = TRUE)){
-          for (i in 1:length(file_list)){
-            doc_text[i] <- readr::read_file(paste0(file_path,
-                                                           file_list[i]))
-          }
-        } else {
-          for (i in 1:length(file_list)){
-                       if (length(file_list) == 0){
-                         return()
-                       }
-                       doc_text[i] <- textreadr::read_document(
-                                    paste0(file_path, file_list[i]))
-          }
-        }
+        doc_text <- read_files(file_list, doc_text, file_path,
+                               requireNamespace("textreadr", quietly = TRUE))
+
         ids <- integer(length(file_list))
         new_rows <- data.frame(doc_id = ids, document_text = doc_text,
-                               doc_path = file_list)
+                               doc_path = as.character(file_list))
         text_df <- rbind( text_df, new_rows)
         row_n <- row.names(text_df)
         text_df$doc_id <- ifelse(text_df$doc_id == 0, row_n,
@@ -269,8 +264,6 @@ read_unit_data <- function(data_path = "units/units.csv",
                              data_frame_name = data_frame_name)
 
   if (file.exists(paths[["data"]])){
-        # units_df_path <- file.path(df_path,
-        #                   paste0(data_frame_name, "_", project_name, ".rds" ))
         units <- readr::read_csv(file = paths[["data"]],
                            col_types = "ic" )
 
