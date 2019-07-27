@@ -7,12 +7,15 @@ codes <- c("harrassment", "new_code")
 replacement_text <- add_codes_to_selection(selection=selected_text, codes=codes)
 
 output <- "(QCODE)This sentence(/QCODE){#harrassment,#new_code}"
-output2 <- "This is a test. (QCODE)This sentence(/QCODE){#harrassment,#new_code} is selected."
+output2 <-
+  "This is a test. (QCODE)This sentence(/QCODE){#harrassment,#new_code} is selected."
 
 test_that("checking add codes",
 
-   expect_equal(add_codes_to_selection(selection = selected_text, codes= codes), output)
+   expect_equal(add_codes_to_selection(selection = selected_text,
+                                       codes= codes), output)
 )
 test_that("checking selection replacement",
-          expect_equal(replace_selection(test_text, selected_text, replacement_text), output2)
+          expect_equal(replace_selection(test_text, selected_text,
+                                         replacement_text), output2)
 )
