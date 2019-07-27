@@ -55,8 +55,12 @@ if (interactive()) {
             tabPanel("Unit to Document Links" ,
                      uiOutput('checkbox_save_links'),
                      uiOutput('checkbox_links')
-                    )
-
+                    ),
+            tabPanel("Document Table",
+                     tags$p("The first 250 characters of the documents are
+                            shown."),
+                     dataTableOutput('docs_table')
+                     )
             ) # close document sub-tabset
        ), # close editor tab panel
        tabPanel("Codes",
@@ -65,7 +69,6 @@ if (interactive()) {
       ), # close codes tab panel
       tabPanel("Coded data",
                dataTableOutput('coded')
-
       ), # close coded tab panel
       tabPanel("Units",
                dataTableOutput('units_table')
@@ -79,7 +82,7 @@ if (interactive()) {
               dataTableOutput('code_freq')
 
      ),
-     tabPanel("Export Files",
+     tabPanel("Export files",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
       tags$p("Zip is located in the same folder as this app.")
@@ -122,7 +125,8 @@ if (interactive()) {
       hideTab("navlist", "Coded data"),
       hideTab("navlist", "Units"),
       hideTab("navlist", "Summary"),
-      hideTab("navlist", "Add data")
+      hideTab("navlist", "Add data"),
+      hideTab("navlist", "Export files")
     )
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
@@ -173,7 +177,8 @@ if (interactive()) {
         showTab("navlist", "Coded data"),
         showTab("navlist", "Units"),
         showTab("navlist", "Summary"),
-        showTab("navlist", "Add data")
+        showTab("navlist", "Add data"),
+        showTab("navlist", "Export files")
       )
 
       my_choices <- reactive({
@@ -267,6 +272,19 @@ if (interactive()) {
           })
 
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
+
+      output$docs_table <- DT::renderDataTable({
+        if (docs_df_path == "") {return()}
+        docs_df <- readRDS(docs_df_path)
+        docs_df$document_text <- substr(docs_df$document_text,1,250)
+        DT::datatable(docs_df,options = list(paging = FALSE, dom = "Bfrtip",
+                                              buttons = list(list(extend='copy'),
+                                                             list(extend='csv', filename = "QCoder_Units"),
+                                                             list(extend='excel', filename = "QCoder_Units"),
+                                                             list(extend='pdf', filename = "QCoder_Units"),
+                                                             list(extend="print"))))
+
+      })
 
       # Get the code data for display
       output$code_table <- DT::renderDataTable(server = FALSE, {
