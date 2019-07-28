@@ -18,3 +18,6 @@ parse_one_document(doc, df, qcoder_documents, dots = NULL)
 \description{
 Parse one document
 }
+\examples{
+unlink("./my_qcoder_project", recursive=TRUE)
+}

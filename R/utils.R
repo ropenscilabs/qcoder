@@ -2,7 +2,8 @@
 #'
 #' @param project_name  A string project name to be located in the
 #'                      current working directory or a path to a project folder.
-#' @param sample Logical that indicates that the sample data should be copied to the project.
+#' @param sample Logical that indicates that the sample data should be copied to
+#'     the project.
 #' @examples
 #' create_qcoder_project(project_name = "my_qcoder_project")
 #' unlink("./my_qcoder_project", recursive=TRUE)
@@ -55,7 +56,8 @@ create_qcoder_project<- function(project_name, sample = FALSE){
   }
   if (sample){
     examples <- list.files(system.file("Example_Data_Markedup",  package = "qcoder"))
-    examples <- paste0(system.file("Example_Data_Markedup",  package = "qcoder"), "/", examples)
+    examples <- paste0(system.file("Example_Data_Markedup",
+                                   package = "qcoder"), "/", examples)
     file.copy(from = examples,
               paste0(project_name, "/documents"), recursive = TRUE )
     file.copy(system.file("example_codes/codes.csv",  package = "qcoder"),
@@ -143,9 +145,11 @@ do_update_document <- function(updated, docs_df_path, this_doc_path){
 #' @param this_doc_path value of doc_path for the document
 #' @param units_docs_path  full path of the data frame of unit to docs links
 #' @examples
+#'
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
-update_links <- function(checked = "", docs_df_path = "", this_doc_path = "", units_docs_path = ""){
+update_links <- function(checked = "", docs_df_path = "", this_doc_path = "",
+                         units_docs_path = ""){
   text_df <- readRDS(docs_df_path)
   new_rows <- data.frame(doc_path = this_doc_path, unit_id = checked)
   # We could be removing or adding so we need to delete all the old links

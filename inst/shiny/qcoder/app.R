@@ -31,10 +31,13 @@ if (interactive()) {
                      buttonType = "default", class = NULL),
       actionButton("update", "Reload project for data updating",
                            icon = icon("refresh")),
+
       tags$br(),
       tags$br(),
       # Start tabset
       navlistPanel(
+      # Nav list panel id
+      id = "navlist",
            # Tab title
            tabPanel("Add codes to text data",
           #  conditionalPanel(condition = "input$project_directory == TRUE",
@@ -52,8 +55,12 @@ if (interactive()) {
             tabPanel("Unit to Document Links" ,
                      uiOutput('checkbox_save_links'),
                      uiOutput('checkbox_links')
-                    )
-
+                    ),
+            tabPanel("Document Table",
+                     tags$p("The first 250 characters of the documents are
+                            shown."),
+                     dataTableOutput('docs_table')
+                     )
             ) # close document sub-tabset
        ), # close editor tab panel
        tabPanel("Codes",
@@ -62,7 +69,6 @@ if (interactive()) {
       ), # close codes tab panel
       tabPanel("Coded data",
                dataTableOutput('coded')
-
       ), # close coded tab panel
       tabPanel("Units",
                dataTableOutput('units_table')
@@ -76,6 +82,13 @@ if (interactive()) {
               dataTableOutput('code_freq')
 
      ),
+     tabPanel("Export files",
+              actionButton("zipfile", label = "Zip Project",
+                           buttonType = "default, class = NULL"),
+      tags$p("Zip is located in the same folder as this app.")
+     ),
+              #I added the zip button to a new panel - Yuiken
+
      tabPanel("Add data",
              tags$h2("Add new document"),
              shinyFilesButton('file', label="Select File", title="Select your new files from
@@ -102,7 +115,19 @@ if (interactive()) {
   # Define server logic
   server <- function(input, output, session) {
 
-
+    #Project selected Conditionals
+    #Show only if the project is selected
+    #If no project selected, hide tabs
+    conditionalPanel(
+      condition = "is.null(input$select_project)",
+      hideTab("navlist", "Add codes to text data"),
+      hideTab("navlist", "Codes"),
+      hideTab("navlist", "Coded data"),
+      hideTab("navlist", "Units"),
+      hideTab("navlist", "Summary"),
+      hideTab("navlist", "Add data"),
+      hideTab("navlist", "Export files")
+    )
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
     if (user_folder != ""){
@@ -141,8 +166,20 @@ if (interactive()) {
                                    "/data_frames/qcoder_unit_document_map_",
                                    basename(project_path), ".rds")
 
-      project.status <- reactiveValues(saved=TRUE
-                                       )
+      project.status <- reactiveValues(saved=TRUE)
+
+      #Show tabs once project is selected
+      conditionalPanel(
+        condition = "!is.null(input$select_project)",
+        #print(project_path == logical(0)),
+        showTab("navlist", "Add codes to text data"),
+        showTab("navlist", "Codes"),
+        showTab("navlist", "Coded data"),
+        showTab("navlist", "Units"),
+        showTab("navlist", "Summary"),
+        showTab("navlist", "Add data"),
+        showTab("navlist", "Export files")
+      )
 
       my_choices <- reactive({
         req(input$select_project)
@@ -195,8 +232,8 @@ if (interactive()) {
     comps <- list()
     if (codes_df_path == "" | is.null(codes_df_path)) {return()}
     qcoder::validate_project(project_path)
-
     qcoder::validate_project_files(project_path)
+
     code_df <- readRDS(codes_df_path)
     comps[["codes"]] <- code_df["code"]
     comps[["tags"]] <- c("QCODE",  "{#")
@@ -236,16 +273,31 @@ if (interactive()) {
 
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
 
+      output$docs_table <- DT::renderDataTable({
+        if (docs_df_path == "") {return()}
+        docs_df <- readRDS(docs_df_path)
+        docs_df$document_text <- substr(docs_df$document_text,1,250)
+        DT::datatable(docs_df,options = list(paging = FALSE, dom = "Bfrtip",
+                                              buttons = list(list(extend='copy'),
+                                                             list(extend='csv', filename = "QCoder_Units"),
+                                                             list(extend='excel', filename = "QCoder_Units"),
+                                                             list(extend='pdf', filename = "QCoder_Units"),
+                                                             list(extend="print"))))
+
+      })
+
       # Get the code data for display
       output$code_table <- DT::renderDataTable(server = FALSE, {
           if (codes_df_path == "") {return()}
           code_df <- readRDS(codes_df_path)
           DT::datatable(code_df,
                         extensions = 'Buttons',
-                        options = list(paging = TRUE,
-                                  dom = 'Bfrtip',
-                                  buttons = c('copy', 'csv', 'excel', 'pdf',
-                                              'print')))
+                        options = list(paging = TRUE, dom = 'Bfrtip',
+                                  buttons = list(list(extend='copy'),
+                                                 list(extend='csv', filename = "QCoder_Codes"),
+                                                 list(extend='excel', filename = "QCoder_Codes"),
+                                                 list(extend='pdf', filename = "QCoder_Codes"),
+                                                 list(extend="print"))))
         })
 
       # Get the units data for display
@@ -254,17 +306,30 @@ if (interactive()) {
       output$units_table <- DT::renderDataTable({
         if (units_df_path == "") {return()}
         units_df <- readRDS(units_df_path)
-        DT::datatable(units_df,options = list(paging = FALSE))
+        DT::datatable(units_df,options = list(paging = FALSE, dom = "Bfrtip",
+                                              buttons = list(list(extend='copy'),
+                                                             list(extend='csv', filename = "QCoder_Units"),
+                                                             list(extend='excel', filename = "QCoder_Units"),
+                                                             list(extend='pdf', filename = "QCoder_Units"),
+                                                             list(extend="print"))))
+
       })
 
         # Get the parsed values with codes.
-        output$coded <- DT::renderDataTable({
+        output$coded <- DT::renderDataTable(server = FALSE, {
           if (docs_df_path == "" | codes_df_path == "" ) {return()}
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
-          DT::datatable(parsed,options = list(paging = FALSE))
+          DT::datatable(parsed,options = list(paging = FALSE, dom = "Bfrtip",
+
+                                              buttons = list(list(extend='copy'),
+                                                             list(extend='csv', filename = "QCoder_CD"),
+                                                             list(extend='excel', filename = "QCoder_CD"),
+                                                             list(extend='pdf', filename = "QCoder_CD"),
+                                                             list(extend="print"))))
+
         })
 
       output$code_freq <- DT::renderDataTable({
@@ -404,6 +469,10 @@ if (interactive()) {
       qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
                        codes_df_path)
     })
+    observeEvent(input$zipfile,
+        zip::zip(zipfile = paste0("QCoderProject-", basename(project_path), "-",
+                                  Sys.Date(),".zip"), files = project_path,
+                  recurse = TRUE))
   } # close server
 
 # Run the application
