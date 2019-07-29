@@ -9,15 +9,51 @@
 #' unlink("./my_qcoder_project", recursive=TRUE)
 #' @export
 create_qcoder_project<- function(project_name, sample = FALSE){
+  if(!dir.exists(project_name)){
   dir.create(project_name)
-  dir.create(paste0(project_name, "/documents"))
-  dir.create(paste0(project_name, "/codes"))
-  dir.create(paste0(project_name, "/data_frames"))
-  dir.create(paste0(project_name, "/units"))
-  dir.create(paste0(project_name, "/images"))
-  dir.create(paste0(project_name, "/media"))
-  dir.create(paste0(project_name, "/memos"))
-  dir.create(paste0(project_name, "/misc"))
+  }else{
+    message(paste0("dir:", project_name, "already exists"))
+  }
+  if(!dir.exists(file.path(project_name, "documents"))){
+  dir.create(file.path(project_name, "documents"))
+  }else{
+    message(paste0("dir:", project_name, "documents already exists"))
+  }
+  if(!dir.exists(file.path(project_name, "codes"))){
+  dir.create(file.path(project_name, "codes"))
+  }else{
+    message(paste0("dir:", project_name, "codes already exists"))
+  }
+  if(!dir.exists(file.path(project_name, "data_frames"))){
+  dir.create(file.path(project_name, "data_frames"))
+  }else{
+    message(paste0("dir:", project_name, "data_frames already exists"))
+  }
+  if(!dir.exists(file.path(project_name, "units"))){
+  dir.create(file.path(project_name, "units"))
+  }else{
+    message(paste0("dir:", project_name, "units already exists"))
+  }
+  if(!dir.exists(file.path(project_name,"images"))){
+  dir.create(file.path(project_name, "images"))
+  }else{
+    message(paste0("dir:", project_name, "images already exists"))
+  }
+  if(!dir.exists(file.path(project_name, "media"))){
+  dir.create(file.path(project_name, "media"))
+  }else{
+    message(paste0("dir:", project_name, "media already exists"))
+  }
+  if(!dir.exists(file.path(project_name, "memos" ))){
+  dir.create(file.path(project_name, "memos"))
+  }else{
+    message(paste0("dir:", project_name, "memos already exists"))
+  }
+  if(!dir.exists(file.path(project_name, "misc"))){
+  dir.create(file.path(project_name, "misc"))
+  }else{
+    message(paste0("dir:", project_name, "misc already exists"))
+  }
   if (sample){
     examples <- list.files(system.file("Example_Data_Markedup",  package = "qcoder"))
     examples <- paste0(system.file("Example_Data_Markedup",
