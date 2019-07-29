@@ -81,7 +81,7 @@ if (interactive()) {
               Sys.time(),                      #Created a panel so I don't mess up anything
               tags$p("This is temporary")
      ),
-     tabPanel("Zip Files",
+     tabPanel("Export",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
       tags$p("Zip is located in the same folder as this app.")
@@ -434,6 +434,7 @@ if (interactive()) {
     })
     observeEvent(input$zipfile, 
                  zipr(zipfile = "QCoderProject.zip", files = project_path, recurse = TRUE))
+
   } # close server
 
 # Run the application
