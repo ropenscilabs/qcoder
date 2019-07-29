@@ -25,12 +25,6 @@ if (interactive()) {
 
     mainPanel(
       tags$h2("Qcoder"),
-      tags$p("Select your project folder"),
-      verbatimTextOutput("project_directory"),
-      shinyDirButton('select_project', label="Select Folder", title="Select your project folder",
-                     buttonType = "default", class = NULL),
-      actionButton("update", "Reload project for data updating",
-                           icon = icon("refresh")),
 
       tags$br(),
       tags$br(),
@@ -38,6 +32,18 @@ if (interactive()) {
       navlistPanel(
       # Nav list panel id
       id = "navlist",
+           # Tab title
+           tabPanel("Project",
+                    tags$p("Select your project folder"),
+                    verbatimTextOutput("project_directory"),
+                    shinyDirButton('select_project', label="Select Folder", title="Select your project folder",
+                                   buttonType = "default", class = NULL),
+                    tags$br(),
+                    tags$br(),
+                    actionButton("update", "Reload project for data updating",
+                                 icon = icon("refresh"))
+
+                    ), # Close tab panel
            # Tab title
            tabPanel("Add codes to text data",
           #  conditionalPanel(condition = "input$project_directory == TRUE",
