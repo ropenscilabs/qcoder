@@ -2,15 +2,17 @@ context("Reading files into data frames for analysis")
 
 test_that("A new file is successfully added to the documents", {
   new_file_name <- "newfile.txt"
-  file_list <- data.frame(name = new_file_name, size = c(NA), type = c(""), datapath = c("NA/newfile6.txt"))
-  data_path <- "./data/"
-  save_path <- paste0(tempdir(), "/rqcoder_documents_my_qcoder_project.rds")
+  file_list <- data.frame(name = new_file_name, size = c(NA), type = c(""),
+                          datapath = c("NA/newfile6.txt"), stringsAsFactors = FALSE)
+  file_path <- file.path(getwd(), "data")
+  data_path <- file.path(getwd(),"data/qcoder_documents_my_qcoder_project.rds")
+  save_path <- paste0(tempdir(), "/qcoder_documents_my_qcoder_project.rds")
   file.copy("./data/qcoder_documents_my_qcoder_project.rds", save_path)
-  add_new_documents(files = file_list, file_path = data_path, docs_df_path = save_path)
+  add_new_documents(files = file_list, docs_df_path = save_path, file_path = file_path)
   new_df <- readRDS(save_path)
   expect_equal(nrow(new_df), 6)
   expect_equal(new_df[6,"doc_path"], new_file_name)
-  unlink(save_path)
+  unlink(save_path, recursive = TRUE)
 })
 
 test_that("A new file with the same name as an existing file generates a warning", {
@@ -70,7 +72,6 @@ test_that("Creating an empty unit document map file works.", {
             "_qc_project/data_frames/qcoder_units_document_map__qc_project.rds")))
   test_data <- readRDS(file.path(getwd(),
             "_qc_project/data_frames/qcoder_units_document_map__qc_project.rds"))
-  print(names(test_data))
   expect_equal(names(test_data), c("doc_path", "unit_id"))
   unlink(file.path(getwd(), "_qc_project"), recursive = TRUE)
 })

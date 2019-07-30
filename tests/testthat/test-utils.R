@@ -37,7 +37,11 @@ test_that("Project with sample data is created correctly.", {
 test_that("Updating documents works", {
   # Set up data
   qcoder_documents_my_qcoder_project <- readRDS("./data/qcoder_documents_my_qcoder_project.rds")
-  save_path <- paste0(tempdir(), "/", "qcoder_documents_my_qcoder_project.rds")
+  test_path <- file.path(tempdir(), "test")
+  # Should not be necessary
+  unlink(test_path, recursive = TRUE)
+  dir.create(test_path)
+  save_path <- file.path(test_path, "qcoder_documents_my_qcoder_project.rds")
   # Do the test on a copy of the data.
   saveRDS(qcoder_documents_my_qcoder_project, file = save_path)
   updated_data <- as.character("A B C D")
@@ -45,10 +49,9 @@ test_that("Updating documents works", {
   input <- readRDS(file = save_path)
   expect_equal(updated_data, input[2, 2])
   # This should be 2 because we started with an empty directory.
-  expect_equal(length(list.files(tempdir())), 2)
+  expect_equal(length(list.files(test_path)), 2)
 
-  unlink(save_path)
-  setwd(basewd)
+  unlink(test_path, recursive = TRUE)
 })
 
 test_that("Converting to HTML works", {
@@ -122,9 +125,7 @@ test_that("Validating a default project data frame list works", {
 #Make a test for the zip function
 test_that("Testing that zip function works", {
   create_qcoder_project(project_name = "my_qcoder_project", sample = TRUE)
-  zip::zip(zipfile = paste0("QCoderProject-my_qcoder_project-",
-                            Sys.Date(),".zip"), files = "my_qcoder_project", recurse = TRUE)
-  expect_equal(file.exists(paste0( "./QCoderProject-my_qcoder_project-" ,
+
                                    Sys.Date(),".zip")), TRUE)
   file.remove(paste0("./QCoderProject-my_qcoder_project-" ,
                      Sys.Date(),".zip"))

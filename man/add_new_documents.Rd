@@ -10,7 +10,7 @@ add_new_documents(files, docs_df_path = "", file_path = "")
 \arguments{
 \item{files}{file tibble produced by ShinyFiles}
 
-\item{docs_df_path}{Existing data frame of text documents}
+\item{docs_df_path}{Path to existing data frame of text documents}
 
 \item{file_path}{Full path to the data set of documents including
 trailing slash}
