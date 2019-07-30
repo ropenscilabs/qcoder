@@ -1,0 +1,7 @@
+code_id,code,code.description
+1,"harassment","define or describes harassing behavior"
+2,"person_talk","naming a specific person to talk to if there are violations"
+3,"gender","mentions gender"
+4,"gender_id","mentions gender identity or expression"
+5,"consequences","Detailing what happens if someone violates the code of conduct"
+6,"license","The license for this code of conduct"

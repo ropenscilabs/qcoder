@@ -13,6 +13,7 @@ if (interactive()) {
   library(shinyFiles)
   library(shinythemes)
   library(DT)
+  library(zip)        #Runs the zip package
 
   library(shinyjs)
   library(here)
@@ -101,8 +102,10 @@ if (interactive()) {
              tags$h2("Add new code"),
              uiOutput("add_new_code"),
              textInput("new_code", "Code"),
-             textInput("new_code_desc", "Description")
-
+             textInput("new_code_desc", "Description"),
+    
+  #Using onStop function for clean environment Part 1 - Yuiken
+  ui <- basicPage("onStop")
 
      ) # close add data tab
     ) # close tab set
@@ -433,7 +436,14 @@ if (interactive()) {
                        codes_df_path)
     })
     observeEvent(input$zipfile, 
-                 zipr(zipfile = "QCoderProject.zip", files = project_path, recurse = TRUE))
+                 zipr(zipfile = "QCoderProject-my_qcoder_project-.zip", files = project_path, recurse = TRUE))
+    
+    #Using onStop function for clean environment Part 2 - Yuiken
+    onStop(function() cat("Qcoder has stopped\n"))
+  
+  onStart <- function() {
+    cat("Qcoder is setting up....\n")
+  }
 
   } # close server
 
