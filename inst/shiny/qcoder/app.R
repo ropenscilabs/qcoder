@@ -439,6 +439,10 @@ if (interactive()) {
   
   onStart <- function() {
     cat("Qcoder is setting up....\n")
+    
+    OnStop(function() {
+      cat("Qcoder is cleaning up....\n")
+    })
   }
 
   } # close server
