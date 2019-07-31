@@ -26,25 +26,17 @@ if (interactive()) {
 
     mainPanel(
       tags$h2("Qcoder"),
-
+      tags$p("Select your project folder"),
+      verbatimTextOutput("project_directory"),
+      shinyDirButton('select_project', label="Select Folder", title="Select your project folder",
+                     buttonType = "default", class = NULL),
+      actionButton("update", "Reload project for data updating",
+                           icon = icon("refresh")),
+      
       tags$br(),
       tags$br(),
       # Start tabset
       navlistPanel(
-      # Nav list panel id
-      id = "navlist",
-           # Tab title
-           tabPanel("Project",
-                    tags$p("Select your project folder"),
-                    verbatimTextOutput("project_directory"),
-                    shinyDirButton('select_project', label="Select Folder", title="Select your project folder",
-                                   buttonType = "default", class = NULL),
-                    tags$br(),
-                    tags$br(),
-                    actionButton("update", "Reload project for data updating",
-                                 icon = icon("refresh"))
-
-                    ), # Close tab panel
            # Tab title
            tabPanel("Add codes to text data",
           #  conditionalPanel(condition = "input$project_directory == TRUE",
@@ -62,12 +54,8 @@ if (interactive()) {
             tabPanel("Unit to Document Links" ,
                      uiOutput('checkbox_save_links'),
                      uiOutput('checkbox_links')
-                    ),
-            tabPanel("Document Table",
-                     tags$p("The first 250 characters of the documents are
-                            shown."),
-                     dataTableOutput('docs_table')
-                     )
+                    )
+
             ) # close document sub-tabset
        ), # close editor tab panel
        tabPanel("Codes",
@@ -76,6 +64,7 @@ if (interactive()) {
       ), # close codes tab panel
       tabPanel("Coded data",
                dataTableOutput('coded')
+
       ), # close coded tab panel
       tabPanel("Units",
                dataTableOutput('units_table')
@@ -89,13 +78,14 @@ if (interactive()) {
               dataTableOutput('code_freq')
 
      ),
-
+     tabPanel("Export",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
       tags$p("Zip is located in the same folder as this app.")
+ #             zipr(zipfile = "QCoderProject.zip", files = project_path, recurse = TRUE) #Originally used zip but now I used zipr and it worked. Observe is at bottom of the file.
      ),
               #I added the zip button to a new panel - Yuiken
-
+     
      tabPanel("Add data",
              tags$h2("Add new document"),
              shinyFilesButton('file', label="Select File", title="Select your new files from
@@ -124,19 +114,7 @@ if (interactive()) {
   # Define server logic
   server <- function(input, output, session) {
 
-    #Project selected Conditionals
-    #Show only if the project is selected
-    #If no project selected, hide tabs
-    conditionalPanel(
-      condition = "is.null(input$select_project)",
-      hideTab("navlist", "Add codes to text data"),
-      hideTab("navlist", "Codes"),
-      hideTab("navlist", "Coded data"),
-      hideTab("navlist", "Units"),
-      hideTab("navlist", "Summary"),
-      hideTab("navlist", "Add data"),
-      hideTab("navlist", "Export files")
-    )
+
     # Select the project directory
     user_folder <- c('Select Volume' = Sys.getenv("HOME"))
     if (user_folder != ""){
@@ -175,20 +153,8 @@ if (interactive()) {
                                    "/data_frames/qcoder_unit_document_map_",
                                    basename(project_path), ".rds")
 
-      project.status <- reactiveValues(saved=TRUE)
-
-      #Show tabs once project is selected
-      conditionalPanel(
-        condition = "!is.null(input$select_project)",
-        #print(project_path == logical(0)),
-        showTab("navlist", "Add codes to text data"),
-        showTab("navlist", "Codes"),
-        showTab("navlist", "Coded data"),
-        showTab("navlist", "Units"),
-        showTab("navlist", "Summary"),
-        showTab("navlist", "Add data"),
-        showTab("navlist", "Export files")
-      )
+      project.status <- reactiveValues(saved=TRUE
+                                       )
 
       my_choices <- reactive({
         req(input$select_project)
@@ -281,19 +247,6 @@ if (interactive()) {
           })
 
       output$this_doc <-{renderText(qcoder::txt2html(doc()))}
-
-      output$docs_table <- DT::renderDataTable({
-        if (docs_df_path == "") {return()}
-        docs_df <- readRDS(docs_df_path)
-        docs_df$document_text <- substr(docs_df$document_text,1,250)
-        DT::datatable(docs_df,options = list(paging = FALSE, dom = "Bfrtip",
-                                              buttons = list(list(extend='copy'),
-                                                             list(extend='csv', filename = "QCoder_Units"),
-                                                             list(extend='excel', filename = "QCoder_Units"),
-                                                             list(extend='pdf', filename = "QCoder_Units"),
-                                                             list(extend="print"))))
-
-      })
 
       # Get the code data for display
       output$code_table <- DT::renderDataTable(server = FALSE, {
@@ -478,6 +431,15 @@ if (interactive()) {
       qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
                        codes_df_path)
     })
+    observeEvent(input$zipfile, 
+                 zipr(zipfile = "QCoderProject-my_qcoder_project-.zip", files = project_path, recurse = TRUE))
+    
+    #Using onStop function for clean environment Part 2 - Yuiken
+    onStop(function() cat("Qcoder has stopped\n"))
+  
+  onStart <- function() {
+    cat("Qcoder is setting up....\n")
+  }
 
   } # close server
 
