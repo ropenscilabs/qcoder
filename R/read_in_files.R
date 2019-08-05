@@ -190,8 +190,7 @@ read_code_data <- function(project_name,
   paths <- build_paths(project_name = project_name, data_path = data_path,
                                  df_path = df_path, project_path = project_path,
                                  data_frame_name = data_frame_name)
-
-  if (file.exists(data_path)){
+  if (file.exists(paths[["data"]])){
       code_data <- readr::read_csv(file = paths[["data"]],
                                   col_types = "icc")
       # validate column names etc here
