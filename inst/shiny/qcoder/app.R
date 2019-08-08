@@ -90,7 +90,7 @@ if (interactive()) {
      tabPanel("Export files",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
-      tags$p("Zip is located in the same folder as this app.")
+      tags$p("Zip is located in the same folder as the project.")
      ),
      tabPanel("Add data",
              tags$h2("Add new document"),
@@ -473,9 +473,14 @@ if (interactive()) {
                        codes_df_path)
     })
     observeEvent(input$zipfile,
-        zip::zipr(zipfile = paste0("QCoderProject-", basename(project_path), "-",
-                                  Sys.Date(),".zip"), files = project_path,
+        zip::zipr(zipfile = paste0(dirname(project_path), "/", 
+                                   "QCoderProject-", basename(project_path), "-",
+                                   Sys.Date(),".zip"), files = project_path,
                   recurse = TRUE))
+    message(paste0("Zip file created: ", paste0(dirname(project_path), "/", 
+                                                "QCoderProject-", 
+                                                basename(project_path), "-",
+                                                Sys.Date(),".zip")))
   } # close server
 
 # Run the application

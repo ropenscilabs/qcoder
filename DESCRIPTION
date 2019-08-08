@@ -39,7 +39,7 @@ Imports:
     shinythemes,
     stringi,
     stringr,
-    zip
+    zip (>= 2.0.3)
 Suggests:
     knitr,
     rmarkdown,
