@@ -86,14 +86,12 @@ if (interactive()) {
               textOutput('codes_summary'),
               tags$h5('Codes frequency'),
               dataTableOutput('code_freq')
-
      ),
      tabPanel("Export files",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
       tags$p("Zip is located in the same folder as the project.")
      ),
-
      tabPanel("Add data",
              tags$h2("Add new document"),
              shinyFilesButton('file', label="Select File", title="Select your new files from

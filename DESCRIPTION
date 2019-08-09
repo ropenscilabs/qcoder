@@ -33,7 +33,7 @@ Imports:
     magrittr,
     readr,
     shiny,
-    shinyAce,
+    shinyAce (>= 0.4.0),
     shinyFiles,
     shinyjs,
     shinythemes,
