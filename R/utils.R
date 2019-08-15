@@ -196,7 +196,7 @@ add_code <- function(codes_df, new_code, new_code_desc, codes_df_path){
     warning("A code with the name already exists, please choose a unique name.")
     return()
   }
-  new_id <- as.integer(max(codes_df$code_id) +1)
+  new_id <- as.integer(max(as.integer(codes_df$code_id)) +1)
   new_row <- data.frame("code_id" = new_id, "code" = new_code,
                         "code.description" = new_code_desc)
   codes_df <- rbind(codes_df, new_row)

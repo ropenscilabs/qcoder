@@ -86,15 +86,12 @@ if (interactive()) {
               textOutput('codes_summary'),
               tags$h5('Codes frequency'),
               dataTableOutput('code_freq')
-
      ),
      tabPanel("Export files",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
-      tags$p("Zip is located in the same folder as this app.")
+      tags$p("Zip is located in the same folder as the project.")
      ),
-              #I added the zip button to a new panel - Yuiken
-
      tabPanel("Add data",
              tags$h2("Add new document"),
              shinyFilesButton('file', label="Select File", title="Select your new files from
@@ -476,9 +473,14 @@ if (interactive()) {
                        codes_df_path)
     })
     observeEvent(input$zipfile,
-        zip::zip(zipfile = paste0("QCoderProject-", basename(project_path), "-",
-                                  Sys.Date(),".zip"), files = project_path,
+        zip::zipr(zipfile = paste0(dirname(project_path), "/", 
+                                   "QCoderProject-", basename(project_path), "-",
+                                   Sys.Date(),".zip"), files = project_path,
                   recurse = TRUE))
+    message(paste0("Zip file created: ", paste0(dirname(project_path), "/", 
+                                                "QCoderProject-", 
+                                                basename(project_path), "-",
+                                                Sys.Date(),".zip")))
   } # close server
 
 # Run the application
