@@ -256,6 +256,7 @@ if (interactive()) {
 
            aceEditor(
              editor_name,
+             outputId = "ace",
              value = doc(),
              mode = "markdown",
              height = "500",
@@ -366,24 +367,23 @@ if (interactive()) {
 
     # Functions related to updating the text.
     new_text <- reactive({
-      input$aceeditor
+      input$ace
     })
 
     update_editor <- observeEvent(input$replace, {
-
       validate(need(input$select_codes, "Codes must be selected"),
-               need(input$selected, "Did you select some text?"))
+               need(input$ace_selected, "Did you select some text?"))
 
       text_old <- new_text()
       codes <- input$select_codes
-      selected <- input$selected
+      selected <- input$ace_selected
+
       if (length(selected) == 0) {return(message("No text selected"))}
 
       updated_selection <- qcoder:::add_codes_to_selection(selection = selected, codes = codes)
-
       updated_text <- qcoder:::replace_selection(text_old, selected, updated_selection)
 
-      updateAceEditor(session=session, editorId=editor_name, value=updated_text)
+      updateAceEditor(session=session, "ace", value = updated_text)
       # put js code to move cursor here
       jump_to <- input$cursorpos
       # print(jump_to)
@@ -392,7 +392,7 @@ if (interactive()) {
 
       # print(jump_to)
 
-      js_statement <- paste0("editor__",editor_name,".focus(); editor__",editor_name,".gotoLine(", row_num, ",", col_num, ");")
+      js_statement <- paste0("editor__","ace",".focus(); editor__","ace",".gotoLine(", row_num, ",", col_num, ");")
       # print(js_statement)
 
       shinyjs::runjs(js_statement)
