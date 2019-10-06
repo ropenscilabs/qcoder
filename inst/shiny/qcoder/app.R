@@ -117,7 +117,6 @@ if (interactive()) {
 
   # Define server logic
   server <- function(input, output, session) {
-
     #Project selected Conditionals
     #Show only if the project is selected
     #If no project selected, hide tabs
@@ -131,11 +130,16 @@ if (interactive()) {
       hideTab("navlist", "Add data"),
       hideTab("navlist", "Export files")
     )
-    # Select the project directory
-    user_folder <- c('Select Volume' = Sys.getenv("HOME"))
-    if (user_folder != ""){
-         shinyDirChoose(input, 'select_project',  roots = user_folder)
+    # Select the project directory if not using working directory.
+    if (!exists("user_folder")){
+          user_folder <- c('Select Volume' = Sys.getenv("HOME"))
     }
+
+    if (user_folder != "" ){
+         shinyDirChoose(input, 'select_project', roots = user_folder
+                          )
+    }
+
     observeEvent(c(input$select_project, input$file, input$update),{
       req(input$select_project)
       if (input$select_project[1] == "" ){
@@ -149,6 +153,7 @@ if (interactive()) {
                return()
            }
         project_path <<- parseDirPath(user_folder, input$select_project)
+
         if (length(project_path) == 0 ){
             return()
           }
@@ -390,10 +395,7 @@ if (interactive()) {
       row_num <- jump_to$row + 1
       col_num <- jump_to$column + (nchar(updated_selection) - nchar(selected))
 
-      # print(jump_to)
-
       js_statement <- paste0("editor__","ace",".focus(); editor__","ace",".gotoLine(", row_num, ",", col_num, ");")
-      # print(js_statement)
 
       shinyjs::runjs(js_statement)
     })
@@ -422,7 +424,6 @@ if (interactive()) {
       if (!exists("project_path")){return()}
       req(!is.integer(input$file))
       doc_folder <- c(paste0(project_path, "/documents/"))
-      roots<-project_path
       # Based on shinyFiles::parseFilePaths()
       files <- sapply(input$file$files, function(x) paste0(unlist(x), collapse = "/"))
       #remove leading separator if present

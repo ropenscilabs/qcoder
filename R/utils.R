@@ -90,7 +90,8 @@ read_data <- function() {
 #'  qcode()
 #'}
 #' @export
-qcode <- function() {
+qcode <- function(use_wd = FALSE) {
+  if (use_wd == TRUE){user_folder <<- c('Select Volume' = getwd())}
   package_location <- system.file(package = "qcoder")
   shiny::runApp(paste0(package_location, "/shiny/qcoder"), quiet = TRUE)
 }
