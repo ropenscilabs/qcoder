@@ -136,7 +136,7 @@ create_empty_docs_file <-function(path){
 
 #' Add new documents
 #' Adds new document or documents to an existing documents data frame.
-#' @param files  file tibble produced by ShinyFiles
+#' @param files  Vector of new files to be added
 #' @param file_path  Full path to the data set of documents including
 #' trailing slash
 #' @param docs_df_path  Path to existing data frame of text documents

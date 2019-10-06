@@ -8,7 +8,7 @@ Adds new document or documents to an existing documents data frame.}
 add_new_documents(files, docs_df_path = "", file_path = "")
 }
 \arguments{
-\item{files}{file tibble produced by ShinyFiles}
+\item{files}{Vector of new files to be added}
 
 \item{docs_df_path}{Path to existing data frame of text documents}
 
