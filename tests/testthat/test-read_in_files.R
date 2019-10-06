@@ -2,13 +2,11 @@ context("Reading files into data frames for analysis")
 
 test_that("A new file is successfully added to the documents", {
   new_file_name <- "newfile.txt"
-  file_list <- data.frame(name = new_file_name, size = c(NA), type = c(""),
-                          datapath = c("NA/newfile6.txt"), stringsAsFactors = FALSE)
   file_path <- file.path(getwd(), "data")
   data_path <- file.path(getwd(),"data/qcoder_documents_my_qcoder_project.rds")
   save_path <- paste0(tempdir(), "/qcoder_documents_my_qcoder_project.rds")
   file.copy("./data/qcoder_documents_my_qcoder_project.rds", save_path)
-  add_new_documents(files = file_list, docs_df_path = save_path, file_path = file_path)
+  add_new_documents(files = new_file_name, docs_df_path = save_path, file_path = file_path)
   new_df <- readRDS(save_path)
   expect_equal(nrow(new_df), 6)
   expect_equal(new_df[6,"doc_path"], new_file_name)
@@ -17,11 +15,10 @@ test_that("A new file is successfully added to the documents", {
 
 test_that("A new file with the same name as an existing file generates a warning", {
   new_file_name <- "CoC_Example2_MU.txt"
-  file_list <- data.frame(name = new_file_name, size = c(NA), type = c(""), datapath = c("NA/CoC_Example2_MU.txt"))
   data_path <- "./data/"
   save_path <- paste0(tempdir(), "/qcoder_documents_my_qcoder_project.rds")
   file.copy("./data/qcoder_documents_my_qcoder_project.rds", save_path)
-  expect_warning( add_new_documents(files = file_list, docs_df_path = save_path, file_path = data_path))
+  expect_warning( add_new_documents(files = new_file_name, docs_df_path = save_path, file_path = data_path))
   unlink(save_path)
 })
 
