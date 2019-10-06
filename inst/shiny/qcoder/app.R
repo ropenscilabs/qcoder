@@ -420,8 +420,14 @@ if (interactive()) {
 
     observeEvent(input$file, {
       if (!exists("project_path")){return()}
+      req(!is.integer(input$file))
       doc_folder <- c(paste0(project_path, "/documents/"))
-      files <- parseFilePaths(doc_folder, input$file)
+      roots<-project_path
+      # Based on shinyFiles::parseFilePaths()
+      files <- sapply(input$file$files, function(x) paste0(unlist(x), collapse = "/"))
+      #remove leading separator if present
+      files <- ifelse(substr(files, 1, 1) == "/", sub("^.", "", files), files)
+
       qcoder::add_new_documents(files, docs_df_path, doc_folder)
     })
 
