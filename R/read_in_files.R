@@ -92,6 +92,9 @@ read_documents_data <- function(project_name,
 
 read_files <- function(file_list, doc_text, path_data, textreadr_available){
   # This is because not all users will be able to install textreadr.
+  if (length(file_list) < 1){
+    return()
+  }
   if (!textreadr_available){
     for (i in 1:length(file_list)){
       doc_text[i] <- readr::read_file(file.path(path_data, file_list[i]))
@@ -145,7 +148,7 @@ create_empty_docs_file <-function(path){
 #' @export
 add_new_documents <- function(files, docs_df_path = "", file_path = ""){
         text_df <- readRDS(docs_df_path)
-        file_list <- as.character(files[["name"]])
+        file_list <- as.character(files)
         old_docs <- text_df[["doc_path"]]
         if (length(intersect(file_list, old_docs)) != 0){
           warning("One or more files are already imported")
@@ -154,11 +157,10 @@ add_new_documents <- function(files, docs_df_path = "", file_path = ""){
         doc_text  <- character()
         doc_text <- read_files(file_list, doc_text, file_path,
                                requireNamespace("textreadr", quietly = TRUE))
-
         ids <- integer(length(file_list))
         new_rows <- data.frame(doc_id = ids, document_text = doc_text,
                                doc_path = as.character(file_list))
-        text_df <- rbind( text_df, new_rows)
+        text_df <- rbind( text_df, new_rows, stringsAsFactors = FALSE)
         row_n <- row.names(text_df)
         text_df$doc_id <- ifelse(text_df$doc_id == 0, row_n,
                                           text_df$doc_id)
