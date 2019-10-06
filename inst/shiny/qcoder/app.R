@@ -423,6 +423,7 @@ if (interactive()) {
       req(!is.integer(input$file))
       doc_folder <- c(paste0(project_path, "/documents/"))
       roots<-project_path
+      # Based on shinyFiles::parseFilePaths()
       files <- sapply(input$file$files, function(x) paste0(unlist(x), collapse = "/"))
       #remove leading separator if present
       files <- ifelse(substr(files, 1, 1) == "/", sub("^.", "", files), files)
