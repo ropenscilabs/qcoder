@@ -84,13 +84,15 @@ read_data <- function() {
 }
 
 #' This launches the coder Shiny app
-#'
+#' @param use_wd  Whether or not the current working directory when launching
+#'   qcoder should be used as the base from which the project file is selected.
 #' @examples
 #' if (interactive()) {
 #'  qcode()
 #'}
 #' @export
 qcode <- function(use_wd = FALSE) {
+  user_folder <- NULL
   if (use_wd == TRUE){user_folder <<- c('Select Volume' = getwd())}
   package_location <- system.file(package = "qcoder")
   shiny::runApp(paste0(package_location, "/shiny/qcoder"), quiet = TRUE)

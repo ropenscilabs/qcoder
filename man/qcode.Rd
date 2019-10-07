@@ -4,7 +4,11 @@
 \alias{qcode}
 \title{This launches the coder Shiny app}
 \usage{
-qcode()
+qcode(use_wd = FALSE)
+}
+\arguments{
+\item{use_wd}{Whether or not the current working directory when launching
+qcoder should be used as the base from which the project file is selected.}
 }
 \description{
 This launches the coder Shiny app
