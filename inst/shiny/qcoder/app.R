@@ -479,15 +479,16 @@ if (interactive()) {
       qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
                        codes_df_path)
     })
-    observeEvent(input$zipfile,
-        zip::zipr(zipfile = paste0(dirname(project_path), "/", 
+    observeEvent(input$zipfile, {
+        zip::zipr(zipfile = paste0(dirname(project_path), "/",
                                    "QCoderProject-", basename(project_path), "-",
                                    Sys.Date(),".zip"), files = project_path,
-                  recurse = TRUE))
-    message(paste0("Zip file created: ", paste0(dirname(project_path), "/", 
-                                                "QCoderProject-", 
+                  recurse = TRUE)
+    message(paste0("Zip file created: ", paste0(dirname(project_path), "/",
+                                                "QCoderProject-",
                                                 basename(project_path), "-",
                                                 Sys.Date(),".zip")))
+    })
   } # close server
 
 # Run the application
