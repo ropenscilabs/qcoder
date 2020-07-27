@@ -5,8 +5,11 @@
 \title{Update codes data frame
 Add discovered codes to the codes data frame}
 \usage{
-add_discovered_code(codes_list = "", code_data_frame = NULL,
-  codes_df_path = "")
+add_discovered_code(
+  codes_list = "",
+  code_data_frame = NULL,
+  codes_df_path = ""
+)
 }
 \arguments{
 \item{codes_list}{A list of codes (usually from a coded document)}
@@ -18,7 +21,4 @@ add_discovered_code(codes_list = "", code_data_frame = NULL,
 \description{
 Update codes data frame
 Add discovered codes to the codes data frame
-}
-\examples{
-
 }

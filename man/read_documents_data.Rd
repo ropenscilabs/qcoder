@@ -4,9 +4,13 @@
 \alias{read_documents_data}
 \title{Create a data frame of documents}
 \usage{
-read_documents_data(project_name, data_path = "documents/",
-  df_path = "data_frames", data_frame_name = "qcoder_documents",
-  project_path = "")
+read_documents_data(
+  project_name,
+  data_path = "documents/",
+  df_path = "data_frames",
+  data_frame_name = "qcoder_documents",
+  project_path = ""
+)
 }
 \arguments{
 \item{project_name}{Name of the Qcoder project}

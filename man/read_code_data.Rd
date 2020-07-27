@@ -5,9 +5,13 @@
 \title{Create a file of codes from csv file
 Use this if you have a spreadsheet of codes already created.}
 \usage{
-read_code_data(project_name, data_path = "codes/codes.csv",
-  df_path = "data_frames", data_frame_name = "qcoder_codes",
-  project_path = "")
+read_code_data(
+  project_name,
+  data_path = "codes/codes.csv",
+  df_path = "data_frames",
+  data_frame_name = "qcoder_codes",
+  project_path = ""
+)
 }
 \arguments{
 \item{project_name}{Name of the project, which matches folder name}

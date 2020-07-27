@@ -6,7 +6,3 @@
 \alias{qcoder}
 \title{Code Qualitative Data
 A light weight approach to qualitative coding and analysis}
-\description{
-Code Qualitative Data
-A light weight approach to qualitative coding and analysis
-}

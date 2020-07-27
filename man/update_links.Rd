@@ -5,8 +5,12 @@
 \title{Update document to unit links
 Saves or updates the links between observation units and documents}
 \usage{
-update_links(checked = "", docs_df_path = "", this_doc_path = "",
-  units_docs_path = "")
+update_links(
+  checked = "",
+  docs_df_path = "",
+  this_doc_path = "",
+  units_docs_path = ""
+)
 }
 \arguments{
 \item{checked}{vector of new or updated links}
