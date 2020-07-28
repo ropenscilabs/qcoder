@@ -480,11 +480,12 @@ if (interactive()) {
                        codes_df_path)
     })
     observeEvent(input$zipfile, {
+      if (!exists("project_path")){return()}
         zip::zipr(zipfile = paste0(dirname(project_path), "/",
                                    "QCoderProject-", basename(project_path), "-",
                                    Sys.Date(),".zip"), files = project_path,
                   recurse = TRUE)
-    message(paste0("Zip file created: ", paste0(dirname(project_path), "/",
+         message(paste0("Zip file created: ", paste0(dirname(project_path), "/",
                                                 "QCoderProject-",
                                                 basename(project_path), "-",
                                                 Sys.Date(),".zip")))
