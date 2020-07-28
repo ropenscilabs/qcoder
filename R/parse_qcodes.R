@@ -5,7 +5,7 @@
 #' and turn it into a dataframe with one row per coded item, of the form:
 #' docid,qcode,text
 #'
-#' Replaces newline characters with "<br>" in the captured text
+#' Replaces newline characters with an HTML "br" in the captured text
 #' returns an empty dataframe (no rows) if no qcodes were found.
 #'
 #' @param x A data frame containing the text to be coded; requires columns "doc_id" and "document_text"
@@ -36,7 +36,6 @@ parse_qcodes <- function(x, ...){
 #' Checks the current document for coding errors.
 #'
 #' @param document The document to be scanned for errors.
-#' @example
 #'
 #' @export
 error_check <- function(document) {
@@ -67,7 +66,7 @@ error_check <- function(document) {
 #' @param codes_list A list of codes (usually from a coded document)
 #' @param code_data_frame Existing data frame of QCODE codes
 #' @param codes_df_path The path where the updated code data frame should be saved
-#' @example
+#'
 #'
 #' @export
 add_discovered_code <- function(codes_list = "", code_data_frame = NULL , codes_df_path = "" ){

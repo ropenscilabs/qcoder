@@ -18,7 +18,7 @@ and turn it into a dataframe with one row per coded item, of the form:
 docid,qcode,text
 }
 \details{
-Replaces newline characters with "<br>" in the captured text
+Replaces newline characters with an HTML "br" in the captured text
 returns an empty dataframe (no rows) if no qcodes were found.
 }
 \examples{

@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\ignore
+^ignore$
 ^\.travis\.yml$
 ^README\.Rmd
 ^README\.html
@@ -12,9 +12,9 @@
 ^motivation\.Rmd
 ^motivation\.html
 ^motivation\.pdf
-^\images
+^images$
 ^Makefile
 ^docs$
 ^vignettes/articles/CONTRIBUTING.Rmd
 ^vignettes/articles/motivation.Rmd
-^\my_qcoder_project
+^my_qcoder_project$

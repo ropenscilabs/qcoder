@@ -5,10 +5,13 @@
 \title{Create a data frame of unit to document links from csv file
 Use this is you have a spreadsheet already created.}
 \usage{
-read_unit_document_map_data(project_name,
+read_unit_document_map_data(
+  project_name,
   data_path = "units/unit_document_map.csv",
-  data_frame_name = "qcoder_unit_document_map", project_path = "",
-  df_path = "data_frames")
+  data_frame_name = "qcoder_unit_document_map",
+  project_path = "",
+  df_path = "data_frames"
+)
 }
 \arguments{
 \item{project_name}{Name of project}

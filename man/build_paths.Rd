@@ -4,8 +4,13 @@
 \alias{build_paths}
 \title{Build the paths for file creation}
 \usage{
-build_paths(project_name, data_path = "", data_frame_name = "",
-  df_path = "data_frames", project_path = "")
+build_paths(
+  project_name,
+  data_path = "",
+  data_frame_name = "",
+  df_path = "data_frames",
+  project_path = ""
+)
 }
 \arguments{
 \item{project_name}{Name of the project}
