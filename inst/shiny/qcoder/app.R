@@ -36,7 +36,8 @@ if (interactive()) {
            tabPanel("Project",
                     tags$p("Select your project folder"),
                     verbatimTextOutput("project_directory"),
-                    shinyDirButton('select_project', label="Select Folder", title="Select your project folder",
+                    shinyDirButton('select_project', label="Select Folder",
+                                   title="Select your project folder",
                                    buttonType = "default", class = NULL),
                     tags$br(),
                     tags$br(),
@@ -93,8 +94,10 @@ if (interactive()) {
       tags$p("Zip is located in the same folder as the project.")
      ),
      tabPanel("Add data",
+
              tags$h2("Add new document"),
-             shinyFilesButton('file', label="Select File", title="Select your new files from
+             shinyFilesButton('file', label="Select File",
+                            title="Select your new files from
                             the project folder", multiple= TRUE,
                             buttonType = "default", class = NULL),
 
@@ -430,6 +433,7 @@ if (interactive()) {
       files <- ifelse(substr(files, 1, 1) == "/", sub("^.", "", files), files)
 
       qcoder::add_new_documents(files, docs_df_path, doc_folder)
+      showNotification(paste("Document added"), duration = 0)
     })
 
     # Set up for associating units and documents
@@ -470,6 +474,7 @@ if (interactive()) {
     observeEvent(   input$add_new_unit, {
       units_df <- readRDS(units_df_path)
       qcoder::add_unit(units_df, input$new_unit, units_df_path)
+      showNotification(paste("New unit added"), duration = 0)
     })
     output$add_new_code <- renderUI({
       actionButton("add_new_code", "Add code")
@@ -478,6 +483,7 @@ if (interactive()) {
       codes_df <- readRDS(codes_df_path)
       qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
                        codes_df_path)
+      showNotification(paste("New code added"), duration = 0)
     })
     observeEvent(input$zipfile, {
       if (!exists("project_path")){return()}
