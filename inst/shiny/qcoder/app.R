@@ -475,6 +475,7 @@ if (interactive()) {
       units_df <- readRDS(units_df_path)
       qcoder::add_unit(units_df, input$new_unit, units_df_path)
       showNotification(paste("New unit added"), duration = 0)
+      DT::dataTableOutput('units_table')
     })
     output$add_new_code <- renderUI({
       actionButton("add_new_code", "Add code")
@@ -484,6 +485,7 @@ if (interactive()) {
       qcoder::add_code(codes_df, input$new_code, input$new_code_desc,
                        codes_df_path)
       showNotification(paste("New code added"), duration = 0)
+      DT::dataTableOutput('code_table')
     })
     observeEvent(input$zipfile, {
       if (!exists("project_path")){return()}
