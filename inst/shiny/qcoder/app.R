@@ -105,9 +105,9 @@ if (interactive()) {
              textInput("new_unit",  "Unit name"),
              uiOutput('add_new_unit'),
              tags$h2("Add new code"),
-             uiOutput("add_new_code"),
              textInput("new_code", "Code"),
-             textInput("new_code_desc", "Description")
+             textInput("new_code_desc", "Description"),
+             uiOutput("add_new_code")
 
 
      ) # close add data tab

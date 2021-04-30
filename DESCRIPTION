@@ -12,7 +12,8 @@ Authors@R: c(
   person("Sheriff", "Colley", email ="rikunaruto0198@gmail.com", role = c("ctb")),
   person("Jamal", "Jones", email ="Jones-Jamal@outlook.com", role = c("ctb")),
   person("Michael", "Lieberman", email = "MichaelAYonkers@gmail.com", role = c("ctb")),
-  person("Tenzing", "Sherpa", email = "tsherpa2016@gmail.com", role = c("ctb")))
+  person("Tenzing", "Sherpa", email = "tsherpa2016@gmail.com", role = c("ctb")),
+  person("Stephanie", "Guillou", email = "stephane.guillou@member.fsf.org", role = c("ctb")))
 Description: A free, lightweight, open source option for analyzing text-based
   qualitative data.
   Enables analysis of interview transcripts, observation notes, memos, 
