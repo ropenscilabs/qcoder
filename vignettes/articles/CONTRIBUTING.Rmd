@@ -5,11 +5,11 @@ output:
   html_document: default
 ---
 
-# Contributing
+## Contributing
 
 Contributions to `qcoder` whether in the form of bug fixes, issue reports, new
-code or documentation improvement are welcome. Please use the github issue
-tracker. For any pull request please link to or open a corresponding issue in the
+code or documentation improvement are welcome. Please use the [GitHub issue
+tracker](https://github.com/ropenscilabs/qcoder/issues). For any pull request please link to or open a corresponding issue in the
 issue tracker. Please ensure that you have notifications turned on and respond to
 questions, comments or needed changes promptly.
 
@@ -26,20 +26,19 @@ interact with other packages, not analysis.
 
 Our approach is currently highly focused on ease of use for 
 people who have not used R previously and who have possibly 
-not used QDA software at all.  Therefore
+not used QDA software at all. Therefore
 we have made the decision to first focus on a simple, tightly structured 
 project model that does not require the installation of Java or of a data base.
 
 Once we have a satisfactory interface there are a number of extensions that
 we will make that will allow more flexibility and power and hence support 
-larger and more complex projects and users with more experience.  These will
-include more flexiblity on the location of files (including the ability to
+larger and more complex projects and users with more experience. These will
+include more flexibility on the location of files (including the ability to
 use text accessible on the Web) and storage in a data base. Therefore, all
-code contributions should be made with this future in mind.  Functions should
+code contributions should be made with this future in mind. Functions should
 work from the command line, which also ensures that they can be efficiently
 tested. We welcome interested people, both users and developers, to discuss
 these plans in our issue tracker and help make them happen.
 
 If you would like to make a code or documentation contribution, please open
 an issue in the tracker that you link to a pull request. 
-
