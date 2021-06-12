@@ -123,7 +123,8 @@ parse_one_document <- function(doc, df, qcoder_documents, dots = NULL){
 
   ### skip this document/row if no qcodes were found
   if( length(splititems) == 1 ){
-    message(paste0("Message: No QCODE blocks found in document: ", doc_id, "\n"))
+    # come up with a better solution for big dfs
+    #message(paste0("Message: No QCODE blocks found in document: ", doc_id, "\n"))
     return(df)
   }
 

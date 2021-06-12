@@ -75,6 +75,11 @@ read_documents_data <- function(project_name,
                           doc_path = file_list,
                           stringsAsFactors = FALSE)
 
+      if (length(unique(data_set$doc_path)) < nrow(data_set)){
+           data_set$doc_path <-
+             paste0(data_set$doc_path, ".", data_set$doc_id )
+      }
+
         # validate column names here
         actualNames <- names(data_set)
         expectedNames <- c("doc_id", "document_text", "doc_path")

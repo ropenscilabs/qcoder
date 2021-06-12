@@ -134,7 +134,7 @@ do_update_document <- function(updated, docs_df_path, this_doc_path){
   archive_path <- sub(".rds", paste0("_", time, ".rds"), docs_df_path)
   saveRDS(text_df, archive_path)
   row_num <- which(text_df[,"doc_path"] == this_doc_path)
-  text_df[row_num, 2] <- updated
+  text_df[row_num, "document_text"] <- updated
   # make sure this save happens
   saveRDS(text_df, file = docs_df_path)
   invisible(TRUE)
