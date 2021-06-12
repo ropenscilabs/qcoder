@@ -14,14 +14,14 @@ tl;dr
 
 To test with some sample data:
 
-    install.packages("devtools")
-    devtools::install_github("ropenscilabs/qcoder")
+    install.packages("remotes")
+    remotes::install_github("ropenscilabs/qcoder")
     library(qcoder)
     create_qcoder_project("my_qcoder_project", sample = TRUE)
     import_project_data(project = "my_qcoder_project")
     qcode()
 
-Click "Select project folder" and "my qcoder project."  
+Click "Select project folder" and "my_qcoder_project."  
 There are two ways to add codes. To use an existing code, highlight the
 text to be coded, select the code, click "Add selected code" and then
 "Save changes." Text to be assigned a new (or existing) code should be
@@ -34,8 +34,8 @@ Installation
 
 To install the latest development version, run
 
-    install.packages("devtools")
-    devtools::install_github("ropenscilabs/qcoder")
+    install.packages("remotes")
+    remotes::install_github("ropenscilabs/qcoder")
     library(qcoder)
 
 Please note that this is not a release-ready version and should be
@@ -167,11 +167,11 @@ link each unit to a document.)
 ### Importing the data
 
 To import this data into Qcode user the `import_project_data()`
-function.
+function. 
 
     import_project_data(project = "my_qcoder_project")
 
-Now the data\_frames folder will contain the imported files.
+Now the data_frames folder will contain the imported files.
 ![](images/data_frames_folder.png)
 
 Now it's time to start coding.
@@ -181,7 +181,9 @@ launch the app use the function `qcode()`.
 
     qcode()
 
-Which will launch this application.
+Which will launch this application. If your current working directory is not the 
+location of your project, use the `use_wd = FALSE` option.
+However, on Windows this will not work unless you have set a HOME or R_USER.
 
 Coding
 ------
