@@ -134,7 +134,17 @@ if (interactive()) {
     )
     # Select the project directory if not using working directory.
     if (!exists("user_folder")){
+      if (Sys.getenv("HOME") != "") {
+          # Linux/Mac
           user_folder <- c('Select Volume' = Sys.getenv("HOME"))
+      } else
+      if (Sys.getenv("R_USER") != "") {
+        # Used for Windows
+        user_folder <- c('Select Volume' = Sys.getenv("R_USER"))
+      } else {
+        # Fallback, which should never happen.
+        user_folder <- getwd()
+      }
     }
 
     if (user_folder != "" ){
