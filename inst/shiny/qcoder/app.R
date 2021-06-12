@@ -455,15 +455,17 @@ if (interactive()) {
 
         checknames <- units_df$name
         checkvalues <- units_df$unit_id
-        this_selected_df <- units_docs_df %>% filter(doc_path == input$this_doc_path)
-        this_selected <- as.character(this_selected_df$unit_id)
-
-        checkboxGroupInput(inputId =  "unit_doc_links",
+        if (nrow(units_docs_df) > 0) {
+            this_selected_df <- units_docs_df %>%
+                filter(doc_path == input$this_doc_path)
+                this_selected <- as.character(this_selected_df$unit_id)
+                checkboxGroupInput(inputId =  "unit_doc_links",
                                  label = "Units connected to this document:",
                                  choiceNames = checknames,
                                  choiceValues = checkvalues,
                                  selected = this_selected
-        )
+                                 )
+        }
       })
 
       output$checkbox_save_links <- renderUI({
