@@ -195,6 +195,11 @@ read_code_data <- function(project_name,
   if (file.exists(paths[["data"]])){
       code_data <- readr::read_csv(file = paths[["data"]],
                                   col_types = "icc")
+      else {
+        create_empty_code_file(paths[["data_frame_path"]])
+        message("Empty code data frame created")
+        return(invisible(TRUE))
+      }
       # validate column names etc here
       actualNames <- names(code_data)
       expectedNames <- c("code_id", "code", "code.description")  #GOOD
@@ -208,8 +213,6 @@ read_code_data <- function(project_name,
       # try catch this save
       saveRDS(code_data, file = paths[["data_frame_path"]])
 
-   } else {
-      create_empty_code_file(paths[["data_frame_path"]])
    }
 
    invisible(TRUE)
@@ -267,6 +270,11 @@ read_unit_data <- function(data_path = "units/units.csv",
   if (file.exists(paths[["data"]])){
         units <- readr::read_csv(file = paths[["data"]],
                            col_types = "ic" )
+       } else {
+          units <- create_empty_units_file(path)
+          message("Empty units data created.")
+          return(invisible(TRUE))
+        }
 
   # validate column names etc here
   actualNames <- names(units)
@@ -274,13 +282,9 @@ read_unit_data <- function(data_path = "units/units.csv",
   if (sum(expectedNames %in% actualNames) != length(units)){
     warning("Required variables for read_unit_data are not present")
   }
-
-
   # try catch this save
       saveRDS(units, file = paths[["data_frame_path"]])
-  } else {
-    create_empty_units_file(paths[["data_frame_path"]])
-  }
+
   invisible(TRUE)
 }
 
@@ -309,7 +313,7 @@ create_empty_units_file <- function(path){
 #' @param project_name  Name of project
 #' @param data_path path to a file containing  unit document map data in csv.
 #' @param data_frame_name The name of the RDS file that the data frame
-#' will be stored in.
+#'   will be stored in.
 #' @param project_path Full path to the project folder
 #' @param df_path Full path to the documents data frame.
 #'
@@ -331,6 +335,12 @@ read_unit_document_map_data <- function(project_name,
           qcoder_unit_document_map <- readr::read_csv(file = paths[["data"]],
                                               col_types = readr::cols(doc_path = "c",
                                                                 unit_id = "i"))
+    } else {
+      create_empty_unit_doc_file(paths[["data_frame_path"]])
+      message("Empty unit document map data frame created.")
+      return(invisible(TRUE))
+      return(invisible(TRUE))
+    }
           # validate column names etc here
           actualNames <- names(qcoder_unit_document_map)
           expectedNames <- c("doc_path", "unit_id")
@@ -339,12 +349,8 @@ read_unit_document_map_data <- function(project_name,
             warning("Required variables for read_unit_document_map_data are not present")
           }
 
-
-
           saveRDS(qcoder_unit_document_map, file = paths[["data_frame_path"]])
-        } else {
-          create_empty_unit_doc_file(paths[["data_frame_path"]])
-        }
+
   invisible(TRUE)
 }
 
@@ -380,6 +386,9 @@ create_empty_unit_doc_file <- function(path ){
 #' unlink("./_my_qcoder_project", recursive=TRUE)
 #' @export
 import_project_data <- function(project_name){
+  if (missing(project_name)){
+    stop("You must provide a project name.")
+  }
   read_documents_data(project_name = project_name)
   read_code_data(project_name = project_name)
   read_unit_data(project_name = project_name)

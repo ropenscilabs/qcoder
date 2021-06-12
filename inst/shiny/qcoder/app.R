@@ -47,7 +47,6 @@ if (interactive()) {
                     ), # Close tab panel
            # Tab title
            tabPanel("Add codes to text data",
-          #  conditionalPanel(condition = "input$project_directory == TRUE",
              # Edit box and document selector
              # make sure these are unique
 
@@ -259,7 +258,7 @@ if (interactive()) {
       # Create the text editor
        output$mydocA <- renderUI({list(useShinyjs(),
          selectInput(inputId = "select_codes", label = "Select Codes to Add",
-                     choices = codes(), selected=codes()[1], multiple = TRUE),
+                     choices = codes(), selected = codes()[1], multiple = TRUE),
          actionButton("replace", "Add selected code"),
 
            aceEditor(

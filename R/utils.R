@@ -91,7 +91,7 @@ read_data <- function() {
 #'  qcode()
 #'}
 #' @export
-qcode <- function(use_wd = FALSE) {
+qcode <- function(use_wd = TRUE) {
   user_folder <- NULL
   if (use_wd == TRUE){user_folder <<- c('Select Volume' = getwd())}
   package_location <- system.file(package = "qcoder")
