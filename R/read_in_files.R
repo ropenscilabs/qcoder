@@ -195,7 +195,7 @@ read_code_data <- function(project_name,
   if (file.exists(paths[["data"]])){
       code_data <- readr::read_csv(file = paths[["data"]],
                                   col_types = "icc")
-      else {
+      } else {
         create_empty_code_file(paths[["data_frame_path"]])
         message("Empty code data frame created")
         return(invisible(TRUE))
@@ -212,8 +212,6 @@ read_code_data <- function(project_name,
 
       # try catch this save
       saveRDS(code_data, file = paths[["data_frame_path"]])
-
-   }
 
    invisible(TRUE)
 }
