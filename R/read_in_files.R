@@ -269,15 +269,18 @@ read_unit_data <- function(data_path = "units/units.csv",
   paths <- build_paths(project_name = project_name, data_path = data_path,
                              df_path = df_path, project_path = project_path,
                              data_frame_name = data_frame_name)
+    if (missing("project_path")) {project_path <- getwd()}
+    path <- paste0(project_path, "/", project_name, "/", df_path, "/",
+    data_frame_name, "_", project_name, ".rds")
 
-  if (file.exists(paths[["data"]])){
+    if (file.exists(paths[["data"]])){
         units <- readr::read_csv(file = paths[["data"]],
                            col_types = "ic" )
-       } else {
+    } else {
           units <- create_empty_units_file(path)
           message("Empty units data created.")
           return(invisible(TRUE))
-        }
+    }
 
   # validate column names etc here
   actualNames <- names(units)
@@ -286,7 +289,7 @@ read_unit_data <- function(data_path = "units/units.csv",
     warning("Required variables for read_unit_data are not present")
   }
   # try catch this save
-      saveRDS(units, file = paths[["data_frame_path"]])
+  saveRDS(units, file = path)
 
   invisible(TRUE)
 }
@@ -306,7 +309,7 @@ create_empty_units_file <- function(path){
   colnames(units) <- ud
   units$name <- as.character(units$name)
   units$unit_id <- as.integer(units$unit_id)
-  saveRDS(units, file = path)
+  saveRDS(units, file = path )
   invisible(TRUE)
 }
 
