@@ -358,10 +358,12 @@ if (interactive()) {
           text_df <- readRDS(docs_df_path)
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df)
-          parsed %>% dplyr::group_by(as.factor(qcode)) %>%
-              dplyr::summarise(n = n()) %>%
-              rename('code'='as.factor(qcode)') %>%
-              DT::datatable(options = list(paging = FALSE))
+          if (!is.null(parsed$qcode)){
+               parsed %>% dplyr::group_by(as.factor(qcode)) %>%
+                 dplyr::summarise(n = n()) %>%
+                 rename('code'='as.factor(qcode)') %>%
+                 DT::datatable(options = list(paging = FALSE))
+          }
         })
 
       output$units_summary <- renderText({
