@@ -4,7 +4,7 @@
 \alias{qcode}
 \title{This launches the coder Shiny app}
 \usage{
-qcode(use_wd = FALSE)
+qcode(use_wd = TRUE)
 }
 \arguments{
 \item{use_wd}{Whether or not the current working directory when launching
