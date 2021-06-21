@@ -7,20 +7,44 @@
 parse_qcodes(x, ...)
 }
 \arguments{
-\item{x}{A data frame containing the text to be coded; requires columns "doc_id" and "document_text"}
+\item{x}{A data frame containing the text to be coded; requires columns
+"doc_id" and "document_text"}
 
 \item{...}{Other parameters optionally passed in}
 }
+\value{
+If the data frame contains coded text in the \code{document_text}
+column, output will be a data frame with three columns: "doc",
+"qcode", and "text".\preformatted{    The \code{doc} is the \code{doc_id} from the input data frame.
+
+    \code{qcode} is the code that the captured text was marked up with.
+
+    \code{text} is the text that was captured.
+}
+}
 \description{
-Take a text document containing coded text of the form:
-"stuff to ignore (QCODE) coded text we care about (/QCODE){#qcode} more stuff to ignore"
-and turn it into a dataframe with one row per coded item, of the form:
-docid,qcode,text
+Take a data frame of coded text documents and return a data frame of the
+codes captured within.
 }
 \details{
-Replaces newline characters with an HTML "br" in the captured text
-returns an empty dataframe (no rows) if no qcodes were found.
+This function takes a text document containing coded text of the form:
+\preformatted{"stuff to ignore (QCODE) coded text we care about (/QCODE){#my_code}
+more stuff to ignore"} and turns it into a data frame with one row per coded
+item, of the form: \code{docid,qcode,text}
+
+\code{parse_qcodes} assumes that it is being passed a data frame, the
+\code{\link{parse_one_document}} function is called to do the heavy lifting
+extracting the coded text from the \code{document_text} column.
+
+Newline characters are replaced with an HTML \code{<br>} in the captured text.
+
+If no valid qcodes are found, \code{parse_qcodes} returns an empty data frame
+(no rows).
 }
 \examples{
-unlink("./_my_qcoder_project", recursive=TRUE)
+parse_qcodes(my_documents)
+
+# Data frames can be piped into this function
+my_documents \%>\%
+  parse_qcodes()
 }
