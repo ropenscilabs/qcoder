@@ -2,15 +2,24 @@
 % Please edit documentation in R/parse_qcodes.R
 \name{error_check}
 \alias{error_check}
-\title{Check for coding errors
-Checks the current document for coding errors.}
+\title{Check for coding errors}
 \usage{
 error_check(document)
 }
 \arguments{
-\item{document}{The document to be scanned for errors.}
+\item{document}{A string to be scanned for errors.}
+}
+\value{
+A \code{warning} message as a character string.
 }
 \description{
-Check for coding errors
 Checks the current document for coding errors.
+}
+\details{
+This function takes a string (such as the contents of a document), and conducts some basic linting. It returns a warning if there aren't a matching number of \code{(QCODE)} tags, or if text has been marked to be captured but the capture is missing a tag (missing \code{{#my_tag}}).
+}
+\examples{
+error_check("An (QCODE)unmatched set of (QCODE) gives (/QCODE){#tag} a warning.")
+error_check("A (QCODE) qcode with a missing tag gives a warning.")
+
 }
