@@ -87,10 +87,12 @@ if (interactive()) {
               tags$h5('Codes frequency'),
               dataTableOutput('code_freq')
      ),
-     tabPanel("Export files",
+     tabPanel("Export project",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
-      tags$p("Zip is located in the same folder as the project.")
+              tags$p("This exports the entire project so it can be qcoded
+                     in another location."),
+              tags$p("Zip is located in the same folder as the project.")
      ),
      tabPanel("Add data",
 
@@ -216,7 +218,7 @@ if (interactive()) {
           if (input$select_project[1] == ""){return()}
           qcoder::validate_project_files(project_path)
           if (docs_df_path == "") {return()}
-            selectInput('this_doc_path', 'Document', my_choices())
+            selectizeInput('this_doc_path', 'Document', my_choices())
          })
 
       output$saveButton <- renderUI({
@@ -343,8 +345,7 @@ if (interactive()) {
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df, save_path = codes_df_path, code_data_frame = code_df)
 
-          DT::datatable(parsed,options = list(paging = FALSE, dom = "Bfrtip",
-
+          DT::datatable(parsed,options = list(paging = TRUE, dom = "Bfrtip",
                                               buttons = list(list(extend='copy'),
                                                              list(extend='csv', filename = "QCoder_CD"),
                                                              list(extend='excel', filename = "QCoder_CD"),
@@ -359,10 +360,16 @@ if (interactive()) {
           code_df <- readRDS(codes_df_path)
           parsed <- qcoder::parse_qcodes(text_df)
           if (!is.null(parsed$qcode)){
-               parsed %>% dplyr::group_by(as.factor(qcode)) %>%
+               code_freq <-parsed %>% dplyr::group_by(as.factor(qcode)) %>%
                  dplyr::summarise(n = n()) %>%
-                 rename('code'='as.factor(qcode)') %>%
-                 DT::datatable(options = list(paging = FALSE))
+                 rename('code'='as.factor(qcode)')
+             DT::datatable(code_freq,options = list(paging = TRUE, dom = "Bfrtip",
+                                        buttons = list(list(extend='copy'),
+                                        list(extend='csv', filename = "QCoder_Summary"),
+                                        list(extend='excel', filename = "QCoder_Summary"),
+                                        list(extend='pdf', filename = "QCoder_Summary"),
+                                        list(extend="print"))))
+
           }
         })
 
