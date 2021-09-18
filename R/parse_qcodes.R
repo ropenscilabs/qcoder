@@ -33,9 +33,18 @@ parse_qcodes <- function(x, ...){
 }
 
 #' Check for coding errors
+#'
 #' Checks the current document for coding errors.
 #'
-#' @param document The document to be scanned for errors.
+#' This function takes a string (such as the contents of a document), and conducts some basic linting. It returns a warning if there aren't a matching number of \code{(QCODE)} tags, or if text has been marked to be captured but the capture is missing a tag (missing \code{{#my_tag}}).
+#' 
+#' @param document A string to be scanned for errors.
+#'
+#' @return A \code{warning} message as a character string.
+#'
+#' @examples
+#' error_check("An (QCODE)unmatched set of (QCODE) gives (/QCODE){#tag} a warning.")
+#' error_check("A (QCODE) qcode with a missing tag gives a warning.")
 #'
 #' @export
 error_check <- function(document) {
