@@ -86,14 +86,14 @@ if (interactive()) {
               textOutput('codes_summary'),
               tags$h5('Codes frequency'),
               dataTableOutput('code_freq')
-     ),
+     ), # Close Summary tab panel
      tabPanel("Export project",
               actionButton("zipfile", label = "Zip Project",
                            buttonType = "default, class = NULL"),
               tags$p("This exports the entire project so it can be qcoded
                      in another location."),
               tags$p("Zip is located in the same folder as the project.")
-     ),
+     ), # Close export project tab panel.
      tabPanel("Add data",
 
              tags$h2("Add new document"),
@@ -132,7 +132,7 @@ if (interactive()) {
       hideTab("navlist", "Units"),
       hideTab("navlist", "Summary"),
       hideTab("navlist", "Add data"),
-      hideTab("navlist", "Export files")
+      hideTab("navlist", "Export project")
     )
     # Select the project directory if not using working directory.
     if (!exists("user_folder")){
