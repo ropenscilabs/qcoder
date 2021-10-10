@@ -314,6 +314,8 @@ if (interactive()) {
           if (codes_df_path == "") {return()}
           code_df <- readRDS(codes_df_path)
           DT::datatable(code_df,
+                        rownames = FALSE,
+                        editable = list(target = "cell", disable = list(columns = c(1))),
                         extensions = 'Buttons',
                         options = list(paging = TRUE, dom = 'Bfrtip',
                                   buttons = list(list(extend='copy'),
