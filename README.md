@@ -240,11 +240,12 @@ button.
 Each time you save, Qcoder makes a backup copy of your documents data
 frame. This is for safety and reproducability. This can end up with a
 lot of files if you save often. You may want to periodically delete some
-backups to save storage space.
+backups to save storage space.  An important goal is to move to using 
+git for this purpose.
 
 Currently when you create a new code while coding, this code will be
 displayed on the Coded data tab, but not on the Codes or Summary tabs.
-You must restart the qcode application to update those displays. This is
+You must go to the first tab of the the qcode application to update those displays. This is
 a high priority development item.
 
 ### Road map
@@ -253,8 +254,12 @@ QCoder can be used right now for coding. However, we are not yet ready
 for release.
 
 Our immediate goal is to create a somewhat more advanced minimum viable
-product. This includes creating user interfaces to add new documents,
-codes and units and adding javascript support for inserting codes.
+product. Please see the issue tracker for a list of short-term and longer-term goals. 
+These goals include interoperability with other QDA packages.
+
+The most important thing is to have more people try qcoder and give us feedback! We
+do not want to release and then discover that our testing has missed problems that
+are obvious to our intended user base.
 
 Contributors
 ------------
