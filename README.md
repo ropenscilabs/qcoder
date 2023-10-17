@@ -105,6 +105,8 @@ However for other users, particularly those on linux systems, additional
 steps are required. Please follow the [installation instructions for
 pdftools](https://github.com/ropensci/pdftools).
 
+    install.packages("pdftools")
+
 ### Codes
 
 QCoder has the option to import a list of predefined codes from a CSV
