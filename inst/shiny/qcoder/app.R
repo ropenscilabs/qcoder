@@ -187,6 +187,10 @@ if (interactive()) {
         units_docs_path <<- paste0(project_path,
                                    "/data_frames/qcoder_unit_document_map_",
                                    basename(project_path), ".rds")
+        export_path <<- paste0(project_path,
+                                   "/exported_files",
+                                   basename(project_path), ".csv")
+
 
       project.status <- reactiveValues(saved=TRUE)
 
@@ -302,7 +306,7 @@ if (interactive()) {
         docs_df$document_text <- substr(docs_df$document_text,1,250)
         DT::datatable(docs_df,options = list(paging = FALSE, dom = "Bfrtip",
                                               buttons = list(list(extend='copy'),
-                                                             list(extend='csv', filename = "QCoder_Units"),
+                                                             list(extend='csv', filename =  "QCoder_Units"),
                                                              list(extend='excel', filename = "QCoder_Units"),
                                                              list(extend='pdf', filename = "QCoder_Units"),
                                                              list(extend="print"))))
