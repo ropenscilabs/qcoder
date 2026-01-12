@@ -11,9 +11,9 @@
 #' \code{parse_qcodes} assumes that it is being passed a data frame, the
 #' \code{\link{parse_one_document}} function is called to do the heavy lifting
 #' extracting the coded text from the \code{document_text} column.
-#' 
+#'
 #' Newline characters are replaced with an HTML \code{<br>} in the captured text.
-#' 
+#'
 #' If no valid qcodes are found, \code{parse_qcodes} returns an empty data frame
 #' (no rows).
 #'
@@ -31,11 +31,11 @@
 #'
 #'         "text" is the text that was captured.
 #' @examples
+#' my_documents <- data.frame("doc_id" = 1,
+#' (QCODE)Parts of above text is licensed {CC BY-SA 4.0}.(/QCODE){#license} Credit to SRCCON.
+#' ",doc_path = "mypath.txt")
 #' parse_qcodes(my_documents)
 #'
-#' # Data frames can be piped into this function
-#' my_documents %>%
-#'   parse_qcodes()
 #' @export
 
 parse_qcodes <- function(x, ...){
@@ -61,7 +61,7 @@ parse_qcodes <- function(x, ...){
 #' Checks the current document for coding errors.
 #'
 #' This function takes a string (such as the contents of a document), and conducts some basic linting. It returns a warning if there aren't a matching number of \code{(QCODE)} tags, or if text has been marked to be captured but the capture is missing a tag (missing \code{{#my_tag}}).
-#' 
+#'
 #' @param document A string to be scanned for errors.
 #'
 #' @return A \code{warning} message as a character string.
