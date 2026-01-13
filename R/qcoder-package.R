@@ -5,9 +5,9 @@
 #' @description Light weight coding
 #' @aliases qcoder
 #' @keywords internal
-#' @docType _PACKAGE
-#' @aliases qcoder-packag
 "_PACKAGE"
+
+
 
 # Imports -----------------------------------------------------------------
 
