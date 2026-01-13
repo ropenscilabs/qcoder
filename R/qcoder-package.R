@@ -4,7 +4,7 @@
 #' @name qcoder-package
 #' @description Light weight coding
 #' @aliases qcoder
-#' @docType package
+#' @docType "_PACKAGE
 
 NULL
 

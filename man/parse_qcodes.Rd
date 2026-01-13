@@ -15,12 +15,15 @@ parse_qcodes(x, ...)
 \value{
 If the data frame contains coded text in the \code{document_text}
 column, output will be a data frame with three columns: "doc",
-"qcode", and "text".\preformatted{    The \code{doc} is the \code{doc_id} from the input data frame.
+"qcode", and "text".
 
-    \code{qcode} is the code that the captured text was marked up with.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    The "doc" column is the corresponding "doc_id" value from the input
+    data frame.
 
-    \code{text} is the text that was captured.
-}
+    "qcode" is the code that the captured text was marked up with.
+
+    "text" is the text that was captured.
+}\if{html}{\out{</div>}}
 }
 \description{
 Take a data frame of coded text documents and return a data frame of the
@@ -42,9 +45,9 @@ If no valid qcodes are found, \code{parse_qcodes} returns an empty data frame
 (no rows).
 }
 \examples{
+my_documents <- data.frame("doc_id" = 1, "document_text" =
+"(QCODE)Parts of above text is licensed {CC BY-SA 4.0}.(/QCODE){#license} Credit to SRCCON.
+","doc_path" = "mypath.txt")
 parse_qcodes(my_documents)
 
-# Data frames can be piped into this function
-my_documents \%>\%
-  parse_qcodes()
 }

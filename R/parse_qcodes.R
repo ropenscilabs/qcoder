@@ -31,9 +31,9 @@
 #'
 #'         "text" is the text that was captured.
 #' @examples
-#' my_documents <- data.frame("doc_id" = 1,
-#' (QCODE)Parts of above text is licensed {CC BY-SA 4.0}.(/QCODE){#license} Credit to SRCCON.
-#' ",doc_path = "mypath.txt")
+#' my_documents <- data.frame("doc_id" = 1, "document_text" =
+#' "(QCODE)Parts of above text is licensed {CC BY-SA 4.0}.(/QCODE){#license} Credit to SRCCON.
+#' ","doc_path" = "mypath.txt")
 #' parse_qcodes(my_documents)
 #'
 #' @export
