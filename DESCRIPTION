@@ -28,19 +28,12 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     assertthat,
-    dplyr (>= 0.7),
-    DT,
     here,
     magrittr,
     readr,
     shiny,
-    shinyAce (>= 0.4.0),
-    shinyFiles,
-    shinyjs,
-    shinythemes,
     stringi,
-    stringr,
-    zip (>= 2.0.3)
+    stringr
 Suggests:
     knitr,
     rmarkdown,
@@ -48,7 +41,14 @@ Suggests:
     withr,
     covr,
     pander,
-    textreadr
+    textreadr,
+    dplyr,
+    DT,
+    shinyAce (>= 0.4.0),
+    shinyFiles,
+    shinyjs,
+    shinythemes,
+    zip (>= 2.0.3)
 URL: https://github.com/ropenscilabs/qcoder
 BugReports: https://github.com/ropenscilabs/qcoder/issues
 VignetteBuilder: knitr
