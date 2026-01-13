@@ -28,7 +28,6 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     assertthat,
-    here,
     magrittr,
     readr,
     shiny,
@@ -41,6 +40,7 @@ Suggests:
     withr,
     covr,
     pander,
+    here,
     textreadr,
     dplyr,
     DT,
