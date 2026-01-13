@@ -7,8 +7,7 @@
 #' @keywords internal
 #' @docType _PACKAGE
 #' @aliases qcoder-packag
-"qcoder"
-NULL
+"_PACKAGE"
 
 # Imports -----------------------------------------------------------------
 
