@@ -4,8 +4,10 @@
 #' @name qcoder-package
 #' @description Light weight coding
 #' @aliases qcoder
-#' @docType "_PACKAGE
-
+#' @keywords internal
+#' @docType _PACKAGE
+#' @aliases qcoder-packag
+"qcoder"
 NULL
 
 # Imports -----------------------------------------------------------------
